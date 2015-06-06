@@ -37,30 +37,58 @@ import com.language.model.expression.*;
 LineTerminator = \r|\n|\r\n
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
-Identifier = [:jletter:][:jletterdigit:]* 
+digit					= [0-9]
+integer                 = 0 | [1-9]{digit}*
+float                   = {integer}?\.{digit}*
+letter                  = [a-zA-Z]
+identifier              = ({letter}|"_") ({letter} | {digit} | "_")*
 
-IntegerLiteral = 0 | [1-9][0-9]*
-FloatLiteral = (0 | [1-9][0-9]*)\.[0-9]+
 
 %%
 
 "+" 				{ return symbol(sym.PLUS, "+"); }
 "-" 				{ return symbol(sym.MINUS, "-"); }
-"*" 				{ return symbol(sym.TIMES, "*"); }
+"**" 				{ return symbol(sym.POW, "**"); }
+"*" 				{ return symbol(sym.MULT, "*"); }
+"//" 				{ return symbol(sym.DIV_INT, "//"); }
 "/" 				{ return symbol(sym.DIV, "/"); }
-
+"%"					{ return symbol(sym.MOD, "%"); }
 "(" 				{ return symbol(sym.LPAREN, "("); }
 ")" 				{ return symbol(sym.RPAREN, ")"); }
 
-\"([^\"\r\n\t]*)\"	{ return symbol(sym.STRING, yytext()); }
+"&" 				{ return symbol(sym.BAND, "&"); }
+"|" 				{ return symbol(sym.BOR, "|"); }
+"^" 				{ return symbol(sym.BXOR, "^"); }
+"~" 				{ return symbol(sym.BNOT, "~"); }
+"<<" 				{ return symbol(sym.BLSHIFT, "<<"); }
+">>" 				{ return symbol(sym.BRSHIFT, ">>"); }
 
-'([^\"\r\n\t]*)'	{ return symbol(sym.STRING, yytext()); }
 
-{Identifier}		{ return symbol(sym.ID, yytext()); }
+"True" 				{ return symbol(sym.TRUE, "True"); }
+"False" 				{ return symbol(sym.FALSE, "False"); }
 
-{IntegerLiteral}	{ return symbol(sym.INTEGRAL, yytext()); }
-					
-{FloatLiteral} 		{ return symbol(sym.DECIMAL, yytext()); }
+"and" 				{ return symbol(sym.AND, "and"); }
+"or" 				{ return symbol(sym.OR, "or"); }
+"not" 				{ return symbol(sym.NOT, "not"); }
+
+"=="				{ return symbol(sym.EQUAL, "=="); }
+"!="				{ return symbol(sym.NOT_EQUAL, "!="); }
+"<"					{ return symbol(sym.LESS, "<"); }
+">"					{ return symbol(sym.GREATER, ">"); }
+"<="				{ return symbol(sym.LESS_OR_EQUAL, "<="); }
+">="				{ return symbol(sym.GREATER_OR_EQUAL, ">="); }
+
+
+\"\"\"(.|\n)*?\"\"\"	{ return symbol(sym.STRING, yytext()); }
+\"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
+'''(.|\n)*?'''			{ return symbol(sym.STRING, yytext()); }
+'([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
+
+
+{float}					{return symbol(sym.FLOAT, new Float(yytext()));}
+{integer}				{return symbol(sym.INTEGER, new Integer(yytext()));}
+{identifier}			{return symbol(sym.IDENTIFIER, new String(yytext()));}
+
 
 {WhiteSpace}        { /* ignore */ }
 
