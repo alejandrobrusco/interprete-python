@@ -35,13 +35,14 @@ import com.language.model.expression.*;
 %eofval}
 
 LineTerminator = \r|\n|\r\n
-WhiteSpace     = {LineTerminator} | [ \t\f]+
+WhiteSpace     = {LineTerminator} | [ \f]+
 
-digit					= [0-9]
-integer                 = 0 | [1-9]{digit}*
-float                   = {integer}?\.{digit}*
-letter                  = [a-zA-Z]
-identifier              = ({letter}|"_") ({letter} | {digit} | "_")*
+Digit					= [0-9]
+Integer                 = 0 | [1-9]{Digit}*
+Float                   = {Integer}?\.{Digit}*
+Long                    = {Integer}[lL]
+Letter                  = [a-zA-Z]
+Identifier              = ({Letter}|"_") ({Letter} | {Digit} | "_")*
 
 AnyCharacter 			= [^\r\n]
 Comment 				= "#" {AnyCharacter}* {LineTerminator}?
@@ -68,7 +69,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 
 "True" 				{ return symbol(sym.TRUE, "True"); }
-"False" 				{ return symbol(sym.FALSE, "False"); }
+"False" 			{ return symbol(sym.FALSE, "False"); }
 
 "and" 				{ return symbol(sym.AND, "and"); }
 "or" 				{ return symbol(sym.OR, "or"); }
@@ -114,18 +115,36 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 "raw_input"			{ return symbol(sym.RAW_INPUT); }
 
-//FUNCIONES PREDEFINIDAS
-
-
+/*FUNCIONES PREDEFINIDAS*/
+"has_key"			{ return symbol(sym.HAS_KEY); }		
+"items"				{ return symbol(sym.ITEMS); }
+"keys"				{ return symbol(sym.KEYS); }
+"pop"				{ return symbol(sym.POP); }
+"values"			{ return symbol(sym.VALUES); }
+"count"				{ return symbol(sym.COUNT); }
+"find"				{ return symbol(sym.FIND); }
+"join"				{ return symbol(sym.JOIN); }
+"split"				{ return symbol(sym.SPLIT); }
+"replace"			{ return symbol(sym.REPLACE); }
+"length"			{ return symbol(sym.LENGTH); }
+"append"			{ return symbol(sym.APPEND); }
+"extend"			{ return symbol(sym.EXTEND); }
+"index"				{ return symbol(sym.INDEX); }
+"insert"			{ return symbol(sym.INSERT); }
+"size"				{ return symbol(sym.SIZE); }
+			
 \"{3}(.|\n)*?\"{3}		{ return symbol(sym.STRING, yytext()); }
 \"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
 '{3}(.|\n)*?'{3}		{ return symbol(sym.STRING, yytext()); }
 '([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
 
 
-{float}					{return symbol(sym.FLOAT, new Float(yytext()));}
-{integer}				{return symbol(sym.INTEGER, new Integer(yytext()));}
-{identifier}			{return symbol(sym.IDENTIFIER, new String(yytext()));}
+{Float}					{return symbol(sym.FLOAT, new Float(yytext())); }
+{Integer}				{return symbol(sym.INTEGER, new Integer(yytext())); }
+{Long}					{return symbol(sym.LONG, new Long(yytext())); }
+{Identifier}			{return symbol(sym.IDENTIFIER, new String(yytext())); }
+
+"\t"					{return symbol(sym.TAB); }
 
 {Comment}               { /* ignore */ }
 
