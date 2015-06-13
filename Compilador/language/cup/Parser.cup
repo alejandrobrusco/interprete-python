@@ -5,62 +5,140 @@ import java_cup.runtime.*;
 import com.language.model.expression.*;
 import com.language.exceptions.*;
 
-terminal PLUS, MINUS;
-terminal TIMES, DIV;
-terminal LPAREN, RPAREN;
 
-terminal String ID;
-terminal String INTEGRAL;
-terminal String DECIMAL;
+terminal String PLUS;
+terminal String MINUS;
+terminal String POW;
+terminal String MULT;
+terminal String DIV;
+terminal String INT;
+terminal String DIV;
+terminal String MOD;
+terminal String LPARAN;
+terminal String RPARAN;
+terminal String BAND;
+terminal String BOR;
+terminal String BXOR;
+terminal String BNOT;
+terminal String BLSHIFT;
+terminal String BRSHIFT;
+terminal String TRUE;
+terminal String FALSE;
+terminal String AND;
+terminal String OR;
+terminal String NOT;
+terminal String EQUAL;
+terminal String NOT;
+terminal String EQUAL;
+terminal String LESS;
+terminal String GREATER;
+terminal String LESS;
+terminal String OR;
+terminal String EQUAL;
+terminal String GREATER;
+terminal String OR;
+terminal String EQUAL;
+terminal String LBRACKET;
+terminal String RBRACKET;
+terminal String ASSIGN;
+terminal String LCURLY;
+terminal String RCURLY;
+terminal String COLON;
+terminal String SEMI;
+terminal String COLON;
+terminal String COMMA;
+terminal String PRINT;
+terminal String TYPE;
+terminal String IF;
+terminal String ELSE;
+terminal String DEF;
+terminal String FOR;
+terminal String WHILE;
+terminal String CONTINUE;
+terminal String BREAK;
+terminal String RETURN;
+terminal String INT;
+terminal String FLOAT;
+terminal String STR;
+terminal String TUPLE;
+terminal String LIST;
+terminal String DICT;
+terminal String RAW;
+terminal String INPUT;
+terminal String FUNCIONES;
+terminal String PREDEFINIDAS;
+terminal String HAS;
+terminal String KEY;
+terminal String ITEMS;
+terminal String KEYS;
+terminal String POP;
+terminal String VALUES;
+terminal String COUNT;
+terminal String FIND;
+terminal String JOIN;
+terminal String SPLIT;
+terminal String REPLACE;
+terminal String LENGTH;
+terminal String APPEND;
+terminal String EXTEND;
+terminal String INDEX;
+terminal String INSERT;
+terminal String SIZE;
 terminal String STRING;
+terminal String FLOAT;
+terminal String INTEGER;
+terminal String LONG;
+terminal String IDENTIFIER;
+terminal String TAB;
 
-non terminal Expression expr;
+non terminal	program;
+non terminal	module;
+non terminal	simple_statement;
+non terminal	simple_statement_list;
+non terminal	expression;
+non terminal	expression_comma_list;
+non terminal	compound_statement;
+non terminal	stmt_list;
+non terminal	statement;
+non terminal	suite;
+non terminal	statement_list;
+non terminal	statement_newline_list;
+non terminal	key_datum;
+non terminal	key_datum_comma_list;
+non terminal	subscription;
+non terminal	target;
+non terminal	identifier_comma_list;
+non terminal	expression_list;
 
+/* Precedences */
+precedence left IF, ELSE;
+precedence left ASSIGN;
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left LESS, GREATER, LESS_OR_EQUAL, GREATER_OR_EQUAL, EQUAL, NOT_EQUAL;
 precedence left PLUS, MINUS;
-precedence left TIMES, DIV;
+precedence left MULT, DIV, DIV_INT, MOD;
+precedence left POW;
+precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPAREN, RPAREN;
 
-expr	::= INTEGRAL:i
-			{:
-				RESULT = new Expression(i);
-			:}
-
-		| DECIMAL:d
-			{:
-				RESULT = new Expression(d);
-			:}
-
-		| STRING:s
-			{:
-				RESULT = new Expression(s);
-			:}
-
-		| expr:l PLUS expr:r
-			{:
-				RESULT = new Expression("+", l, r);
-			:}
-
-		| expr:l MINUS expr:r
-			{:
-				RESULT = new Expression("-", l, r);
-			:}
-
-		| expr:l TIMES expr:r
-			{:
-				RESULT = new Expression("*", l, r);
-			:}
-
-		| expr:l DIV expr:r
-			{:
-				RESULT = new Expression("/", l, r);
-			:}
-
-		| ID:i
-			{:
-				RESULT = new Expression(i, null);
-			:}
-
-		| LPAREN expr:e RPAREN
-			{:
-				RESULT = e;
-			:}
-		;
+program					::= statement_list:listStm 
+								{:							:};
+							
+statement_list 			::= statement:stm statement_list:listStm 
+								{:							:};
+						  | 
+								/* epsilon */
+								{: RESULT = new LinkedList<Statement>(); :};
+statement				::= expression:expr
+								{: RESULT = new ExpressionStatement((Expression)expr);	:}
+						  | PRINT expression_list:list			
+								{: RESULT = new PrintStatement((List<Expression>)list);	:}
+						  | IDENTIFIER:value ASSIGN expression:expr
+								{: RESULT = new AssignStatement(new IdentifierExpression((String)value), (Expression)expr); :}
+						  |	target:value ASSIGN expression:expr
+								{: RESULT = new TargetAssignStatement((Expression)value, (Expression)expr); :}
+						  |	IDENTIFIER:value LPARAN expression_list:list RPARAN
+								{: RESULT = new FunctionExpression(new IdentifierExpression((String)value), (LinkedList<Expression>)list);	:}		
+						  | RETURN expression:expr
+						  		{: RESULT = new ReturnStatement((Expression)expr);	:};

@@ -57,8 +57,8 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 "//" 				{ return symbol(sym.DIV_INT, "//"); }
 "/" 				{ return symbol(sym.DIV, "/"); }
 "%"					{ return symbol(sym.MOD, "%"); }
-"(" 				{ return symbol(sym.LPARAN, "("); }
-")" 				{ return symbol(sym.RPARAN, ")"); }
+"(" 				{ return symbol(sym.LPAREN, "("); }
+")" 				{ return symbol(sym.RPAREN, ")"); }
 
 "&" 				{ return symbol(sym.BAND, "&"); }
 "|" 				{ return symbol(sym.BOR, "|"); }
