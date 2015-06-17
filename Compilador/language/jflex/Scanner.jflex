@@ -110,6 +110,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 "int"				{ return symbol(sym.INT); }
 "float"				{ return symbol(sym.FLOAT); }
 "str"				{ return symbol(sym.STR); }
+"long"				{ return symbol(sym.LONG); }
 "tuple"				{ return symbol(sym.TUPLE); }
 "list"				{ return symbol(sym.LIST); }
 "dict"				{ return symbol(sym.DICT); }
@@ -140,9 +141,9 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 '([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
 
 
-{Float}					{return symbol(sym.FLOAT, new Float(yytext())); }
+{Float}					{return symbol(sym.FLOATATION, new Float(yytext())); }
 {Integer}				{return symbol(sym.INTEGER, new Integer(yytext())); }
-{Long}					{return symbol(sym.LONG, new Long(yytext())); }
+{Long}					{return symbol(sym.LONGER, new Long(yytext())); }
 {Identifier}			{return symbol(sym.IDENTIFIER, new String(yytext())); }
 
 "\t"					{return symbol(sym.TAB); }

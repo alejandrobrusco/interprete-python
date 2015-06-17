@@ -62,6 +62,7 @@ terminal String BREAK;
 terminal String INT;
 terminal String FLOAT;
 terminal String STR;
+terminal String LONG;
 terminal String TUPLE;
 terminal String LIST;
 terminal String DICT;
@@ -84,9 +85,9 @@ terminal String INSERT;
 terminal String SIZE;
 terminal String STRING;
 
-terminal String FLOAT;
+terminal String FLOATATION;
 terminal String INTEGER;
-terminal String LONG;
+terminal String LONGATION;
 terminal String IDENTIFIER;
 
 terminal String TAB;
