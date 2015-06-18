@@ -127,14 +127,20 @@ precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPAREN, RPAREN;
 program					::= statement_list:listStm 
 								{:							:};
 							
-statement_list 			::= statement:stm statement_list:listStm 
+statement_list 			::= statement:stm statement_list:list 
 								{: ((List<Statement>)list).add((Statement)stmt);
 								   RESULT = list;
 								:};
 						  | /* epsilon */
 								{: RESULT = new LinkedList<Statement>(); :};
 								
-statement				::= expression:expr
+statement    			::= simple_statement:simple_stm 
+								{:    :} ;	
+						  |
+						  	compound_statement:compound_stm
+						  	    {:   :} ;							
+								
+simple_statement		::= expression:expr
 								{: RESULT = new ExpressionStatement((Expression)expr);	:}
 						  | PRINT expression_list:list			
 								{: RESULT = new PrintStatement((List<Expression>)list);	:}
@@ -142,7 +148,8 @@ statement				::= expression:expr
 								{: RESULT = new TypeExpression((Expression) expr); :}
 						  | RAW_INPUT LPARAN RPARAN
 								{: RESULT = new InputExpression(); :}
-								
+						  | RAW_INPUT LPARAN expression:expr RPARAN
+								{: RESULT = new InputExpression((Expression) expr); :}		
 						  | IDENTIFIER:value ASSIGN expression:expr
 								{: RESULT = new AssignStatement(new IdentifierExpression((String)value), (Expression)expr); :}
 						  |	target:value ASSIGN expression:expr
