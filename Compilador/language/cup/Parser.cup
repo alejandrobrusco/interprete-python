@@ -90,7 +90,10 @@ terminal String INTEGER;
 terminal String LONGATION;
 terminal String IDENTIFIER;
 
-terminal String TAB;
+terminal String INDENT;
+terminal String DEDENT;
+
+terminal String NEWLINE;
 
 non terminal	program;
 non terminal	module;
@@ -124,21 +127,34 @@ precedence left SIGN;
 precedence left POW;
 precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPAREN, RPAREN;
 
-program					::= statement_list:listStm 
+program					::= statement_newline_list:list 
 								{:							:};
-							
-statement_list 			::= statement:stm statement_list:list 
+								
+statement_newline_list  ::= statement:stmt statement_newline_list:list   
+								{:							:};
+						  | NEWLINE statement_newline_list:list
+					  			{:							:};
+						  | /* epsilon */
+								{:							:};
+								
+statement_list 			::= statement:stmt statement_list:list 
 								{: ((List<Statement>)list).add((Statement)stmt);
 								   RESULT = list;
 								:};
 						  | /* epsilon */
 								{: RESULT = new LinkedList<Statement>(); :};
 								
-statement    			::= simple_statement:simple_stm 
+statement    			::= stmt_list:list NEWLINE 
 								{:    :} ;	
-						  |
-						  	compound_statement:compound_stm
+						  |	compound_statement:compound_stm
 						  	    {:   :} ;							
+
+stmt_list				::= simple_statement:simple SEMICOLON stmt_list:list
+							{:							:};
+						  | simple_statement:simple
+						  	{:							:};
+						  | /* epsilon */
+						  	{:							:};
 								
 simple_statement		::= expression:expr
 								{: RESULT = new ExpressionStatement((Expression)expr);	:}
@@ -175,7 +191,7 @@ expression_list			::= expression_list:list COMMA expression:expr
 						  		
 expression				::=  MINUS expression:expr									
 								{: RESULT = new UnaryExpression(UnaryOperators.sub, (Expression) expr); :} %prec SIGN
-				|	PLUS expression:expr									
+						  |	PLUS expression:expr									
 								{: RESULT = new UnaryExpression(UnaryOperators.add, (Expression) expr); :} %prec SIGN
 								
 					  	  | expression:expr1 PLUS expression:expr2				
@@ -268,5 +284,18 @@ compound_statement		::= IF expression:expr COLON suite:list1 ELSE COLON suite:li
 								{:	interpreter.FunctionsVariables.function.add((String) identifier1);
 									((List<String>)identifierList).add((String)identifier2);
 									RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
-								:};						  	
+								:};		
+								
+identifier_comma_list	::= COMMA IDENTIFIER:identifier identifier_comma_list:list
+								{: 
+									((List<String>)list).add((String)identifier);
+									RESULT = list;
+								:}
+						  |	/*epsilon*/
+								{: RESULT = new LinkedList<String>();	:};
+
+suite					::= stmt_list:list NEWLINE
+								{: RESULT = (List<Statement>)list;:}
+						  |	NEWLINE INDENT statement_list:list DEDENT
+									{: RESULT = (List<Statement>)list;	:};	  	
 						  	

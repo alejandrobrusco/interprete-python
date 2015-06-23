@@ -13,6 +13,13 @@ import com.language.model.expression.*;
 %column
 
 %class Scanner
+
+%init{
+	this.stack.push(0);
+	current_indent = 0;
+	yybegin(indent_state);
+%init}
+
 %{
 	private SymbolFactory sf;
 	private StringBuffer string = new StringBuffer();
@@ -28,6 +35,12 @@ import com.language.model.expression.*;
 	private Symbol symbol(int type, Object value) {
 		return new Symbol(type, yyline, yycolumn, value);
 	}
+	
+	private static final int TAB_LENGTH = 4;
+	
+	Stack<Integer> stack = new Stack<Integer>();
+	private int current_indent;
+	
 %}
 
 %eofval{
@@ -48,7 +61,12 @@ AnyCharacter 			= [^\r\n]
 Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 
+%state indent_status
+%state normal_status
+
 %%
+
+<normal_status>	{
 
 "+" 				{ return symbol(sym.PLUS, "+"); }
 "-" 				{ return symbol(sym.MINUS, "-"); }
@@ -146,15 +164,53 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 {Long}					{return symbol(sym.LONGER, new Long(yytext())); }
 {Identifier}			{return symbol(sym.IDENTIFIER, new String(yytext())); }
 
-"\t"					{return symbol(sym.TAB); }
+{WhiteSpace}        	{ /* ignore */ }
+
+{LineTerminator}	{ yybegin(indent_status);
+					  current_indent = 0;
+					  return symbol(sym.NEWLINE);
+					}
+
+}
+
+<indent_status>{
+" "			   		{	current_indent++; }
+"\t"			   	{	current_indent = current_indent + TAB_LENGTH; }
+"\f"				{	/*Ignore whitespace*/}
+.					{	yypushback(1);
+						if(current_indent > stack.peek()){
+							stack.push(current_indent);
+							yybegin(normal_status);
+							return symbol(sym.INDENT);
+						}
+						else if(current_indent == stack.peek()){
+							yybegin(normal_status);
+						}
+						else{
+							int tmp = stack.pop();
+							return symbol(sym.DEDENT);
+						}
+					}
+{LineTerminator}	{	if(current_indent > stack.peek()){
+							stack.push(current_indent);
+							yybegin(normal_status);
+							return symbol(sym.INDENT);
+						}
+						else if(current_indent == stack.peek()){
+							yybegin(normal_status);
+						}
+						else{
+							yypushback(1);
+							int tmp = stack.pop();
+							return symbol(sym.DEDENT);
+						}
+					}
+}
+
 
 {Comment}               { /* ignore */ }
-
-{WhiteSpace}        	{ /* ignore */ }
 
 . 						{
 							throw new ParsingException("Illegal character at line " + yyline + ", column " + yycolumn + " >> " + yytext());
 						}
-
-
 
