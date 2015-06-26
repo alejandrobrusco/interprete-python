@@ -6,16 +6,16 @@ import java.util.List;
 import statements.Statement;
 import expressions.Expression;
 
-public class If extends Statement {
+public class If implements Statement {
 
 	Expression expression;
 	List<Statement> statementList;
+	
 	public If(Expression expression, List<Statement> statementList){
 		this.expression = expression;
 		this.statementList = statementList;
 	}
 	
-	@Override
 	public void print() {
 		System.out.print("if ");
 		this.expression.print();
@@ -28,6 +28,16 @@ public class If extends Statement {
 			System.out.println();
 		}
 		System.out.print(">>");
+	}
+
+	public void eval() {
+		if ((boolean) expression.eval()){
+			if (statementList != null){
+				for (Statement statement : statementList) {
+					statement.eval();
+				}
+			}
+		}
 	}
 	
 }

@@ -1,7 +1,8 @@
 package statements;
 
-public abstract class Statement {
+public abstract interface Statement {
 
 	public abstract void print();
+	public abstract void eval(); 
 	
 }
