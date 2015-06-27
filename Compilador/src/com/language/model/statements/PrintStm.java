@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.language.model.expression.Expression;
 
-public class Print implements Statement {
+public class PrintStm implements Statement {
 	
 	List<Expression> expressions;
 	
-	public Print(List<Expression> expressions){
+	public PrintStm(List<Expression> expressions){
 		this.expressions = expressions;
 	}
 	

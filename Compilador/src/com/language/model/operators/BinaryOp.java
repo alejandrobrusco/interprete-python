@@ -2,7 +2,7 @@ package com.language.model.operators;
 
 import com.language.types.Types;
 
-public enum BinaryOperators {
+public enum BinaryOp {
 	add, sub, mult, div, div_int, mod, pow,
 	less, greater, lessorequal, greaterorequal, equal, notequal,
 	or, and;

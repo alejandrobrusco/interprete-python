@@ -1,6 +1,6 @@
 package com.language.model.operators;
 
-public enum UnaryOperators {
+public enum UnaryOp {
 	add, sub, not;
 
 	public void print() {

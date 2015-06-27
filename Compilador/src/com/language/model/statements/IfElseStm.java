@@ -5,13 +5,13 @@ import java.util.List;
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
 
-public class IfElse implements Statement {
+public class IfElseStm implements Statement {
 
 	Expression expression;
 	List<Statement> ifStatementList;
 	List<Statement> elseStatementList;
 	
-	public IfElse(Expression expression, List<Statement> ifStatementList, List<Statement> elseStatementList){
+	public IfElseStm(Expression expression, List<Statement> ifStatementList, List<Statement> elseStatementList){
 		this.expression = expression;
 		this.ifStatementList = ifStatementList;
 		this.elseStatementList = elseStatementList;
