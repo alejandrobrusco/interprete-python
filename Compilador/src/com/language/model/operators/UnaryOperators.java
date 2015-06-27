@@ -1,4 +1,4 @@
-package operators;
+package com.language.model.operators;
 
 public enum UnaryOperators {
 	add, sub, not;

@@ -1,8 +1,7 @@
-package statements;
+package com.language.model.statements;
 
 public abstract interface Statement {
 
-	public abstract void print();
 	public abstract void eval(); 
 	
 }

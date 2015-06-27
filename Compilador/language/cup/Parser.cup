@@ -2,7 +2,7 @@ package com.language.parser;
 
 import java.util.*;
 import java_cup.runtime.*;
-import com.language.model.expression.*;
+import com.language.model.*;
 import com.language.exceptions.*;
 
 
@@ -128,14 +128,17 @@ precedence left POW;
 precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPAREN, RPAREN;
 
 program					::= statement_newline_list:list 
-								{:							:};
+								{:	RESULT = new Program((List<Statement>)list); :};
 								
 statement_newline_list  ::= statement:stmt statement_newline_list:list   
-								{:							:};
+								{:	 
+									((List<Statement>)list).add((Statement)stmt);
+									RESULT = list;						
+								:};
 						  | NEWLINE statement_newline_list:list
-					  			{:							:};
+					  			{:	RESULT = list; :};
 						  | /* epsilon */
-								{:							:};
+								{:	RESULT = new LinkedList<Statement>(); :};
 								
 statement_list 			::= statement:stmt statement_list:list 
 								{: ((List<Statement>)list).add((Statement)stmt);
@@ -145,21 +148,28 @@ statement_list 			::= statement:stmt statement_list:list
 								{: RESULT = new LinkedList<Statement>(); :};
 								
 statement    			::= stmt_list:list NEWLINE 
-								{:    :} ;	
+								{: RESULT = list; :};	
 						  |	compound_statement:compound_stm
 						  	    {:   :} ;							
 
 stmt_list				::= simple_statement:simple SEMICOLON stmt_list:list
-							{:							:};
+							{:	
+								((List<Statement>)list).add((Statement)simple);
+								RESULT = list;
+							:};
 						  | simple_statement:simple
-						  	{:							:};
+						  	{:	
+						  		List<Statement> list = new LinkedList<Statement>();
+						  		list.add((Statement)simple)
+						  		RESULT = list 
+						  	:};
 						  | /* epsilon */
-						  	{:							:};
+						  	{:	RESULT = new LinkedList<Statement>(); :};
 								
 simple_statement		::= expression:expr
 								{: RESULT = new ExpressionStatement((Expression)expr);	:}
 						  | PRINT expression_list:list			
-								{: RESULT = new PrintStatement((List<Expression>)list);	:}
+								{: RESULT = new Print((List<Expression>)list);	:}
 						  | TYPE LPARAN expresion:expr RPARAN
 								{: RESULT = new TypeExpression((Expression) expr); :}
 						  | RAW_INPUT LPARAN RPARAN

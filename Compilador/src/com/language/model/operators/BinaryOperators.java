@@ -1,9 +1,9 @@
-package operators;
+package com.language.model.operators;
 
-import types.Types;
+import com.language.types.Types;
 
 public enum BinaryOperators {
-	add, sub, mult, div, mod, pow,
+	add, sub, mult, div, div_int, mod, pow,
 	less, greater, lessorequal, greaterorequal, equal, notequal,
 	or, and;
 
@@ -20,6 +20,9 @@ public enum BinaryOperators {
 				break;
 			case div:
 				System.out.print("/");
+				break;
+			case div_int:
+				System.out.print("//");
 				break;
 			case mod:
 				System.out.print("%");
@@ -69,6 +72,8 @@ public enum BinaryOperators {
 				return "(* " + obj1 + " " + obj2 + ")";
 			case div:
 				return "(/ " + obj1 + " " + obj2 + ")";
+			case div_int:
+				return "(// " + obj1 + " " + obj2 + ")";
 			case mod:
 				return "(mod " + obj1 + " " + obj2 + ")";
 			case pow:
@@ -89,6 +94,8 @@ public enum BinaryOperators {
 				return "(and " + obj1 + " " + obj2 + ")";
 			case or:
 				return "(or " + obj1 + " " + obj2 + ")";
+			default:
+				break;
 		}
 		return null;
 	}

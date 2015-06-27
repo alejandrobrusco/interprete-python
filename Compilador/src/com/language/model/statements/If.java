@@ -1,10 +1,9 @@
-package statements;
+package com.language.model.statements;
 
-import java.util.Iterator;
 import java.util.List;
 
-import statements.Statement;
-import expressions.Expression;
+import com.language.model.expression.Expression;
+import com.language.model.statements.Statement;
 
 public class If implements Statement {
 
@@ -16,20 +15,6 @@ public class If implements Statement {
 		this.statementList = statementList;
 	}
 	
-	public void print() {
-		System.out.print("if ");
-		this.expression.print();
-		System.out.println(":");
-		
-		System.out.println("<<");
-		Iterator<Statement> iterator = this.statementList.iterator();
-		while(iterator.hasNext()){
-			iterator.next().print();
-			System.out.println();
-		}
-		System.out.print(">>");
-	}
-
 	public void eval() {
 		if ((boolean) expression.eval()){
 			if (statementList != null){

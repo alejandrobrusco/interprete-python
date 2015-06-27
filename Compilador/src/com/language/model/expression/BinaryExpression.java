@@ -1,7 +1,7 @@
-package expressions;
+package com.language.model.expression;
 
-import operators.BinaryOperators;
-import types.Types;
+import com.language.model.operators.BinaryOperators;
+import com.language.types.Types;
 
 public class BinaryExpression implements Expression {
 	
@@ -15,23 +15,10 @@ public class BinaryExpression implements Expression {
 		this.expression2 = expression2;
 	}
 	
-	@Override
-	public void print() {
-		System.out.print("(");
-		expression1.print();
-		System.out.print(" ");
-		operator.print();
-		System.out.print(" ");
-		expression2.print();
-		System.out.print(")");
-	}
-
-	@Override
 	public Types getType() {
 		return expression1.getType();
 	}
 
-	@Override
 	public Object eval() {
 		return operator.eval(this.expression1.eval(),this.expression2.eval());
 	}
