@@ -97,23 +97,20 @@ terminal String DEDENT;
 terminal String NEWLINE;
 
 non terminal	program;
-non terminal	module;
-non terminal	simple_statement;
-non terminal	simple_statement_list;
-non terminal	expression;
-non terminal	expression_comma_list;
-non terminal	compound_statement;
-non terminal	stmt_list;
-non terminal	statement;
-non terminal	suite;
-non terminal	statement_list;
 non terminal	statement_newline_list;
-non terminal	key_datum;
-non terminal	key_datum_comma_list;
-non terminal	subscription;
+non terminal	statement_list;
+non terminal	statement;
+non terminal	stmt_list;
+non terminal	simple_statement;
+non terminal	expression;
+non terminal	compound_statement;
+non terminal	suite;
 non terminal	target;
 non terminal	identifier_comma_list;
 non terminal	expression_list;
+non terminal	index;
+non terminal	int_expr;
+non terminal	int_expr_not_empty;
 
 /* Precedences */
 precedence left IF, ELSE;
@@ -135,29 +132,29 @@ statement_newline_list  ::= statement:stmt statement_newline_list:list
 								{:	 
 									((List<Statement>)list).add((Statement)stmt);
 									RESULT = list;						
-								:};
+								:}
 						  | NEWLINE statement_newline_list:list
-					  			{:	RESULT = list; :};
+					  			{:	RESULT = list; :}
 						  | /* epsilon */
 								{:	RESULT = new LinkedList<Statement>(); :};
 								
 statement_list 			::= statement:stmt statement_list:list 
 								{: ((List<Statement>)list).add((Statement)stmt);
 								   RESULT = list;
-								:};
+								:}
 						  | /* epsilon */
 								{: RESULT = new LinkedList<Statement>(); :};
 								
 statement    			::= stmt_list:list NEWLINE 
-								{: RESULT = list; :};	
+								{: RESULT = list; :}	
 						  |	compound_statement:compound_stm
 						  	    {:   :} ;							
 
-stmt_list				::= simple_statement:simple SEMICOLON stmt_list:list
+stmt_list				::= simple_statement:simple SEMI_COLON stmt_list:list
 							{:	
 								((List<Statement>)list).add((Statement)simple);
 								RESULT = list;
-							:};
+							:}
 						  | simple_statement:simple
 						  	{:	
 						  		List<Statement> list = new LinkedList<Statement>();
@@ -165,7 +162,7 @@ stmt_list				::= simple_statement:simple SEMICOLON stmt_list:list
 						  			list.add((Statement)simple)
 					  			}
 						  		RESULT = list 
-						  	:};
+						  	:}
 						  | /* epsilon */
 						  	{:	RESULT = new LinkedList<Statement>(); :};
 								
@@ -173,7 +170,7 @@ simple_statement		::= expression:expr
 								{: RESULT = new ExpressionStm((Expression)expr);	:}
 						  | PRINT expression_list:list			
 								{: RESULT = new PrintStm((List<Expression>)list);	:}
-						  | TYPE LPARAN expresion:expr RPARAN
+						  | TYPE LPARAN expression:expr RPARAN
 								{: RESULT = new TypeExp((Expression) expr); :}
 						  | RAW_INPUT LPARAN RPARAN
 								{: RESULT = new RawInputExp(); :}
@@ -304,14 +301,14 @@ target					::= IDENTIFIER LBRACKET index:i RBRACKET
 								{: RESULT = new TargetExp((Expression)i); :};
 								
 index					::= int_expr_not_empty:iene
-								{: RESULT = new IndexExp((Expression)iene); :};
+								{: RESULT = new IndexExp((Expression)iene); :}
 						  | int_expr:ieIni COLON int_expr:ieFin
-						  		{: RESULT = new IndexExp((Expression)ieIni, (Expression) ieFin); :};
+						  		{: RESULT = new IndexExp((Expression)ieIni, (Expression) ieFin); :}
 						  | int_expr:ieIni COLON int_expr:ieFin COLON int_expr:ieStep
 						  		{: RESULT =  new IndexExp((Expression)ieIni,(Expression)ieFin, (Expression)ieStep); :};								
 								
 int_expr				::=	int_expr_not_empty:iene
-								{: RESULT =	iene; :};
+								{: RESULT =	iene; :}
 						  | /* epsilon */
 					  			{:  :};
 					  			
