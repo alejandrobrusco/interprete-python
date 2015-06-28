@@ -6,6 +6,7 @@ import com.language.model.*;
 import com.language.exceptions.*;
 
 
+terminal String SIGN;
 terminal String PLUS;
 terminal String MINUS;
 terminal String POW;
@@ -125,7 +126,7 @@ precedence left PLUS, MINUS;
 precedence left MULT, DIV, DIV_INT, MOD;
 precedence left SIGN;
 precedence left POW;
-precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPAREN, RPAREN;
+precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPARAN, RPARAN;
 
 program					::= statement_newline_list:list 
 								{:	RESULT = new Program((List<Statement>)list); :};
