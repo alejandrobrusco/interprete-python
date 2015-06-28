@@ -3,9 +3,9 @@ package com.language.model.operators;
 import com.language.types.Types;
 
 public enum BinaryOp {
-	add, sub, mult, div, div_int, mod, pow,
-	less, greater, lessorequal, greaterorequal, equal, notequal,
-	or, and;
+	add, sub, mult, div, divInt, mod, pow,
+	less, greater, lessOrEqual, greaterOrEqual, equal, notEqual,
+	or, and,bAnd,bOr,bXor,bLShift,bRShift;
 
 	public void print() {
 		switch(this){
@@ -21,7 +21,7 @@ public enum BinaryOp {
 			case div:
 				System.out.print("/");
 				break;
-			case div_int:
+			case divInt:
 				System.out.print("//");
 				break;
 			case mod:
@@ -36,16 +36,16 @@ public enum BinaryOp {
 			case greater:
 				System.out.print(">");
 				break;
-			case greaterorequal:
+			case greaterOrEqual:
 				System.out.print(">=");
 				break;
-			case lessorequal:
+			case lessOrEqual:
 				System.out.print("<=");
 				break;
 			case equal:
 				System.out.print("==");
 				break;
-			case notequal:
+			case notEqual:
 				System.out.print("!=");
 				break;
 			case and:
@@ -53,6 +53,21 @@ public enum BinaryOp {
 				break;
 			case or:
 				System.out.print("or");
+				break;
+			case bAnd:
+				System.out.print("&");
+				break;
+			case bLShift:
+				System.out.print("<<");
+				break;
+			case bOr:
+				System.out.print("|");
+				break;
+			case bRShift:
+				System.out.print(">>");
+				break;
+			case bXor:
+				System.out.print("^");
 				break;
 		} 
 	}
@@ -72,7 +87,7 @@ public enum BinaryOp {
 				return "(* " + obj1 + " " + obj2 + ")";
 			case div:
 				return "(/ " + obj1 + " " + obj2 + ")";
-			case div_int:
+			case divInt:
 				return "(// " + obj1 + " " + obj2 + ")";
 			case mod:
 				return "(mod " + obj1 + " " + obj2 + ")";
@@ -82,20 +97,28 @@ public enum BinaryOp {
 				return "(< " + obj1 + " " + obj2 + ")";
 			case greater:
 				return "(> " + obj1 + " " + obj2 + ")";
-			case greaterorequal:
+			case greaterOrEqual:
 				return "(>= " + obj1 + " " + obj2 + ")";
-			case lessorequal:
+			case lessOrEqual:
 				return "(<= " + obj1 + " " + obj2 + ")";
 			case equal:
 				return "(= " + obj1 + " " + obj2 + ")";
-			case notequal:
+			case notEqual:
 				return "(/= " + obj1 + " " + obj2 + ")";
 			case and:
 				return "(and " + obj1 + " " + obj2 + ")";
 			case or:
 				return "(or " + obj1 + " " + obj2 + ")";
-			default:
-				break;
+			case bAnd:
+				return "(& " + obj1 + " " + obj2 + ")";
+			case bLShift:
+				return "(<< " + obj1 + " " + obj2 + ")";
+			case bOr:
+				return "(| " + obj1 + " " + obj2 + ")";
+			case bRShift:
+				return "(>> " + obj1 + " " + obj2 + ")";
+			case bXor:
+				return "(^ " + obj1 + " " + obj2 + ")";
 		}
 		return null;
 	}

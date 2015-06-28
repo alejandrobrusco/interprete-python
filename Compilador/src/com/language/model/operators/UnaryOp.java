@@ -1,7 +1,7 @@
 package com.language.model.operators;
 
 public enum UnaryOp {
-	add, sub, not;
+	add, sub, not, bNot;
 
 	public void print() {
 		switch(this){
@@ -14,6 +14,9 @@ public enum UnaryOp {
 			case not:
 				System.out.print("not ");
 				break;
+			case bNot:
+				System.out.print("~");
+				break;
 		}
 	}
 	
@@ -25,6 +28,8 @@ public enum UnaryOp {
 			return "- " + obj1;
 		case not:
 			return "not " + obj1;
+		case bNot:
+			return "~ " + obj1;
 		}
 		return null;
 		
