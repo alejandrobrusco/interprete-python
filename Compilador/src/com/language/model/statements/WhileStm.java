@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.language.model.expression.Expression;
 
-public class WhileStm implements Statement {
+public class WhileStm extends Statement {
 
 	Expression expression;
 	List<Statement> statementList;

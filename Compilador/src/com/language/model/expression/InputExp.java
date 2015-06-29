@@ -2,7 +2,7 @@ package com.language.model.expression;
 
 import com.language.types.Types;
 
-public class InputExp implements Expression {
+public class InputExp extends Expression {
 
 	public InputExp(){
 		
@@ -13,7 +13,7 @@ public class InputExp implements Expression {
 		return Types.nondefined_type;
 	}
 
-
+	@Override
 	public Object eval() {
 		// TODO - Revisar
 		return null;

@@ -3,7 +3,7 @@ package com.language.model.expression;
 import com.language.model.operators.BinaryOp;
 import com.language.types.Types;
 
-public class BinaryExp implements Expression {
+public class BinaryExp extends Expression {
 	
 	Expression expression1;
 	BinaryOp operator;
@@ -15,10 +15,12 @@ public class BinaryExp implements Expression {
 		this.expression2 = expression2;
 	}
 	
+	@Override
 	public Types getType() {
 		return expression1.getType();
 	}
 
+	@Override
 	public Object eval() {
 		return operator.eval(this.expression1.eval(),this.expression2.eval());
 	}

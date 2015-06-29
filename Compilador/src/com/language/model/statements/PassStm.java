@@ -1,6 +1,6 @@
 package com.language.model.statements;
 
-public class PassStm implements Statement {
+public class PassStm extends Statement {
 
 	public PassStm(){}
 	

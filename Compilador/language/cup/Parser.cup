@@ -115,6 +115,10 @@ non terminal	int_expr_not_empty;
 /* Precedences */
 precedence left IF, ELSE;
 precedence left ASSIGN;
+precedence left BOR;
+precedence left BAND;
+precedence left BNOT;
+precedence left BXOR, BLSHIFT, BRSHIFT;
 precedence left OR;
 precedence left AND;
 precedence left NOT;
@@ -124,6 +128,7 @@ precedence left MULT, DIV, DIV_INT, MOD;
 precedence left SIGN;
 precedence left POW;
 precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPARAN, RPARAN;
+precedence left NEWLINE;
 
 program					::= statement_newline_list:list 
 								{:	RESULT = new Program((List<Statement>)list); :};
@@ -297,9 +302,9 @@ suite					::= stmt_list:list NEWLINE
 						  |	NEWLINE INDENT statement_list:list DEDENT
 								{: RESULT = (List<Statement>)list;	:};	  	
 
-target					::= IDENTIFIER LBRACKET index:i RBRACKET
-								{: RESULT = new TargetExp((Expression)i); :};
-								
+target					::= IDENTIFIER:id LBRACKET index:i RBRACKET
+								{: RESULT = new TargetExp((IdentifierExp)id,(Expression)i); :};
+/*								
 index					::= int_expr_not_empty:iene
 								{: RESULT = new IndexExp((Expression)iene); :}
 						  | int_expr:ieIni COLON int_expr:ieFin
@@ -309,7 +314,7 @@ index					::= int_expr_not_empty:iene
 								
 int_expr				::=	int_expr_not_empty:iene
 								{: RESULT =	iene; :}
-						  | /* epsilon */
+						  | 
 					  			{:  :};
 					  			
 int_expr_not_empty		::= MINUS expression:expr									
@@ -381,7 +386,7 @@ int_expr_not_empty		::= MINUS expression:expr
 								
 						  | IDENTIFIER:value
 								{: RESULT = new IdentifierExp((String)value); :};
-
+*/
 								
 identifier_comma_list	::= COMMA IDENTIFIER:identifier identifier_comma_list:list
 								{: 

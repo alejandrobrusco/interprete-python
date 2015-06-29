@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.language.model.expression.Expression;
 
-public class PrintStm implements Statement {
+public class PrintStm extends Statement {
 	
 	List<Expression> expressions;
 	

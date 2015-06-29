@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.language.types.Types;
 
-public class FunctionExp implements Expression {
+public class FunctionExp extends Expression {
 
 	Expression expr;
 	List<Expression> expressionList;
@@ -19,6 +19,7 @@ public class FunctionExp implements Expression {
 		return Types.none_type;
 	}
 
+	@Override
 	public Object eval() {
 		// TODO - Revisar
 		return null;

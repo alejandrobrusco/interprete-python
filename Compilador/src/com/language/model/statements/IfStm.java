@@ -5,7 +5,7 @@ import java.util.List;
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
 
-public class IfStm implements Statement {
+public class IfStm extends Statement {
 
 	Expression expression;
 	List<Statement> statementList;

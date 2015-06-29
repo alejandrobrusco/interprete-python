@@ -3,7 +3,7 @@ package com.language.model.statements;
 import java.util.Collections;
 import java.util.List;
 
-public class FunctionDefinitionStm implements Statement {
+public class FunctionDefinitionStm extends Statement {
 
 	String identifier;
 	List<String> identifierList;

@@ -2,7 +2,7 @@ package com.language.model.statements;
 
 import com.language.model.expression.Expression;
 
-public class TargetAssignStm implements Statement {
+public class TargetAssignStm extends Statement {
 
 	Expression expr1;
 	Expression expr2;

@@ -2,7 +2,7 @@ package com.language.model.expression;
 
 import com.language.types.Types;
 
-public class IntegerExp implements Expression {
+public class IntegerExp extends Expression {
 
 	String value;
 	
@@ -10,10 +10,12 @@ public class IntegerExp implements Expression {
 		this.value = value;
 	}
 	
+	@Override
 	public Types getType() {
 		return Types.int_type;
 	}
-
+	
+	@Override
 	public Object eval() {
 		// TODO - Revisar
 		return null;

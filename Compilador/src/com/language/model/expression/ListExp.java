@@ -1,9 +1,10 @@
 package com.language.model.expression;
 
 import java.util.List;
+
 import com.language.types.Types;
 
-public class ListExp implements Expression {
+public class ListExp extends Expression {
 
 	List<Expression> list;
 	
@@ -11,10 +12,12 @@ public class ListExp implements Expression {
 		this.list = list;
 	}
 	
+	@Override
 	public Types getType() {
 		return Types.list_type;
 	}
 
+	@Override
 	public Object eval() {
 		// TODO - Revisar
 		return null;

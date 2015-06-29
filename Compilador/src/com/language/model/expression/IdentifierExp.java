@@ -2,7 +2,7 @@ package com.language.model.expression;
 
 import com.language.types.Types;
 
-public class IdentifierExp implements Expression {
+public class IdentifierExp extends Expression {
 
 	String id;
 	
@@ -10,6 +10,7 @@ public class IdentifierExp implements Expression {
 		this.id = id;
 	}
 	
+	@Override
 	public Types getType() {
 		return Types.nondefined_type;
 	}
@@ -18,6 +19,7 @@ public class IdentifierExp implements Expression {
 		return this.id;
 	}
 
+	@Override
 	public Object eval() {
 		// TODO - Revisar qué es lo que se tiene que hacer acá (almacenar un listado de variables, etc)
 		//System.out.print(this.id);

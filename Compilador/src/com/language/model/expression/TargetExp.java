@@ -2,17 +2,19 @@ package com.language.model.expression;
 
 import com.language.types.Types;
 
-public class ParenthesesExp extends Expression {
+public class TargetExp extends Expression {
 
-	Expression expression;
+	IdentifierExp id;
+	Expression expr;
 	
-	public ParenthesesExp(Expression expression){
-		this.expression=expression;
+	public TargetExp(IdentifierExp id, Expression expr) {
+		this.id = id;
+		this.expr = expr;
 	}
 
 	@Override
 	public Types getType() {
-		return expression.getType();
+		return expr.getType();
 	}
 
 	@Override

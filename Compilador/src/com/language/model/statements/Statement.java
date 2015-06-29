@@ -1,6 +1,6 @@
 package com.language.model.statements;
 
-public abstract interface Statement {
+public abstract class Statement {
 
 	public abstract void eval(); 
 	
