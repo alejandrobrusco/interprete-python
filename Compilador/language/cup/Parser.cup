@@ -2,7 +2,9 @@ package com.language.parser;
 
 import java.util.*;
 import java_cup.runtime.*;
-import com.language.model.*;
+import com.language.model.expression.*;
+import com.language.model.operators.*;
+import com.language.model.statements.*;
 import com.language.exceptions.*;
 
 
@@ -303,7 +305,7 @@ suite					::= stmt_list:list NEWLINE
 								{: RESULT = (List<Statement>)list;	:};	  	
 
 target					::= IDENTIFIER:id LBRACKET index:i RBRACKET
-								{: RESULT = new TargetExp((IdentifierExp)id,(Expression)i); :};
+								{: RESULT = new TargetExp((String)id,(Expression)i); :};
 /*								
 index					::= int_expr_not_empty:iene
 								{: RESULT = new IndexExp((Expression)iene); :}

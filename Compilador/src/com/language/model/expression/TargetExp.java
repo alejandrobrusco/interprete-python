@@ -7,8 +7,8 @@ public class TargetExp extends Expression {
 	IdentifierExp id;
 	Expression expr;
 	
-	public TargetExp(IdentifierExp id, Expression expr) {
-		this.id = id;
+	public TargetExp(String id, Expression expr) {
+		this.id = new IdentifierExp(id);
 		this.expr = expr;
 	}
 
