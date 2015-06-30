@@ -290,7 +290,7 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 						  |	WHILE expression:expr COLON suite:list
 								{: RESULT = new WhileStm((Expression)expr, (List<Statement>)list); :}
 						  |	DEF IDENTIFIER:identifier LPARAN RPARAN COLON suite:list
-								{:	compilador.AuxiliaryElements.functionList.add((String) identifier);
+								{:	com.language.compilador.AuxiliaryElements.functionList.add((String) identifier);
 									RESULT = new FunctionDefinitionStm((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	
 								:}
 						  |	DEF IDENTIFIER:identifier1 LPARAN IDENTIFIER:identifier2 identifier_comma_list:identifierList RPARAN COLON suite:list
