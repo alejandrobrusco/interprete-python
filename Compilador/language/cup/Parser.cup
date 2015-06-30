@@ -294,7 +294,7 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 									RESULT = new FunctionDefinitionStm((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	
 								:}
 						  |	DEF IDENTIFIER:identifier1 LPARAN IDENTIFIER:identifier2 identifier_comma_list:identifierList RPARAN COLON suite:list
-								{:	compilador.AuxiliaryElements.functionList.add((String) identifier1);
+								{:	com.language.compilador.AuxiliaryElements.functionList.add((String) identifier1);
 									((List<String>)identifierList).add((String)identifier2);
 									RESULT = new FunctionDefinitionStm((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
 								:};		
