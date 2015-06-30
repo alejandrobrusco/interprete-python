@@ -91,7 +91,7 @@ terminal String STRING;
 
 terminal String FLOATATION;
 terminal String INTEGER;
-terminal String LONGATION;
+terminal String LONGER;
 terminal String IDENTIFIER;
 
 terminal String INDENT;

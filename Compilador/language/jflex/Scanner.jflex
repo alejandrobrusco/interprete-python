@@ -17,7 +17,7 @@ import com.language.model.*;
 %init{
 	this.stack.push(0);
 	current_indent = 0;
-	yybegin(indent_state);
+	yybegin(indent_status);
 %init}
 
 %{
