@@ -2,9 +2,15 @@ package com.language.model.expression;
 
 import com.language.types.Types;
 
-public class InputExp extends Expression {
+public class RawInputExp extends Expression {
 
-	public InputExp(){
+	
+	
+	public RawInputExp(){
+		
+	}
+	
+	public RawInputExp(Expression expr){
 		
 	}
 	
