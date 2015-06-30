@@ -2,6 +2,7 @@ package com.language.parser;
 
 import java.util.*;
 import java_cup.runtime.*;
+import com.language.*;
 import com.language.model.expression.*;
 import com.language.model.operators.*;
 import com.language.model.statements.*;
