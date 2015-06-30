@@ -11,6 +11,7 @@ import com.language.model.*;
 %line
 %unicode
 %column
+%public
 
 %class Scanner
 
