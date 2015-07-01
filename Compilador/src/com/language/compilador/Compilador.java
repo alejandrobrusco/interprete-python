@@ -15,7 +15,8 @@ public class Compilador {
 		if(args.length == 1){
 			try {
 				Parser parser = new Parser(new Scanner(new FileReader(args[0])));
-				Program program = (Program)parser.debug_parse().value;
+				Object value = parser.debug_parse().value;
+				Program program = (Program)value;
 				program.eval();
 				
 			} catch (FileNotFoundException e) {

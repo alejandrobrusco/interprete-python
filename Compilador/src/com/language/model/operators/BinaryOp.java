@@ -1,5 +1,6 @@
 package com.language.model.operators;
 
+import com.language.model.expression.Expression;
 import com.language.types.Types;
 
 public enum BinaryOp {
@@ -123,8 +124,49 @@ public enum BinaryOp {
 		return null;
 	}
 
-	public Object eval(Object eval, Object eval2) {
-		// TODO Auto-generated method stub
+	public Object eval(Expression expr, Expression expr2) {
+//		switch (this) {
+//		case add:
+//			return expr.eval() + expr2.eval();
+//		case and:
+//			return expr.eval() && expr2.eval();
+//		case bAnd:
+//			return expr.eval() & expr2.eval();
+//		case bLShift:
+//			return expr.eval() << expr2.eval();
+//		case bOr:
+//			return expr.eval() | expr2.eval();
+//		case bRShift:
+//			return expr.eval() >> expr2.eval();
+//		case bXor:
+//			return expr.eval() ^ expr2.eval();
+//		case div:
+//			return expr.eval() / expr2.eval();
+//		case divInt:
+//			break;
+//		case equal:
+//			break;
+//		case greater:
+//			break;
+//		case greaterOrEqual:
+//			break;
+//		case less:
+//			break;
+//		case lessOrEqual:
+//			break;
+//		case mod:
+//			break;
+//		case mult:
+//			break;
+//		case notEqual:
+//			break;
+//		case or:
+//			break;
+//		case pow:
+//			break;
+//		case sub:
+//			break;
+//		}
 		return null;
 	}
 }

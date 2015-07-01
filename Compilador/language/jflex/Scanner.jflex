@@ -160,10 +160,10 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 '([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
 
 
-{Float}					{return symbol(sym.FLOATATION, new Float(yytext())); }
-{Integer}				{return symbol(sym.INTEGER, new Integer(yytext())); }
-{Long}					{return symbol(sym.LONGER, new Long(yytext())); }
-{Identifier}			{return symbol(sym.IDENTIFIER, new String(yytext())); }
+{Float}					{return symbol(sym.FLOATATION, yytext(); }
+{Integer}				{return symbol(sym.INTEGER, yytext()); }
+{Long}					{return symbol(sym.LONGER, yytext()); }
+{Identifier}			{return symbol(sym.IDENTIFIER, yytext()); }
 
 {WhiteSpace}        	{ /* ignore */ }
 

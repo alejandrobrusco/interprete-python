@@ -4,9 +4,9 @@ import com.language.types.Types;
 
 public class IntegerExp extends Expression {
 
-	String value;
+	Integer value;
 	
-	public IntegerExp(String value){
+	public IntegerExp(Integer value){
 		this.value = value;
 	}
 	
@@ -17,8 +17,7 @@ public class IntegerExp extends Expression {
 	
 	@Override
 	public Object eval() {
-		// TODO - Revisar
-		return null;
+		return this.value;
 	}
 
 }

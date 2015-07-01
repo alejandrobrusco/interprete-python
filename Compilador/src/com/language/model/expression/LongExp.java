@@ -6,8 +6,8 @@ public class LongExp extends Expression {
 
 	Long value;
 	
-	public LongExp(String value){
-		this.value = new Long(value);
+	public LongExp(Long value){
+		this.value = value;
 	}
 	
 	@Override
@@ -17,8 +17,7 @@ public class LongExp extends Expression {
 	
 	@Override
 	public Object eval() {
-		// TODO - Revisar
-		return null;
+		return this.value;
 	}
 
 }

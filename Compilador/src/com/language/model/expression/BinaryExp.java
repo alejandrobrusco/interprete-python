@@ -22,7 +22,9 @@ public class BinaryExp extends Expression {
 
 	@Override
 	public Object eval() {
-		return operator.eval(this.expression1.eval(),this.expression2.eval());
+		System.out.println("probando");
+//		return operator.eval(this.expression1.eval(),this.expression2.eval());
+		return null;
 	}
 
 }

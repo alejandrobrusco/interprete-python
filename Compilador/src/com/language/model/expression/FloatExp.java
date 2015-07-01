@@ -4,9 +4,9 @@ import com.language.types.Types;
 
 public class FloatExp extends Expression {
 
-	String value;
+	Float value;
 	
-	public FloatExp(String value){
+	public FloatExp(Float value){
 		this.value = value;
 	}
 	
@@ -17,8 +17,7 @@ public class FloatExp extends Expression {
 
 	@Override
 	public Object eval() {
-		// TODO - Revisar
-		return null;
+		return this.value;
 	}
 
 }
