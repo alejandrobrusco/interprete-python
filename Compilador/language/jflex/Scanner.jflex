@@ -160,7 +160,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 '([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
 
 
-{Float}					{return symbol(sym.FLOATATION, yytext(); }
+{Float}					{return symbol(sym.FLOATATION, yytext()); }
 {Integer}				{return symbol(sym.INTEGER, yytext()); }
 {Long}					{return symbol(sym.LONGER, yytext()); }
 {Identifier}			{return symbol(sym.IDENTIFIER, yytext()); }

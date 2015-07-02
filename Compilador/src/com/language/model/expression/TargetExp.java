@@ -12,10 +12,6 @@ public class TargetExp extends Expression {
 		this.expr = expr;
 	}
 
-	@Override
-	public Types getType() {
-		return expr.getType();
-	}
 
 	@Override
 	public Object eval() {

@@ -4,7 +4,6 @@ import com.language.types.Types;
 
 public abstract class Expression {
 
-	public abstract Types getType();
-	public abstract Object eval();
-	
+	public abstract Types eval();
+
 }

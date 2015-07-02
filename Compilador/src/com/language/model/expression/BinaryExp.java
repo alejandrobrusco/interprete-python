@@ -16,15 +16,52 @@ public class BinaryExp extends Expression {
 	}
 	
 	@Override
-	public Types getType() {
-		return expression1.getType();
-	}
-
-	@Override
-	public Object eval() {
-		System.out.println("probando");
-//		return operator.eval(this.expression1.eval(),this.expression2.eval());
-		return null;
-	}
-
+	public Types eval() {
+			Types lType = expr.getType();
+			Types rType = expr2.getType();
+			
+			switch (operator) {
+			case add:
+				return (Integer) expr.eval() + (Integer) expr2.eval();
+			case and:
+				return expr.eval() && expr2.eval();
+			case bAnd:
+				return expr.eval() & expr2.eval();
+			case bLShift:
+				return expr.eval() << expr2.eval();
+			case bOr:
+				return expr.eval() | expr2.eval();
+			case bRShift:
+				return expr.eval() >> expr2.eval();
+			case bXor:
+				return expr.eval() ^ expr2.eval();
+			case div:
+				return expr.eval() / expr2.eval();
+			case divInt:
+				break;
+			case equal:
+				break;
+			case greater:
+				break;
+			case greaterOrEqual:
+				break;
+			case less:
+				break;
+			case lessOrEqual:
+				break;
+			case mod:
+				break;
+			case mult:
+				break;
+			case notEqual:
+				break;
+			case or:
+				break;
+			case pow:
+				break;
+			case sub:
+				break;
+			}
+			return null;
+		}
 }

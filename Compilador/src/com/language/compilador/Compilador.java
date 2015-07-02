@@ -2,11 +2,10 @@ package com.language.compilador;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.LinkedList;
 
+import com.language.Program;
 import com.language.parser.Parser;
 import com.language.parser.Scanner;
-import com.language.Program;
 
 public class Compilador {
 
