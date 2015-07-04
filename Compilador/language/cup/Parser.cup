@@ -61,6 +61,7 @@ terminal String FOR;
 terminal String WHILE;
 terminal String CONTINUE;
 terminal String BREAK;
+terminal String IN;
 
 terminal String INT;
 terminal String FLOAT;
@@ -111,8 +112,9 @@ non terminal	target;
 non terminal	identifier_comma_list;
 non terminal	expression_list;
 non terminal	index;
-non terminal	int_expr;
-non terminal	int_expr_not_empty;
+non terminal	numeric_type;
+non terminal	expression_or_empty;
+non terminal	expression_dict_list;
 
 /* Precedences */
 precedence left IF, ELSE;
@@ -211,7 +213,7 @@ numeric_type				::= INTEGER:value
 					  	  | FLOAT:value
 								{: RESULT = new FloatExp(((String)value)); :}	
 						  | LONG:value
-								{: RESULT = new LongExp(((String)value)); :}
+								{: RESULT = new LongExp(((String)value)); :};
 						  										
 						  		
 expression				::=  MINUS expression:expr									
@@ -242,7 +244,7 @@ expression				::=  MINUS expression:expr
 								{: RESULT = new ListExp((List<Expression>)list);	:}	
 						  |	LCURLY RCURLY
 								{: RESULT = new DicExp(new List<DicElement>);	:}	
-						  |	LCURLY STRING:value SEMICOLON expression:expr expression_dict_list:list RCURLY
+						  |	LCURLY STRING:value SEMI_COLON expression:expr expression_dict_list:list RCURLY
 								{: 
 									DicElement dicElement = new DicElement((String)value,(Expression)expr);
 									((List<DicElement>)list).add(dicElement);
@@ -309,7 +311,7 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 								{: RESULT = new IfStm((Expression)expr, (List<Statement>)list); :}
 						  |	WHILE expression:expr COLON suite:list
 								{: RESULT = new WhileStm((Expression)expr, (List<Statement>)list); :}
-						  |	FOR IDENTIFIER:identifier in expression:expr SEMICOLON suite:list
+						  |	FOR IDENTIFIER:identifier IN expression:expr SEMI_COLON suite:list
 								{: RESULT = new ForStm((String)identifier,(Expression)expr, (List<Statement>)list); :}
 						  |	DEF IDENTIFIER:identifier LPARAN RPARAN COLON suite:list
 								{:	com.language.compilador.AuxiliaryElements.functionList.add((String) identifier);
@@ -321,14 +323,14 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 									RESULT = new FunctionDefinitionStm((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
 								:};		
 
-expression_dict_list	::= COMMA STRING:value SEMICOLON expression:expr expression_dict_list:list 
+expression_dict_list	::= COMMA STRING:value SEMI_COLON expression:expr expression_dict_list:list 
 								{: 
 									DicElement dicElement = new DicElement((String)value,(Expression)expr);
 									((List<DicElement>)list).add(dicElement);
 									RESULT = new DicExp((List<DicElement>)list);	
 								:}
 						  | /* epsilon */
-						  		{: RESULT = new DicExp(new List<DicElement>);	:}
+						  		{: RESULT = new DicExp(new List<DicElement>);	:};
 
 
 suite					::= stmt_list:list NEWLINE
@@ -348,8 +350,8 @@ index					::= expression:expr
 								
 expression_or_empty		::=	expression:expr
 								{: RESULT =	expr; :}
-						  | 
-					  			{:  :};
+						  | /* epsilon */
+					  			{: RESULT = new EmptyExp(); :};
 					  			
 identifier_comma_list	::= COMMA IDENTIFIER:identifier identifier_comma_list:list
 								{: 
