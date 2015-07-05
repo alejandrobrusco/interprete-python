@@ -243,12 +243,11 @@ expression				::=  MINUS expression:expr
 						  |	LBRACKET expression_list:list RBRACKET
 								{: RESULT = new ListExp((List<Expression>)list);	:}	
 						  |	LCURLY RCURLY
-								{: RESULT = new DicExp(new List<DicElement>);	:}	
-						  |	LCURLY STRING:value SEMI_COLON expression:expr expression_dict_list:list RCURLY
+								{: RESULT = new DicExp(new Map<Expression,Expression>);	:}	
+						  |	LCURLY expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map RCURLY
 								{: 
-									DicElement dicElement = new DicElement((String)value,(Expression)expr);
-									((List<DicElement>)list).add(dicElement);
-									RESULT = new DicExp((List<DicElement>)list);	
+									((DicExp)map).put(exprKey,exprValue);
+									RESULT = map;	
 								:}
 								
 						  |	expression:expr1 BAND expression:expr2									
@@ -323,14 +322,13 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 									RESULT = new FunctionDefinitionStm((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
 								:};		
 
-expression_dict_list	::= COMMA STRING:value SEMI_COLON expression:expr expression_dict_list:list 
+expression_dict_list	::= COMMA expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map 
 								{: 
-									DicElement dicElement = new DicElement((String)value,(Expression)expr);
-									((List<DicElement>)list).add(dicElement);
-									RESULT = new DicExp((List<DicElement>)list);	
+									((DicExp)map).put(exprKey,exprValue);
+									RESULT = map;	
 								:}
 						  | /* epsilon */
-						  		{: RESULT = new DicExp(new List<DicElement>);	:};
+						  		{: RESULT = new DicExp(new Map<Expression,Expression>);	:};
 
 
 suite					::= stmt_list:list NEWLINE
