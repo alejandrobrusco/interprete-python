@@ -209,11 +209,11 @@ expression_list			::= expression_list:list COMMA expression:expr
 								{: RESULT = new LinkedList<Expression>(); :};
 								
 numeric_type				::= INTEGER:value												
-								{: RESULT = new IntegerExp((String)value); :}
+								{: RESULT = new IntegerType((String)value); :}
 					  	  | FLOAT:value
-								{: RESULT = new FloatExp(((String)value)); :}	
+								{: RESULT = new FloatType(((String)value)); :}	
 						  | LONG:value
-								{: RESULT = new LongExp(((String)value)); :};
+								{: RESULT = new LongType(((String)value)); :};
 						  										
 						  		
 expression				::=  MINUS expression:expr									
@@ -243,10 +243,10 @@ expression				::=  MINUS expression:expr
 						  |	LBRACKET expression_list:list RBRACKET
 								{: RESULT = new ListExp((List<Expression>)list);	:}	
 						  |	LCURLY RCURLY
-								{: RESULT = new DicExp(new Map<Expression,Expression>);	:}	
+								{: RESULT = new DicExp(new HashMap<Expression,Expression>());	:}	
 						  |	LCURLY expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map RCURLY
 								{: 
-									((DicExp)map).put(exprKey,exprValue);
+									((DicExp)map).put((Expression)exprKey,(Expression)exprValue);
 									RESULT = map;	
 								:}
 								
@@ -295,7 +295,7 @@ expression				::=  MINUS expression:expr
 						  | LONG:value
 								{: RESULT = new LongExp(((String)value)); :}
 						  | STRING:value
-								{: RESULT = new StringExp(((String)value)); :}
+								{: RESULT = new StringType(((String)value)); :}
 								
 						  | IDENTIFIER:value
 								{: RESULT = new IdentifierExp((String)value); :}
@@ -324,11 +324,11 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 
 expression_dict_list	::= COMMA expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map 
 								{: 
-									((DicExp)map).put(exprKey,exprValue);
+									((DicExp)map).put((Expression)exprKey,(Expression)exprValue);
 									RESULT = map;	
 								:}
 						  | /* epsilon */
-						  		{: RESULT = new DicExp(new Map<Expression,Expression>);	:};
+						  		{: RESULT = new DicExp(new HashMap<Expression,Expression>());	:};
 
 
 suite					::= stmt_list:list NEWLINE
