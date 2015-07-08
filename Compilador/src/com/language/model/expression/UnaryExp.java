@@ -12,15 +12,14 @@ public class UnaryExp extends Expression {
 		this.operator = operator;
 		this.expression = expression;
 	}
-	
-	@Override
-	public Types getType() {
-		return expression.getType();
-	}
 
 	@Override
-	public Object eval() {
-		// TODO - Revisar
+	public Types eval() {
+		
+		Types t = expression.eval();
+		
+		//if (t.getType().equals(TypeEnum.))
+		
 		return null;
 	}
 
