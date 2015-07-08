@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.types.StringType;
 import com.language.types.Types;
 
 public class StringExp extends Expression {
@@ -11,13 +12,8 @@ public class StringExp extends Expression {
 	}
 	
 	@Override
-	public Types getType() {
-		return Types.string_type;
-	}
-	
-	@Override
-	public Object eval() {
-		return this.value;
+	public Types eval() {
+		return new StringType(this.value); 
 	}
 
 }
