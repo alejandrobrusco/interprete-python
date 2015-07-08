@@ -4,28 +4,28 @@ import com.language.types.Types;
 
 public class BooleanType extends Types {
 
-	Float value;
+	Boolean value;
 	
-	public BooleanType(String value){
-		this.value = new Float(value);
+	public BooleanType(Boolean value){
+		this.value = new Boolean(value);
 	}
 
 	@Override
-	protected TypeEnum getType() {
+	public TypeEnum getType() {
 		return TypeEnum.boolean_type;
 	}
 
 	@Override
-	protected void print() {
+	public void print() {
 		System.out.println(value);
 	}
 	
-	public Float getBoolean() {
+	public Boolean getBoolean() {
 		return this.value;
 	}
 
 	@Override
-	protected String toStringValue() {
+	public String toStringValue() {
 		return String.valueOf(this.value);
 	}
 	

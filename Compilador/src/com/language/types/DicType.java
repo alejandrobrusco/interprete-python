@@ -1,38 +1,35 @@
 package com.language.types;
 
 import java.util.List;
+import java.util.Map;
 
 import com.language.types.Types;
 
 public class DicType extends Types {
 
-	List<DicElement> value;
+	Map<Types,Types> dic;
 	
-	public DicType(List<Types> value){
-		this.value = value;
+	public DicType(Map<Types,Types> map){
+		this.dic = map;
 	}
 
 	@Override
 	protected TypeEnum getType() {
-		return TypeEnum.list_type;
+		return TypeEnum.dict_type;
 	}
 
 	@Override
 	protected void print() {
-		System.out.print("[");
-		for (Types types : value) {
-			System.out.print(types.toStringValue() + ",");
-		}
-		System.out.print("]");
+		
 	}
 	
-	public List<Types> getList() {
-		return this.value;
+	public Map<Types, Types> getDic() {
+		return this.dic;
 	}
 
 	@Override
 	protected String toStringValue() {
-		return this.value.toString();
+		return this.dic.toString();
 	}
 	
 
