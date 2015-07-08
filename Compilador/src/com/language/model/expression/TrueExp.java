@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.types.BooleanType;
 import com.language.types.Types;
 
 public class TrueExp extends Expression {
@@ -9,14 +10,8 @@ public class TrueExp extends Expression {
 	}
 	
 	@Override
-	public Types getType() {
-		return Types.boolean_type;
-	}
-	
-	@Override
-	public Object eval() {
-		// TODO - Revisar
-		return null;
+	public Types eval() {
+		return new BooleanType(Boolean.TRUE);
 	}
 
 }

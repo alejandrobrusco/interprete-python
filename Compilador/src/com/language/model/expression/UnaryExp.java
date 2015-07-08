@@ -27,7 +27,7 @@ public class UnaryExp extends Expression {
 			
 			Float f = ((FloatType) t).getFloat();
 
-			// Operadores deben ser Mas o Menos
+			// Operadores deben ser +, -, not
 			if (operator.equals(UnaryOp.add)){
 				return t;
 			}
@@ -54,7 +54,7 @@ public class UnaryExp extends Expression {
 			
 			Long l = ((LongType) t).getLong();
 
-			// Operadores deben ser Mas o Menos
+			// Operadores deben ser +, -, not, bNot
 			if (operator.equals(UnaryOp.add)){
 				return t;
 			}
@@ -84,7 +84,7 @@ public class UnaryExp extends Expression {
 			
 			Integer i = ((IntegerType) t).getInteger();
 
-			// Operadores deben ser Mas o Menos
+			// Operadores deben ser +, -, not, bNot
 			if (operator.equals(UnaryOp.add)){
 				return t;
 			}
@@ -115,7 +115,7 @@ public class UnaryExp extends Expression {
 			Boolean b = ((BooleanType) t).getBoolean();
 			Integer bValue = ((BooleanType) t).getIntegerValue();
 
-			// Operadores deben ser Mas o Menos
+			// Operadores deben ser +, -, not, bNot
 			if (operator.equals(UnaryOp.add)){
 				return new IntegerType(bValue);
 			}

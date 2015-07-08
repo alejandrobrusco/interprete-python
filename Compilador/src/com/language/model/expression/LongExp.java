@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.types.LongType;
 import com.language.types.Types;
 
 public class LongExp extends Expression {
@@ -11,13 +12,8 @@ public class LongExp extends Expression {
 	}
 	
 	@Override
-	public Types getType() {
-		return Types.long_type;
-	}
-	
-	@Override
-	public Object eval() {
-		return this.value;
+	public Types eval() {
+		return new LongType(value);
 	}
 
 }
