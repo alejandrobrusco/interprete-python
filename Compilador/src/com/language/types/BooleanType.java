@@ -29,5 +29,17 @@ public class BooleanType extends Types {
 		return String.valueOf(this.value);
 	}
 	
+	public Integer getIntegerValue(){
+		if (this.getBoolean().equals(Boolean.TRUE)){
+			return 1;
+		}
+		else if (this.getBoolean().equals(Boolean.FALSE)){
+			return 0;
+		}
+		else{
+			return null;
+		}
+	}
+	
 
 }

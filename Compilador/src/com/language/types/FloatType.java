@@ -6,7 +6,7 @@ public class FloatType extends Types {
 
 	Float value;
 	
-	public FloatType(String value){
+	public FloatType(Float value){
 		this.value = new Float(value);
 	}
 

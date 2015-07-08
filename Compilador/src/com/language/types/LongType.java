@@ -6,8 +6,8 @@ public class LongType extends Types {
 
 	Long value;
 	
-	public LongType(String value){
-		this.value = new Long(value);
+	public LongType(Long value){
+		this.value = value;
 	}
 
 	@Override

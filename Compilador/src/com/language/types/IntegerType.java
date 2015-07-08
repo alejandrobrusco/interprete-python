@@ -4,10 +4,10 @@ import com.language.types.Types;
 
 public class IntegerType extends Types {
 
-	Boolean value;
+	Integer value;
 	
-	public IntegerType(String value){
-		this.value = new Boolean(value);
+	public IntegerType(Integer value){
+		this.value = value;
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class IntegerType extends Types {
 		System.out.println(value);
 	}
 	
-	public Boolean getInteger(){
+	public Integer getInteger(){
 		return this.value;
 	}
 
