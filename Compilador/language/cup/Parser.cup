@@ -112,7 +112,6 @@ non terminal	target;
 non terminal	identifier_comma_list;
 non terminal	expression_list;
 non terminal	index;
-non terminal	numeric_type;
 non terminal	expression_or_empty;
 non terminal	expression_dict_list;
 
@@ -208,14 +207,6 @@ expression_list			::= expression_list:list COMMA expression:expr
 						  |	/* epsilon */
 								{: RESULT = new LinkedList<Expression>(); :};
 								
-numeric_type				::= INTEGER:value												
-								{: RESULT = new IntegerExp((String)value); :}
-					  	  | FLOAT:value
-								{: RESULT = new FloatExp(((String)value)); :}	
-						  | LONG:value
-								{: RESULT = new LongExp(((String)value)); :};
-						  										
-						  		
 expression				::=  MINUS expression:expr									
 								{: RESULT = new UnaryExp(UnaryOp.sub, (Expression) expr); :} %prec SIGN
 						  |	PLUS expression:expr									
