@@ -11,12 +11,12 @@ public class LongType extends Types {
 	}
 
 	@Override
-	protected TypeEnum getType() {
+	public TypeEnum getType() {
 		return TypeEnum.long_type;
 	}
 
 	@Override
-	protected void print() {
+	public void print() {
 		System.out.println(value);
 	}
 	
@@ -25,7 +25,7 @@ public class LongType extends Types {
 	}
 
 	@Override
-	protected String toStringValue() {
+	public String toStringValue() {
 		return String.valueOf(this.value);
 	}
 	

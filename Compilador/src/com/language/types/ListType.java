@@ -13,12 +13,12 @@ public class ListType extends Types {
 	}
 
 	@Override
-	protected TypeEnum getType() {
+	public TypeEnum getType() {
 		return TypeEnum.list_type;
 	}
 
 	@Override
-	protected void print() {
+	public void print() {
 		System.out.print("[");
 		for (Types types : value) {
 			System.out.print(types.toStringValue() + ",");
@@ -31,7 +31,7 @@ public class ListType extends Types {
 	}
 
 	@Override
-	protected String toStringValue() {
+	public String toStringValue() {
 		return this.value.toString();
 	}
 	

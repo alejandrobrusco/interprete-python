@@ -14,12 +14,12 @@ public class DicType extends Types {
 	}
 
 	@Override
-	protected TypeEnum getType() {
+	public TypeEnum getType() {
 		return TypeEnum.dict_type;
 	}
 
 	@Override
-	protected void print() {
+	public void print() {
 		
 	}
 	
@@ -28,7 +28,7 @@ public class DicType extends Types {
 	}
 
 	@Override
-	protected String toStringValue() {
+	public String toStringValue() {
 		return this.dic.toString();
 	}
 	
