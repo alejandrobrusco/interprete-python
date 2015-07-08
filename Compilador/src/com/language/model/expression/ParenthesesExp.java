@@ -11,14 +11,8 @@ public class ParenthesesExp extends Expression {
 	}
 
 	@Override
-	public Types getType() {
-		return expression.getType();
-	}
-
-	@Override
-	public Object eval() {
-		// TODO - Revisar
-		return null;
+	public Types eval() {
+		return this.expression.eval();
 	}
 
 }
