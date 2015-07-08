@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.types.TypeType;
 import com.language.types.Types;
 
 public class TypeExp extends Expression {
@@ -9,16 +10,14 @@ public class TypeExp extends Expression {
 	public TypeExp(Expression expr){
 		this.expr = expr;
 	}
-	
+
 	@Override
-	public Types getType() {
-		return Types.nondefined_type;
-	}
-	
-	@Override
-	public Object eval() {
-		// TODO - Revisar
-		return null;
+	public Types eval() {
+		
+		Types t = this.expr.eval();
+		
+		return new TypeType(t.getType().getPythonType());
+		
 	}
 
 }

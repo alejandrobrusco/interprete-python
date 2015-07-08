@@ -1,5 +1,17 @@
 package com.language.types;
 
 public enum TypeEnum {
-	boolean_type, int_type, long_type, float_type,string_type,list_type,tuple_type, dict_type, function_type, none_type, nondefined_type
+	
+	boolean_type("boolean"), int_type("int"), long_type("long"), float_type("float"),string_type("str"),list_type("list"),tuple_type("tuple"), dict_type("dict"), function_type(null), none_type("NoneType"), nondefined_type(null), type_type("type");
+
+	private String pyhtonType;
+	
+	TypeEnum(String pythonType){
+		this.pyhtonType = pythonType;
+	}
+	
+	public String getPythonType(){
+		return this.pyhtonType;
+	}
+	
 }
