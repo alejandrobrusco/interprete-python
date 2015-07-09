@@ -4,16 +4,16 @@ import java.util.HashMap;
 
 import com.language.types.Types;
 
-public class VariablesList {
+public class Scope {
 
-	private HashMap<String, StackVariable> varList;
+	private HashMap<String, ScopeVariable> varList;
 
-	public VariablesList() {
-		varList = new HashMap<String, StackVariable>();
+	public Scope() {
+		varList = new HashMap<String, ScopeVariable>();
 	}
 
 	public void addVariable(String id, Types type) {
-		StackVariable var = new StackVariable();
+		ScopeVariable var = new ScopeVariable();
 		var.setId(id);
 		var.setType(type);
 		varList.put(id, var);
@@ -21,7 +21,7 @@ public class VariablesList {
 
 	public Types findVariable(String id) {
 		Types t = null;
-		StackVariable sVar = varList.get(id);
+		ScopeVariable sVar = varList.get(id);
 		if (sVar != null) {
 			t = sVar.getType();
 		}
@@ -30,7 +30,7 @@ public class VariablesList {
 
 	public void printList() {
 
-		for (StackVariable sVar : varList.values()) {
+		for (ScopeVariable sVar : varList.values()) {
 			System.out.println("Variable: " + sVar.getId());
 		}
 

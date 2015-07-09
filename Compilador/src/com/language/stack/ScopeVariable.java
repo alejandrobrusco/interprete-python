@@ -2,12 +2,12 @@ package com.language.stack;
 
 import com.language.types.Types;
 
-public class StackVariable {
+public class ScopeVariable {
 
 	private String id;
 	private Types type;
 
-	public StackVariable() {
+	public ScopeVariable() {
 
 	}
 

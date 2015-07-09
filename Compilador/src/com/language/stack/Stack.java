@@ -7,14 +7,14 @@ import com.language.types.Types;
 
 public class Stack {
 
-	private List<VariablesList> stackList;
+	private List<Scope> stackList;
 
 	public Stack() {
-		stackList = new ArrayList<VariablesList>();
+		stackList = new ArrayList<Scope>();
 	}
 
 	public void openScope() {
-		VariablesList l = new VariablesList();
+		Scope l = new Scope();
 		stackList.add(l);
 	}
 
@@ -28,7 +28,7 @@ public class Stack {
 	}
 
 	public Types findInActualScope(String id) {
-		VariablesList vList = stackList.get(stackList.size() - 1);
+		Scope vList = stackList.get(stackList.size() - 1);
 		return (vList.findVariable(id));
 	}
 
@@ -44,7 +44,7 @@ public class Stack {
 	}
 	
 	public Types findInGlobalScope(String id){
-		VariablesList globalScope = this.stackList.get(0);
+		Scope globalScope = this.stackList.get(0);
 		
 		return globalScope.findVariable(id);
 		

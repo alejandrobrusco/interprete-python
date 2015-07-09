@@ -9,7 +9,7 @@ import com.language.model.statements.FunctionDefinitionStm;
 public class StackHandler {
 
 	private static StackHandler instance = null;
-	Stack scopeStack; 
+	private Stack scopeStack; 
 	private Map<String, FunctionDefinitionStm> functionDefinitions;// list for functions
 
 	private StackHandler() {
@@ -31,7 +31,7 @@ public class StackHandler {
 		scopeStack = new Stack();
 	}
 
-	public Stack getStack() {
+	public Stack getScope() {
 		return scopeStack;
 	}
 
