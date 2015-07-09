@@ -193,7 +193,7 @@ simple_statement		::= expression:expr
 						  | RETURN expression:expr
 						  		{: RESULT = new ReturnStm ((Expression)expr); :};
 
-expression_list			::= expression_list:list COMMA expression:expr
+expression_list			::=  expression:expr COMMA expression_list:list 
 								{: ((List<Expression>)list).add((Expression)expr); 
 										RESULT = list;
 								:}
