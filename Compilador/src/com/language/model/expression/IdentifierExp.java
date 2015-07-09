@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.stack.StackHandler;
 import com.language.types.Types;
 
 public class IdentifierExp extends Expression {
@@ -10,19 +11,27 @@ public class IdentifierExp extends Expression {
 		this.id = id;
 	}
 	
-	@Override
-	public Types getType() {
-		// buscar en las variavles para retornar el tipo
-	}
-	
 	public String getId() {
 		return this.id;
 	}
 
 	@Override
 	public Types eval() {
+		StackHandler stackHandler = StackHandler.getInstance();
 		
-		// Retorna valor según el stack de variables
+		Types variableValue = stackHandler.getStack().findInActualScope(id);
+		Types globalVariable = stackHandler.getStack().findInGlobalScope(id);
+
+		if (variableValue!=null){
+			return variableValue;
+		}
+		else if (globalVariable!=null){
+			return globalVariable;
+		}
+		else{
+			// EXCEPTION
+			return null;
+		}
 		
 	}
 
