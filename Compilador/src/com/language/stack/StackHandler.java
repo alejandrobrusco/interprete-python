@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.language.model.statements.FunctionDefinitionStm;
-import com.language.types.Types;
 
 
 public class StackHandler {
@@ -13,7 +12,7 @@ public class StackHandler {
 	Stack scopeStack; 
 	private Map<String, FunctionDefinitionStm> functionDefinitions;// list for functions
 
-	StackHandler() {
+	private StackHandler() {
 		functionDefinitions = new HashMap<String, FunctionDefinitionStm>();
 		scopeStack = new Stack();
 		// el scope global

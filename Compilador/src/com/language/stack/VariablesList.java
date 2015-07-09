@@ -8,7 +8,7 @@ public class VariablesList {
 
 	private HashMap<String, StackVariable> varList;
 
-	VariablesList() {
+	public VariablesList() {
 		varList = new HashMap<String, StackVariable>();
 	}
 

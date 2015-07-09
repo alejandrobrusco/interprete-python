@@ -7,7 +7,7 @@ public class StackVariable {
 	private String id;
 	private Types type;
 
-	StackVariable() {
+	public StackVariable() {
 
 	}
 

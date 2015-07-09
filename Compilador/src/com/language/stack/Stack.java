@@ -9,7 +9,7 @@ public class Stack {
 
 	private List<VariablesList> stackList;
 
-	Stack() {
+	public Stack() {
 		stackList = new ArrayList<VariablesList>();
 	}
 
