@@ -14,9 +14,10 @@ public class TargetExp extends Expression {
 
 
 	@Override
-	public Object eval() {
-		// TODO - Revisar
-		return null;
+	public Types eval() {
+		
+		
+		
 	}
 
 }

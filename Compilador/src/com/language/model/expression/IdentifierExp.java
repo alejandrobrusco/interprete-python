@@ -12,7 +12,7 @@ public class IdentifierExp extends Expression {
 	
 	@Override
 	public Types getType() {
-		return Types.nondefined_type;
+		// buscar en las variavles para retornar el tipo
 	}
 	
 	public String getId() {
@@ -20,10 +20,10 @@ public class IdentifierExp extends Expression {
 	}
 
 	@Override
-	public Object eval() {
-		// TODO - Revisar qué es lo que se tiene que hacer acá (almacenar un listado de variables, etc)
-		//System.out.print(this.id);
-		return null;
+	public Types eval() {
+		
+		// Retorna valor según el stack de variables
+		
 	}
 
 }
