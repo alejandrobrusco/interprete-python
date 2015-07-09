@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
+import com.language.types.BooleanType;
+import com.language.types.TypeEnum;
+import com.language.types.Types;
 
 public class IfStm extends Statement {
 
@@ -16,7 +19,8 @@ public class IfStm extends Statement {
 	}
 	
 	public void eval() {
-		if ((boolean) expression.eval()){
+		Types eval = expression.eval();
+		if (TypeEnum.boolean_type.equals(eval.getType()) && ((BooleanType)eval).getBoolean()){
 			if (statementList != null){
 				for (Statement statement : statementList) {
 					statement.eval();
