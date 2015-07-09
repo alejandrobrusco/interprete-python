@@ -3,6 +3,7 @@ package com.language.model.statements;
 import java.util.List;
 
 import com.language.model.expression.Expression;
+import com.language.types.Types;
 
 public class PrintStm extends Statement {
 	
@@ -15,7 +16,9 @@ public class PrintStm extends Statement {
 	public void eval() {
 		if (expressions != null){
 			for (Expression expression : expressions) {
-				System.out.print(expression.eval()+" ");
+				Types eval = expression.eval();
+				String stringValue = eval.toStringValue();
+				System.out.print(stringValue+" ");
 			}
 		}
 	}
