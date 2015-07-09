@@ -7,11 +7,10 @@ public class LongExp extends Expression {
 
 	Long value;
 	
-	public LongExp(Long value){
-		this.value = value;
+	public LongExp(String value){
+		this.value = new Long(value);
 	}
 	
-	@Override
 	public Types eval() {
 		return new LongType(value);
 	}
