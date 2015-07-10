@@ -1,7 +1,9 @@
 package com.language.model.statements;
 
+import com.language.types.Types;
+
 public abstract class Statement {
 
-	public abstract void eval(); 
+	public abstract Types eval(); 
 	
 }

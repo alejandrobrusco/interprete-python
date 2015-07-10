@@ -9,7 +9,11 @@ import com.language.model.statements.FunctionDefinitionStm;
 public class StackHandler {
 
 	private static StackHandler instance = null;
-	private Stack scopeStack; 
+	private Stack scopeStack;
+	private boolean contextReturn;
+	private boolean contextBreak;
+	private boolean contextContinue;
+	
 	private Map<String, FunctionDefinitionStm> functionDefinitions;// list for functions
 
 	private StackHandler() {
@@ -31,7 +35,7 @@ public class StackHandler {
 		scopeStack = new Stack();
 	}
 
-	public Stack getScope() {
+	public Stack getStack() {
 		return scopeStack;
 	}
 
@@ -51,5 +55,29 @@ public class StackHandler {
 			return this.functionDefinitions.get(id);
 		}
 
+	}
+
+	public boolean isContextoReturn() {
+		return contextReturn;
+	}
+
+	public void setContextoReturn(boolean contextoReturn) {
+		this.contextReturn = contextoReturn;
+	}
+
+	public boolean isContextoBreak() {
+		return contextBreak;
+	}
+
+	public void setContextoBreak(boolean contextoBreak) {
+		this.contextBreak = contextoBreak;
+	}
+
+	public boolean isContextoContinue() {
+		return contextContinue;
+	}
+
+	public void setContextoContinue(boolean contextoContinue) {
+		this.contextContinue = contextoContinue;
 	}
 }

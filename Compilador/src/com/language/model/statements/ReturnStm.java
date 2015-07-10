@@ -1,6 +1,8 @@
 package com.language.model.statements;
 
 import com.language.model.expression.Expression;
+import com.language.types.ReturnType;
+import com.language.types.Types;
 
 public class ReturnStm extends Statement {
 
@@ -10,8 +12,10 @@ public class ReturnStm extends Statement {
 		this.expr = expr;
 	}
 	
-	public void eval() {
-		// TODO - Revisar
+	public Types eval() {
+		Types evalType = expr.eval();
+		Types returnType = new ReturnType(evalType);
+		return returnType;
 	}
 	
 }

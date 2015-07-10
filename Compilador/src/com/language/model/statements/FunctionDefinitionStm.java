@@ -3,21 +3,30 @@ package com.language.model.statements;
 import java.util.Collections;
 import java.util.List;
 
-public class FunctionDefinitionStm extends Statement {
+import com.language.types.Types;
 
+public class FunctionDefinitionStm extends Statement {
 	String identifier;
-	List<String> identifierList;
-	List<Statement> statementList;
+	List<String> parametersList;
+	List<Statement> statementsList;
 	
 	public FunctionDefinitionStm(String identifier, List<String> identifierList, List<Statement> statementList) {
 		this.identifier = identifier;
 		Collections.reverse(identifierList);
-		this.identifierList = identifierList;
-		this.statementList = statementList;
+		this.parametersList = identifierList;
+		this.statementsList = statementList;
 	}
 	
-	public void eval() {
-		// TODO - Revisar
+	public List<String> getParametersList() {
+		return this.parametersList;
+	}
+
+	public List<Statement> getStatemensList() {
+		return this.statementsList;
 	}
 	
+	public Types eval() {
+		// no hace nada
+		return null;
+	}
 }
