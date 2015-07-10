@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.language.model.expression.Expression;
 import com.language.types.Types;
+import com.language.types.VoidType;
 
 public class PrintStm extends Statement {
 	
@@ -13,7 +14,7 @@ public class PrintStm extends Statement {
 		this.expressions = expressions;
 	}
 	
-	public void eval() {
+	public Types eval() {
 		if (expressions != null){
 			for (Expression expression : expressions) {
 				Types eval = expression.eval();
@@ -21,5 +22,6 @@ public class PrintStm extends Statement {
 				System.out.print(stringValue+" ");
 			}
 		}
+		return new VoidType();
 	}
 }
