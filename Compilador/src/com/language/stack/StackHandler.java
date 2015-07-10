@@ -61,7 +61,7 @@ public class StackHandler {
 		return contextReturn;
 	}
 
-	public void setContextoReturn(boolean contextoReturn) {
+	public void setContextReturn(boolean contextoReturn) {
 		this.contextReturn = contextoReturn;
 	}
 

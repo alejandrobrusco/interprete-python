@@ -10,7 +10,11 @@ import com.language.model.statements.Statement;
 import com.language.model.statements.Type;
 import com.language.stack.Stack;
 import com.language.stack.StackHandler;
+import com.language.types.BreakType;
+import com.language.types.ContinueType;
+import com.language.types.ReturnType;
 import com.language.types.Types;
+import com.language.types.VoidType;
 
 public class FunctionExp extends Expression {
 
@@ -38,11 +42,24 @@ public class FunctionExp extends Expression {
 					stack.addVariableToActualScope(definedParameters.get(index), parameterType);
 					index++;
 				}
+				stackHandler.setContextReturn(true);
 				List<Statement> statemensList = function.getStatemensList();
+				Types ret;
 				for (Statement statement : statemensList) {
-					Types ret = statement.eval();
-					if (ret instanceof ContinueType || ret instanceof BreakType || ret instanceof ReturnType )
+					ret = statement.eval();
+					if (ret instanceof ReturnType ){
+						break;
+					}
 				}
+				
+				stackHandler.setContextReturn(false);
+				stack.closeScope();
+				
+				if (ret instanceof ReturnType){
+					ret = ((ReturnType) ret).getValueType();
+				}
+				
+				return ret;
 			}
 		}else{
 			
