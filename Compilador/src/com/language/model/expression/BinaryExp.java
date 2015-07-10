@@ -502,10 +502,19 @@ public class BinaryExp extends Expression {
 			return new LongType(longPow(lLongValue, rLongValue));
 		}
 		else if (operator.equals(BinaryOp.bAnd)){
-				return new LongType(lLongValue & rLongValue);
+			return new LongType(lLongValue & rLongValue);
 		}
 		else if (operator.equals(BinaryOp.bOr)){
-				return new LongType(lLongValue | rLongValue);
+			return new LongType(lLongValue | rLongValue);
+		}
+		else if (operator.equals(BinaryOp.bXor)){
+			return new LongType(lLongValue ^ rLongValue);
+		}
+		else if (operator.equals(BinaryOp.bLShift)){
+			return new LongType(lLongValue << rLongValue);
+		}
+		else if (operator.equals(BinaryOp.bRShift)){
+			return new LongType(lLongValue >> rLongValue);
 		} else {
 			return null;
 		}
@@ -543,6 +552,15 @@ public class BinaryExp extends Expression {
 		}
 		else if (operator.equals(BinaryOp.bOr)){
 				return new IntegerType(lIntValue | rIntValue);
+		}
+		else if (operator.equals(BinaryOp.bXor)){
+				return new IntegerType(lIntValue ^ rIntValue);
+		}
+		else if (operator.equals(BinaryOp.bLShift)){
+			return new IntegerType(lIntValue << rIntValue);
+		}
+		else if (operator.equals(BinaryOp.bRShift)){
+			return new IntegerType(lIntValue >> rIntValue);
 		} else {
 			return null;
 		}
@@ -575,40 +593,26 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.pow)){ // HAY RIESGO DE OVERFLOW !!!
 			return new IntegerType(intPow(lBoolIntValue, rBoolIntValue));
 		}
-		else if (operator.equals(BinaryOp.bAnd)){
-			if (esElPrimero){
-				if (rType.getType().equals(TypeEnum.boolean_type)){
-					return new BooleanType(((BooleanType) lType).getBoolean() & ((BooleanType) rType).getBoolean());
-				} else {
-					// [TODO] Excepción de TIPOS
-					return null;
-				}
-			} else {
-				if (lType.getType().equals(TypeEnum.boolean_type)){
-					return new BooleanType(((BooleanType) lType).getBoolean() & ((BooleanType) rType).getBoolean());
-				} else {
-					// [TODO] Excepción de TIPOS
-					return null;
-				}
-			}
+		else if (operator.equals(BinaryOp.bXor)){
+			return new IntegerType(lBoolIntValue ^ rBoolIntValue);
 		}
-		else if (operator.equals(BinaryOp.bOr)){
-			if (esElPrimero){
-				if (rType.getType().equals(TypeEnum.boolean_type)){
-					return new BooleanType(((BooleanType) lType).getBoolean() | ((BooleanType) rType).getBoolean());
-				} else {
-					// [TODO] Excepción de TIPOS
-					return null;
-				}
-			} else {
-				if (lType.getType().equals(TypeEnum.boolean_type)){
-					return new BooleanType(((BooleanType) lType).getBoolean() | ((BooleanType) rType).getBoolean());
-				} else {
-					// [TODO] Excepción de TIPOS
-					return null;
-				}
+		else if (operator.equals(BinaryOp.bLShift)){
+			return new IntegerType(lBoolIntValue << rBoolIntValue);
+		}
+		else if (operator.equals(BinaryOp.bRShift)){
+			return new IntegerType(lBoolIntValue >> rBoolIntValue);
+		}
+		else if ((lType.getType().equals(TypeEnum.boolean_type)) && (rType.getType().equals(TypeEnum.boolean_type))){ // Para las operaciones bAnd y bOr: Ambos operandos deben ser booleanos y dan como resultado un booleano. Sino, hay un error de tipos
+			if (operator.equals(BinaryOp.bAnd)){
+				return new BooleanType(((BooleanType) lType).getBoolean() & ((BooleanType) rType).getBoolean());
 			}
-		} else {
+			else if (operator.equals(BinaryOp.bOr)){
+				return new BooleanType(((BooleanType) lType).getBoolean() | ((BooleanType) rType).getBoolean());
+			} else {
+				// [TODO] Excepción de TIPOS
+				return null;
+			}
+		} else { // No hay otros operadores definidos
 			return null;
 		}
 	}
