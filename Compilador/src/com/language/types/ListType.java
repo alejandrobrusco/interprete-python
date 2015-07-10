@@ -8,6 +8,10 @@ public class ListType extends Types {
 
 	List<Types> value;
 	
+	public ListType(){
+		
+	}
+	
 	public ListType(List<Types> value){
 		this.value = value;
 	}

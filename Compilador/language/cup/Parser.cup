@@ -232,7 +232,10 @@ expression				::=  MINUS expression:expr
 						  |	LPARAN expression_list:list RPARAN
 								{: RESULT = new TupleExp((List<Expression>)list); :}							
 						  |	LBRACKET expression_list:list RBRACKET
-								{: RESULT = new ListExp((List<Expression>)list);	:}	
+								{:  
+									Collections.reverse(List<Expression>)list);
+									RESULT = new ListExp((List<Expression>)list);	
+								:}	
 						  |	LCURLY RCURLY
 								{: RESULT = new DicExp(new HashMap<Expression,Expression>());	:}	
 						  |	LCURLY expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map RCURLY
