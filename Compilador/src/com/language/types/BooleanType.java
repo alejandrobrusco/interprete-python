@@ -23,6 +23,10 @@ public class BooleanType extends Types {
 	public Boolean getBoolean() {
 		return this.value;
 	}
+	
+	public void setBoolean(Boolean value) {
+		this.value = value;
+	}
 
 	@Override
 	public String toStringValue() {
