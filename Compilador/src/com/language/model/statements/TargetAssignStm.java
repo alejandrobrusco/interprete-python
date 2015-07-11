@@ -1,6 +1,7 @@
 package com.language.model.statements;
 
 import com.language.model.expression.Expression;
+import com.language.model.expression.TargetExp;
 
 public class TargetAssignStm extends Statement {
 
@@ -12,8 +13,22 @@ public class TargetAssignStm extends Statement {
 		this.expr2 = expr2;
 	}
 	
-	public void eval() {
-		// TODO - Revisar
+	public Types eval() {
+		
+		if (expr1 instanceof TargetExp){
+			
+			TargetExp target = (TargetExp)expr1;
+			
+			target.assign(expr2);
+			
+			return expr2.eval();
+			
+		}
+		else{
+			// General error
+			return null;
+		}
+		
 	}
 	
 }

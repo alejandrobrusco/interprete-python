@@ -3,6 +3,9 @@ package com.language.model.statements;
 import com.language.model.expression.Expression;
 import com.language.model.expression.IdentifierExp;
 import com.language.model.statements.Statement;
+import com.language.stack.StackHandler;
+import com.language.types.Types;
+import com.language.types.VoidType;
 
 public class AssignStm extends Statement {
 
@@ -14,8 +17,15 @@ public class AssignStm extends Statement {
 		this.expression = expression;
 	}
 	
-	public void eval() {
-		// TODO - Revisar
+	public Types eval(){
+		
+		StackHandler handler = StackHandler.getInstance();
+		
+		Types t = this.expression.eval();
+		
+		handler.getStack().addVariableToActualScope(id.getId(), t);
+		
+		return new VoidType();
 	}
 	
 }
