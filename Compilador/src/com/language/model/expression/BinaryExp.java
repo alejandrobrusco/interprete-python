@@ -102,11 +102,10 @@ public class BinaryExp extends Expression {
 				return null;
 			}
 			
-			
 		} else if (!tipoOperador(operator)) { // Es Lógica
 			if (lType.getType().equals(TypeEnum.string_type) || (rType.getType().equals(TypeEnum.string_type))){
 				try {
-					return boolEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
+					return stringEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -527,47 +526,43 @@ public class BinaryExp extends Expression {
 // typeEvalArit
 	
 	public Types stringEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		String lStringValue = "";
-		String rStringValue = "";
-		
-		obtenerStringValues(lType,rType,lStringValue,rStringValue,esElPrimero);
-		
-		// ESTA FUNCION NO SE PUEDE HACER DE LA MISMA FORMA QUE LAS OTRAS PORQUE HAY OPERACIONES NO VALIDAS CON STRINGS
-		if (!esElPrimero){
-			if (lType.getType().equals(TypeEnum.string_type)){ // "Hola" + "Chau" = "HolaChau". No es necesario hacer el análogo a este ya que los 2 son StringType y no importa el esElPrimero
-				if (operator.equals(BinaryOp.add)){
-					return new StringType(lStringValue + rStringValue);
-				} else{
-					// [TODO] Excepción de TIPOS
-				}				
+		// La implementación es un poco distinta a las demás implementaciones de xEvalArit(...) porque es bastante particular este tipo
+		if (operator.equals(BinaryOp.add)){
+			if (lType.getType().equals(TypeEnum.string_type) && (rType.getType().equals(TypeEnum.string_type))){ // "Hola" + "Chau" = "HolaChau". No es necesario hacer el análogo a este ya que los 2 son StringType y no importa el esElPrimero
+				return new StringType(((StringType) lType).getString() + ((StringType) rType).getString());
+			} else{
+				// [TODO] Excepción de TIPOS
+			}				
+		}
+		else if (operator.equals(BinaryOp.mult)){ // Sólo puede ser una multiplicación de un número por un String.
+			String s;
+			Long it = 0L;
+			Types numericType;
+			if (esElPrimero){ // "Hola" * 3 = "HolaHolaHola". Consulto si el lType es el String y por lo tanto, el rType el número
+				s = ((StringType) lType).getString();
+				numericType = rType;
+			} else { // 3 * "Hola" = "HolaHolaHola". Consulto si el rType es el String y por lo tanto, el lType el número
+				numericType = lType;
+				s = ((StringType) rType).getString();
 			}
-			else if (lType.getType().equals(TypeEnum.int_type)){
-				if (operator.equals(BinaryOp.mult)){ // 3 * "Hola" = "HolaHolaHola"
-					String aux = "";
-					for (int i=0; i< ((IntegerType) lType).getInteger(); i++){
-						aux += ((StringType) rType).getString();
-					}
-					return new StringType(aux);
-				} else{
-					// [TODO] Excepción de TIPOS
-				}
+			if (numericType.getType().equals(TypeEnum.long_type)){
+				it = ((LongType) numericType).getLong();
+			}
+			else if (numericType.getType().equals(TypeEnum.int_type)){
+				it = ((IntegerType) numericType).getInteger().longValue();
+			}
+			else if (numericType.getType().equals(TypeEnum.boolean_type)){
+				it = ((BooleanType) numericType).getIntegerValue().longValue();
 			} else{
 				// [TODO] Excepción de TIPOS
 			}
-		} else {
-			if (rType.getType().equals(TypeEnum.int_type)){
-				if (operator.equals(BinaryOp.mult)){ // "Hola" * 3 = "HolaHolaHola"
-					String aux = "";
-					for (int i=0; i< ((IntegerType) rType).getInteger(); i++){
-						aux += ((StringType) lType).getString();
-					}
-					return new StringType(aux);
-				} else{
-					// [TODO] Excepción de TIPOS
-				}
-			} else{
-				// [TODO] Excepción de TIPOS
+			String aux = "";
+			for (long i=0; i< it; i++){
+				aux += s;
 			}
+			return new StringType(aux);
+		} else { // Operación inválida
+			// [TODO] Excepción de TIPOS
 		}
 		return null;
 	}
@@ -731,7 +726,7 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.bRShift)){
 			return new IntegerType(lBoolIntValue >> rBoolIntValue);
 		}
-		else if ((lType.getType().equals(TypeEnum.boolean_type)) && (rType.getType().equals(TypeEnum.boolean_type))){ // Para las operaciones bAnd y bOr: Ambos operandos deben ser booleanos y dan como resultado un booleano. Sino, hay un error de tipos
+		else if ((lType.getType().equals(TypeEnum.boolean_type)) && (rType.getType().equals(TypeEnum.boolean_type))){ // Para las operaciones bAnd y bOr: Ambos operandos deben ser booleanos (porque las otras combinaciones válidas ya fueron verificadas anteriormente) y dan como resultado un booleano. Sino, hay un error de tipos
 			if (operator.equals(BinaryOp.bAnd)){
 				return new BooleanType(((BooleanType) lType).getBoolean() & ((BooleanType) rType).getBoolean());
 			}
