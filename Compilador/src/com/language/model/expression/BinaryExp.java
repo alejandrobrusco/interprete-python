@@ -1,11 +1,17 @@
 package com.language.model.expression;
 
+import java.util.List;
+import java.util.Map;
+
 import com.language.model.operators.BinaryOp;
 import com.language.types.BooleanType;
+import com.language.types.DicType;
 import com.language.types.FloatType;
 import com.language.types.IntegerType;
+import com.language.types.ListType;
 import com.language.types.LongType;
 import com.language.types.StringType;
+import com.language.types.TupleType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
 
@@ -25,7 +31,6 @@ public class BinaryExp extends Expression {
 	public Types eval() {
 		Types lType = expression1.eval();
 		Types rType = expression2.eval();
-		
 		
 		if (tipoOperador(operator)) {// Es Aritmética o Bitwise
 			if (lType.getType().equals(TypeEnum.string_type) || (rType.getType().equals(TypeEnum.string_type))){
@@ -68,7 +73,34 @@ public class BinaryExp extends Expression {
 					e.printStackTrace();
 				}
 			}
-			// FALTA MUCHO: Long, Int, Boolean, String, List, Dict
+			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
+				try {
+					return dictEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
+				try {
+					return tupleEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
+				try {
+					return listEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				// [TODO] Excepción de TIPOS
+				return null;
+			}
 			
 			
 		} else if (!tipoOperador(operator)) { // Es Lógica
@@ -112,102 +144,44 @@ public class BinaryExp extends Expression {
 					e.printStackTrace();
 				}
 			}
-			// FALTA MUCHO: Long, Int, Boolean, String, List, Dict
+			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
+				try {
+					return dictEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
+				try {
+					return tupleEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
+				try {
+					return listEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				// [TODO] Excepción de TIPOS
+				return null;
+			}
+			
+			
 		} else {
+			// [TODO] Operación no definida
 			return null;
 		}
 		return null;
 	}
 
 					
-					
-		/*
-		case and:
-			return expr.eval() && expr2.eval();
-		case bAnd:
-			return expr.eval() & expr2.eval();
-		case bLShift:
-			return expr.eval() << expr2.eval();
-		case bOr:
-			return expr.eval() | expr2.eval();
-		case bRShift:
-			return expr.eval() >> expr2.eval();
-		case bXor:
-			return expr.eval() ^ expr2.eval();
-		case div:
-			return expr.eval() / expr2.eval();
-		case divInt:
-			break;
-		case equal:
-			break;
-		case greater:
-			break;
-		case greaterOrEqual:
-			break;
-		case less:
-			break;
-		case lessOrEqual:
-			break;
-		case mod:
-			break;
-		case mult:
-			break;
-		case notEqual:
-			break;
-		case or:
-			break;
-		case pow:
-			break;
-		case sub:
-			break;
-		}
-		return null;
-			
-		/*
-		switch (operator) {
-		case add:
-			return (Integer) expr.eval() + (Integer) expr2.eval();
-		case and:
-			return expr.eval() && expr2.eval();
-		case bAnd:
-			return expr.eval() & expr2.eval();
-		case bLShift:
-			return expr.eval() << expr2.eval();
-		case bOr:
-			return expr.eval() | expr2.eval();
-		case bRShift:
-			return expr.eval() >> expr2.eval();
-		case bXor:
-			return expr.eval() ^ expr2.eval();
-		case div:
-			return expr.eval() / expr2.eval();
-		case divInt:
-			break;
-		case equal:
-			break;
-		case greater:
-			break;
-		case greaterOrEqual:
-			break;
-		case less:
-			break;
-		case lessOrEqual:
-			break;
-		case mod:
-			break;
-		case mult:
-			break;
-		case notEqual:
-			break;
-		case or:
-			break;
-		case pow:
-			break;
-		case sub:
-			break;
-		}
-		return null;*/
-	
 // typeEvalLog
 	
 	public Types stringEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
@@ -392,8 +366,163 @@ public class BinaryExp extends Expression {
 			// [TODO] Excepción de TIPOS
 			return null;
 		}
+	}	
+
+	public Types dictEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		// TODO: Ver si evaluamos el <, >, <= y >= con diccionarios
+		/*
+		Dictionary<K, V> lBoolValue = 0;
+		Dict rBoolValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolValue,rBoolValue,esElPrimero);
+		
+		
+		if (operator.equals(BinaryOp.less)){
+			return new BooleanType(lBoolValue < rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greater)){
+			return new BooleanType(lBoolValue > rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.lessOrEqual)){
+			return new BooleanType(lBoolValue <= rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greaterOrEqual)){
+			return new BooleanType(lBoolValue >= rBoolValue);
+		}
+		else*/
+		if (operator.equals(BinaryOp.equal)){
+			if (lType.getType().equals(TypeEnum.dict_type) && (rType.getType().equals(TypeEnum.dict_type))) {
+				Map<Types, Types> lDict = ((DicType) lType).getDic();
+				Map<Types, Types> rDict = ((DicType) rType).getDic();
+				return new BooleanType(lDict.equals(rDict));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.notEqual)){
+			if (lType.getType().equals(TypeEnum.dict_type) && (rType.getType().equals(TypeEnum.dict_type))) {
+				Map<Types, Types> lDict = ((DicType) lType).getDic();
+				Map<Types, Types> rDict = ((DicType) rType).getDic();
+				return new BooleanType(!lDict.equals(rDict));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.or)){
+			return lType;
+		}
+		else if (operator.equals(BinaryOp.and)){
+			return rType;
+		}
+		else{
+			// [TODO] Excepción de TIPOS
+			return null;
+		}
 	}
 	
+	public Types tupleEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		// TODO: Ver si evaluamos el <, >, <= y >= con tuplas
+		/*
+		Dictionary<K, V> lBoolValue = 0;
+		Dict rBoolValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolValue,rBoolValue,esElPrimero);
+		
+		
+		if (operator.equals(BinaryOp.less)){
+			return new BooleanType(lBoolValue < rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greater)){
+			return new BooleanType(lBoolValue > rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.lessOrEqual)){
+			return new BooleanType(lBoolValue <= rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greaterOrEqual)){
+			return new BooleanType(lBoolValue >= rBoolValue);
+		}
+		else*/
+		if (operator.equals(BinaryOp.equal)){
+			if (lType.getType().equals(TypeEnum.tuple_type) && (rType.getType().equals(TypeEnum.tuple_type))) {
+				List<Types> lTuple = ((TupleType) lType).getTuple();
+				List<Types> rTuple = ((TupleType) rType).getTuple();
+				return new BooleanType(lTuple.equals(rTuple));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.notEqual)){
+			if (lType.getType().equals(TypeEnum.tuple_type) && (rType.getType().equals(TypeEnum.tuple_type))) {
+				List<Types> lTuple = ((TupleType) lType).getTuple();
+				List<Types> rTuple = ((TupleType) rType).getTuple();
+				return new BooleanType(!lTuple.equals(rTuple));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.or)){
+			return lType;
+		}
+		else if (operator.equals(BinaryOp.and)){
+			return rType;
+		}
+		else{
+			// [TODO] Excepción de TIPOS
+			return null;
+		}
+	}
+	
+	public Types listEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		// TODO: Ver si evaluamos el <, >, <= y >= con listas
+		/*
+		Dictionary<K, V> lBoolValue = 0;
+		Dict rBoolValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolValue,rBoolValue,esElPrimero);
+		
+		
+		if (operator.equals(BinaryOp.less)){
+			return new BooleanType(lBoolValue < rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greater)){
+			return new BooleanType(lBoolValue > rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.lessOrEqual)){
+			return new BooleanType(lBoolValue <= rBoolValue);
+		}
+		else if (operator.equals(BinaryOp.greaterOrEqual)){
+			return new BooleanType(lBoolValue >= rBoolValue);
+		}
+		else*/
+		if (operator.equals(BinaryOp.equal)){
+			if (lType.getType().equals(TypeEnum.list_type) && (rType.getType().equals(TypeEnum.list_type))) {
+				List<Types> lList = ((ListType) lType).getList();
+				List<Types> rList = ((ListType) rType).getList();
+				return new BooleanType(lList.equals(rList));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.notEqual)){
+			if (lType.getType().equals(TypeEnum.list_type) && (rType.getType().equals(TypeEnum.list_type))) {
+				List<Types> lList = ((ListType) lType).getList();
+				List<Types> rList = ((ListType) rType).getList();
+				return new BooleanType(!lList.equals(rList));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.or)){
+			return lType;
+		}
+		else if (operator.equals(BinaryOp.and)){
+			return rType;
+		}
+		else{
+			// [TODO] Excepción de TIPOS
+			return null;
+		}
+	}
 		
 // typeEvalArit
 	
@@ -617,6 +746,64 @@ public class BinaryExp extends Expression {
 		}
 	}
 
+	public Types dictEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		/*
+		Integer lBoolIntValue = 0;
+		Integer rBoolIntValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolIntValue,rBoolIntValue,esElPrimero);
+		*/
+		
+		// [TODO] Excepción de TIPOS
+		return null;
+	}
+	
+	public Types tupleEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		/*
+		Integer lBoolIntValue = 0;
+		Integer rBoolIntValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolIntValue,rBoolIntValue,esElPrimero);
+		*/
+		
+		if (operator.equals(BinaryOp.add)){
+			if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
+				List<Types> lTuple = ((TupleType) lType).getTuple();
+				List<Types> rTuple = ((TupleType) rType).getTuple();
+				lTuple.addAll(rTuple);
+				return new TupleType(lTuple);
+			} else {
+				// [TODO] Excepción de TIPOS
+				return null;
+			}
+		} else { // No hay otros operadores definidos
+			return null;
+		}
+	}
+	
+	public Types listEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+		/*
+		Integer lBoolIntValue = 0;
+		Integer rBoolIntValue = 0;
+		
+		obtenerBoolValues(lType,rType,lBoolIntValue,rBoolIntValue,esElPrimero);
+		*/
+		
+		if (operator.equals(BinaryOp.add)){
+			if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
+				List<Types> lList = ((ListType) lType).getList();
+				List<Types> rList = ((ListType) rType).getList();
+				lList.addAll(rList);
+				return new TupleType(lList);
+			} else {
+				// [TODO] Excepción de TIPOS
+				return null;
+			}
+		} else { // No hay otros operadores definidos
+			return null;
+		}
+	}
+	
 // obtenerTypeValues
 
 	private void obtenerStringValues(Types lType, Types rType, String lStringValue, String rStringValue, boolean esElPrimero) {
