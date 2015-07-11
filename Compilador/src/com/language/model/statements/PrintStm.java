@@ -18,9 +18,10 @@ public class PrintStm extends Statement {
 		if (expressions != null){
 			for (Expression expression : expressions) {
 				Types eval = expression.eval();
-				String stringValue = eval.toStringValue();
-				System.out.print(stringValue+" ");
+				eval.print();
+				System.out.print(" ");
 			}
+			System.out.println();
 		}
 		return new VoidType();
 	}

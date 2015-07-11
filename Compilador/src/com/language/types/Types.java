@@ -4,4 +4,13 @@ public abstract class Types {
 	public abstract TypeEnum getType();
 	public abstract void print();
 	public abstract String toStringValue();	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Types){
+			return (this.getType().equals(((Types) obj).getType()) && 
+					this.toStringValue().equals(((Types) obj).toStringValue()));
+		}
+		return false;
+	}
 }
