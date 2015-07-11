@@ -1,6 +1,7 @@
 package com.language.model.expression;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -37,15 +38,14 @@ public class TargetExp extends Expression {
 			if (indexType.getIndex()!=null){
 			
 				long maxIndex = list.size() -1;
-				
-				long index = Long.parseLong(expressionValue.toStringValue());
+				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
 					// EXCEPTION: out of index
 					return null;
 				}
 				else{
-					return list.get(Integer.valueOf(expressionValue.toStringValue()));
+					return list.get(index);
 				}
 			}
 			else{
@@ -67,8 +67,13 @@ public class TargetExp extends Expression {
 					returnOriginalList = this.returnOriginalList(list.size(), from, to);
 					
 					if (!returnEmptyList){
-						retList = list.subList(from, to);
-						return new ListType(retList);
+						if (returnOriginalList){
+							return new ListType(list);
+						}
+						else{
+							retList = list.subList(from, to);
+							return new ListType(retList);
+						}
 					}
 				}
 				
@@ -78,11 +83,16 @@ public class TargetExp extends Expression {
 					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
 					
 					returnEmptyList = this.returnEmptyList(from, list.size()-1);
-					returnOriginalList = this.returnOriginalList(list.size(), from, to);
+					returnOriginalList = this.returnOriginalList(list.size(), from, list.size()-1);
 
 					if (!returnEmptyList){
-						retList = list.subList(from, list.size()-1);
-						return new ListType(retList);
+						if (returnOriginalList){
+							return new ListType(list);
+						}
+						else{
+							retList = list.subList(from, list.size()-1);
+							return new ListType(retList);
+						}
 					}
 				}
 				
@@ -92,11 +102,16 @@ public class TargetExp extends Expression {
 					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 					
 					returnEmptyList = this.returnEmptyList(0, to);
-					returnOriginalList = this.returnOriginalList(list.size(), from, to);
+					returnOriginalList = this.returnOriginalList(list.size(), 0, to);
 
 					if (!returnEmptyList){
-						retList = list.subList(0, to);
-						return new ListType(retList);
+						if (returnOriginalList){
+							return new ListType(list);
+						}
+						else{
+							retList = list.subList(0, to);
+							return new ListType(retList);
+						}
 					}
 				}
 				
@@ -115,17 +130,25 @@ public class TargetExp extends Expression {
 					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
 					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					
 					if (by==0){
 						// EXCEPTION: step no puede ser zero
 						return null;
 					}
 
-					if (by<0){
+					if (by<0 || returnEmptyList){
 						retList = new ArrayList<Types>();
 					}
 					else{
 						retList = new ArrayList<Types>();
 						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
 							retList.add(list.get(i));
 						}
 					}
@@ -140,17 +163,25 @@ public class TargetExp extends Expression {
 					int to = list.size() - 1;
 					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
 					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					
 					if (by==0){
 						// EXCEPTION: step no puede ser zero
 						return null;
 					}
 
-					if (by<0){
+					if (by<0 || returnEmptyList){
 						retList = new ArrayList<Types>();
 					}
 					else{
 						retList = new ArrayList<Types>();
 						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
 							retList.add(list.get(i));
 						}
 					}
@@ -165,17 +196,25 @@ public class TargetExp extends Expression {
 					int from = 0;
 					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
 					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					
 					if (by==0){
 						// EXCEPTION: step no puede ser zero
 						return null;
 					}
 
-					if (by<0){
+					if (by<0 || returnEmptyList){
 						retList = new ArrayList<Types>();
 					}
 					else{
 						retList = new ArrayList<Types>();
 						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
 							retList.add(list.get(i));
 						}
 					}
@@ -190,17 +229,24 @@ public class TargetExp extends Expression {
 					int from = 0;
 					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
 					
+					returnEmptyList = this.returnEmptyList(from, to);
+
 					if (by==0){
 						// EXCEPTION: step no puede ser zero
 						return null;
 					}
 
-					if (by<0){
+					if (by<0 || returnEmptyList){
 						retList = new ArrayList<Types>();
 					}
 					else{
 						retList = new ArrayList<Types>();
 						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
 							retList.add(list.get(i));
 						}
 					}
@@ -219,10 +265,15 @@ public class TargetExp extends Expression {
 	}
 	
 	private boolean returnOriginalList(int size, int from, int to) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return (to>=size-1 && from==0);
+		
 	}
 
+	private boolean checkInterval(int from,int to){
+		
+		return from>to || from<0 || to<0;
+	}
 
 	private boolean returnEmptyList(int from, int to) {
 		
@@ -255,59 +306,187 @@ public class TargetExp extends Expression {
 			if (indexType.getIndex()!=null){
 				
 				long maxIndex = list.size() -1;
-				
-				long index = Long.parseLong(expressionValue.toStringValue());
+				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
 					// EXCEPTION: out of index
 				}
 				else{
-					int indexInt = Integer.valueOf(String.valueOf(index));
-					list.add(indexInt, valueToAssing.eval());
+					list.add(index, valueToAssing.eval());
 				}
 			}
 			else{
 				
-				// Aca va el tema de que venga con un paso sobre los inidces (controlar que se asigna una lista
+				// Aca va el tema de que venga con un paso sobre los inidces (controlar que se asigna una lista)
 				
-				List<Types> retList = new ArrayList<Types>();
-				
-				/*** SIN VALORES DE STEP ***/
-				
-				// Sin step (con ini y fin)
-				if (indexType.getFrom()!=null && indexType.getTo()!=null && indexType.getStep()==null){
+				if (valueToAssing.eval().getType().equals(TypeEnum.list_type)){
 					
-					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
-					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					List<Types> subListToRemove = new ArrayList<Types>();
+					List<Types> subListToAdd = ((ListType)valueToAssing.eval()).getList();
+					
+					boolean returnEmptyList = false;
+					boolean returnOriginalList = false;
+					
+					/*** SIN VALORES DE STEP ***/
+					
+					// Sin step (con ini y fin)
+					if (indexType.getFrom()!=null && indexType.getTo()!=null && indexType.getStep()==null){
+						
+						int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+						
+						if (this.checkInterval(from, to)){
+							// Exception : from > to
+						}
+						else{
+							returnOriginalList = this.returnOriginalList(list.size(), from, to);
+							if (returnOriginalList){
+								list = subListToAdd;
+							}
+							else{
+								// armo dos listas
+								List<Types> firstPart = new ArrayList<Types>();
+								List<Types> secondPart = new ArrayList<Types>();
+								
+								for (int i=0;i<from;i++){
+									firstPart.add(list.get(i));
+								}
+								
+								for (int i=to;i<(list.size()-1);i++){
+									secondPart.add(list.get(i));
+								}
+								
+								firstPart.addAll(subListToAdd);
+								firstPart.addAll(secondPart);
 
-					
-					retList = list.subList(from, to);
-					return new ListType(retList);
-				}
-				
-				// Sin step (con ini, sin fin)
-				if (indexType.getFrom()!=null && indexType.getTo()==null && indexType.getStep()==null){
-					
-					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+								list = new ArrayList<>(firstPart);
 
-					retList = list.subList(from, list.size()-1);
-					return new ListType(retList);
-				}
-				
-				// Sin step (sin ini, con fin)
-				if (indexType.getFrom()==null && indexType.getTo()!=null && indexType.getStep()==null){
+							}
+						}
+						
+						
+					}
 					
-					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					// Sin step (con ini, sin fin)
+					else if (indexType.getFrom()!=null && indexType.getTo()==null && indexType.getStep()==null){
+						
+						int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+						int to = list.size();
+						
+						if (this.checkInterval(from, to)){
+							// Exception : from > to
+						}
+						else{
+							returnOriginalList = this.returnOriginalList(list.size(), from, to);
+							if (returnOriginalList){
+								list = subListToAdd;
+							}
+							else{
+								// armo dos listas
+								List<Types> firstPart = new ArrayList<Types>();
+								List<Types> secondPart = new ArrayList<Types>();
+								
+								for (int i=0;i<from;i++){
+									firstPart.add(list.get(i));
+								}
+								
+								for (int i=to;i<(list.size()-1);i++){
+									secondPart.add(list.get(i));
+								}
+								
+								firstPart.addAll(subListToAdd);
+								firstPart.addAll(secondPart);
 
-					retList = list.subList(0, to);
-					return new ListType(retList);
-				}
-				
-				// Sin step (sin ini, sin fin)
-				if (indexType.getFrom()==null && indexType.getTo()==null && indexType.getStep()==null){
+								list = new ArrayList<>(firstPart);
+
+							}
+						}
+					}
 					
-					return new ListType(list);
+					// Sin step (sin ini, con fin)
+					else if (indexType.getFrom()==null && indexType.getTo()!=null && indexType.getStep()==null){
+						
+						int from = 0;
+						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+						
+						if (this.checkInterval(from, to)){
+							// Exception : from > to
+						}
+						else{
+							returnOriginalList = this.returnOriginalList(list.size(), from, to);
+							if (returnOriginalList){
+								list = subListToAdd;
+							}
+							else{
+								// armo dos listas
+								List<Types> firstPart = new ArrayList<Types>();
+								List<Types> secondPart = new ArrayList<Types>();
+								
+								for (int i=0;i<from;i++){
+									firstPart.add(list.get(i));
+								}
+								
+								for (int i=to;i<(list.size()-1);i++){
+									secondPart.add(list.get(i));
+								}
+								
+								firstPart.addAll(subListToAdd);
+								firstPart.addAll(secondPart);
+
+								list = new ArrayList<>(firstPart);
+
+							}
+						}
+					}
+					
+					// Sin step (sin ini, sin fin)
+					else if (indexType.getFrom()==null && indexType.getTo()==null && indexType.getStep()==null){
+						
+						int from = 0;
+						int to = list.size();
+						
+						if (this.checkInterval(from, to)){
+							// Exception : from > to
+						}
+						else{
+							returnOriginalList = this.returnOriginalList(list.size(), from, to);
+							if (returnOriginalList){
+								list = subListToAdd;
+							}
+							else{
+								// armo dos listas
+								List<Types> firstPart = new ArrayList<Types>();
+								List<Types> secondPart = new ArrayList<Types>();
+								
+								for (int i=0;i<from;i++){
+									firstPart.add(list.get(i));
+								}
+								
+								for (int i=to;i<(list.size()-1);i++){
+									secondPart.add(list.get(i));
+								}
+								
+								firstPart.addAll(subListToAdd);
+								firstPart.addAll(secondPart);
+
+								list = new ArrayList<>(firstPart);
+
+							}
+						}
+					}
+					
+					else{
+						// Exception: tiene step y no lo soportamos!!
+					}
+					
 				}
+				else{
+					// EXCEPTION: tiene q ser lista
+					
+				}
+			
+				
+				
 			}
 			
 		}
