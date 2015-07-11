@@ -20,20 +20,37 @@ public class IfElseStm extends Statement {
 		this.elseStatementList = elseStatementList;
 	}
 	
-	public void eval() {
+	public Types eval() {
 		Types eval = expression.eval();
-		if (TypeEnum.boolean_type.equals(eval.getType()) && ((BooleanType)eval).getBoolean()){
-			if (ifStatementList != null){
-				for (Statement statement : ifStatementList) {
-					statement.eval();
+		Types ret = null;
+		if (TypeEnum.boolean_type.equals(eval.getType())){
+			if (((BooleanType)eval).getBoolean()){
+				if (ifStatementList != null){
+					for (Statement statement : ifStatementList) {
+						ret = statement.eval();
+						
+						if (ret.getType().equals(TypeEnum.break_type) || ret.getType().equals(TypeEnum.continue_type) || ret.getType().equals(TypeEnum.return_type)){
+							break;
+						}
+					}
+				}
+			} else {
+				if (elseStatementList != null){
+					for (Statement statement : elseStatementList) {
+						ret = statement.eval();
+						
+						if (ret.getType().equals(TypeEnum.break_type) || ret.getType().equals(TypeEnum.continue_type) || ret.getType().equals(TypeEnum.return_type)){
+							break;
+						}
+					}
 				}
 			}
-		} else {
-			if (elseStatementList != null){
-				for (Statement statement : elseStatementList) {
-					statement.eval();
-				}
-			}
+			
+			return ret;
+		}
+		else{
+			// Type Error
+			return null;
 		}
 	}
 	

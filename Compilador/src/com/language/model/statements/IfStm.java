@@ -18,15 +18,26 @@ public class IfStm extends Statement {
 		this.statementList = statementList;
 	}
 	
-	public void eval() {
+	public Types eval() {
 		Types eval = expression.eval();
+		Types ret = null;
 		if (TypeEnum.boolean_type.equals(eval.getType()) && ((BooleanType)eval).getBoolean()){
 			if (statementList != null){
 				for (Statement statement : statementList) {
-					statement.eval();
+					ret = statement.eval();
+					
+					if (ret.getType().equals(TypeEnum.break_type) || ret.getType().equals(TypeEnum.continue_type) || ret.getType().equals(TypeEnum.return_type)){
+						break;
+					}
 				}
 			}
 		}
+		else{
+			// EXCEPTION Type Error
+			return null;
+		}
+		
+		return ret;
 	}
 	
 }
