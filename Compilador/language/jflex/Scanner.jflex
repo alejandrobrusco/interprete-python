@@ -49,7 +49,7 @@ import com.language.model.*;
 %eofval}
 
 LineTerminator = \r|\n|\r\n
-WhiteSpace     = {LineTerminator} | [ \f]+
+WhiteSpace     = [ \f]+
 
 Digit					= [0-9]
 Integer                 = 0 | [1-9]{Digit}*
