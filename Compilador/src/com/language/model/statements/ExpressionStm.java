@@ -1,6 +1,7 @@
 package com.language.model.statements;
 
 import com.language.model.expression.Expression;
+import com.language.types.Types;
 
 public class ExpressionStm extends Statement {
 
@@ -10,8 +11,8 @@ public class ExpressionStm extends Statement {
 		this.expr = expr;
 	}
 	
-	public void eval() {
-		// TODO - Revisar
+	public Types eval() {
+		return this.expr.eval();
 	}
 	
 }

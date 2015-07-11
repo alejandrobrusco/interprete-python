@@ -3,6 +3,7 @@ package com.language.model.statements;
 import java.util.List;
 
 import com.language.model.expression.Expression;
+import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
 import com.language.types.BooleanType;
 import com.language.types.TypeEnum;
@@ -21,8 +22,12 @@ public class WhileStm extends Statement {
 	@Override
 	public Types eval() {
 		StackHandler handler = StackHandler.getInstance();
-		handler.setContextoBreak(true);
-		handler.setContextoContinue(true);
+		
+		handler.openControlScope();
+		
+		ControlVariable controlVar = handler.getActualScopeControlVariable();
+		controlVar.setBreakContext(true);
+		controlVar.setContinueContext(true);
 		
 		Types condition = this.expression.eval();
 		
@@ -68,6 +73,8 @@ public class WhileStm extends Statement {
 					condValue.setBoolean(Boolean.FALSE);
 				}
 			}
+			
+			handler.closeControlScope();
 			
 			return t;
 		}
