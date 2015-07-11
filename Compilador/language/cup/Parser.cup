@@ -133,9 +133,9 @@ precedence left POW;
 precedence left LBRACKET, RBRACKET, LCURLY, RCURLY, LPARAN, RPARAN;
 precedence left NEWLINE;
 
-program					::= statement_newline_list:list 
+program					::= statement_newline_list:list
 								{:	
-									Collections.reverse((List<Statement>)list)
+									Collections.reverse((List<Statement>)list);
 									RESULT = new Program((List<Statement>)list); 
 								:};
 								
@@ -159,7 +159,7 @@ statement_list 			::= statement:stmt statement_list:list
 statement    			::= stmt_list:list NEWLINE 
 								{: RESULT = list; :}	
 						  |	compound_statement:compound_stm
-						  	    {:   :} ;							
+						  	    {:   :} ;						
 
 stmt_list				::= simple_statement:simple SEMI_COLON stmt_list:list
 							{:	
