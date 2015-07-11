@@ -1,17 +1,11 @@
 package com.language.model.expression;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.ws.handler.MessageContext.Scope;
 
 import com.language.model.statements.FunctionDefinitionStm;
 import com.language.model.statements.Statement;
-import com.language.model.statements.Type;
 import com.language.stack.Stack;
 import com.language.stack.StackHandler;
-import com.language.types.BreakType;
-import com.language.types.ContinueType;
 import com.language.types.ReturnType;
 import com.language.types.Types;
 import com.language.types.VoidType;
@@ -44,7 +38,7 @@ public class FunctionExp extends Expression {
 				}
 				stackHandler.setContextReturn(true);
 				List<Statement> statemensList = function.getStatemensList();
-				Types ret;
+				Types ret = null;
 				for (Statement statement : statemensList) {
 					ret = statement.eval();
 					if (ret instanceof ReturnType ){
@@ -57,12 +51,18 @@ public class FunctionExp extends Expression {
 				
 				if (ret instanceof ReturnType){
 					ret = ((ReturnType) ret).getValueType();
+				} else {
+					ret = new VoidType();
 				}
 				
 				return ret;
+			} else {
+				//TODO EXCEPTION cant parametros
+				return new VoidType();
 			}
 		}else{
-			
+			//TODO EXCEPTION no es 
+			return new VoidType();
 		}
 		
 	}
