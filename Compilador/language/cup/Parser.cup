@@ -141,7 +141,7 @@ program					::= statement_newline_list:list
 								
 statement_newline_list  ::= statement:stmt statement_newline_list:list   
 								{:	 
-									((List<Statement>)list).add((Statement)stmt);
+									((List<Statement>)list).addAll((List<Statement>)stmt);
 									RESULT = list;						
 								:}
 						  | NEWLINE statement_newline_list:list
@@ -150,7 +150,7 @@ statement_newline_list  ::= statement:stmt statement_newline_list:list
 								{:	RESULT = new LinkedList<Statement>(); :};
 								
 statement_list 			::= statement:stmt statement_list:list 
-								{: ((List<Statement>)list).add((Statement)stmt);
+								{: ((List<Statement>)list).addAll((List<Statement>)stmt);
 								   RESULT = list;
 								:}
 						  | /* epsilon */
@@ -159,7 +159,11 @@ statement_list 			::= statement:stmt statement_list:list
 statement    			::= stmt_list:list NEWLINE 
 								{: RESULT = list; :}	
 						  |	compound_statement:compound_stm
-						  	    {:   :} ;						
+						  	    {:  
+						  	    	List<Statement> list = new LinkedList<Statement>();
+						  	    	list.add((Statement)compound_stm);
+						  	    	RESULT = list;
+						  	     :} ;						
 
 stmt_list				::= simple_statement:simple SEMI_COLON stmt_list:list
 							{:	
