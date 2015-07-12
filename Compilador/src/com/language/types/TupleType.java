@@ -9,6 +9,10 @@ public class TupleType extends Types {
 
 	List<Types> value;
 	
+	public TupleType(){
+		
+	}
+	
 	public TupleType(List<Types> value){
 		this.value = value;
 	}

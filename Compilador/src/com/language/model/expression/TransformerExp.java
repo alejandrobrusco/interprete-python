@@ -92,7 +92,7 @@ public class TransformerExp extends Expression {
 			return new StringType(exprType.print());
 		case tuple_type:
 			if (exprType == null){
-				exprType = new ListType(new ArrayList<Types>()); 
+				exprType = new TupleType(new ArrayList<Types>()); 
 			}
 			exprTypeEnum = exprType.getType();
 			if (TypeEnum.string_type.equals(exprTypeEnum)){
@@ -104,19 +104,21 @@ public class TransformerExp extends Expression {
 						Types t = new StringType(String.valueOf(c));
 						list.add(t);
 					}
-					return new ListType(list);
+					return new TupleType(list);
 				}
 				return new ListType();
+			} else if (TypeEnum.tuple_type.equals(exprTypeEnum)) {
+				return new TupleType(((TupleType)exprType).getTuple());
 			} else if (TypeEnum.list_type.equals(exprTypeEnum)) {
-				return new ListType(((ListType)exprType).getList());
+				return new TupleType(((ListType)exprType).getList());
 			} else if (TypeEnum.dict_type.equals(exprTypeEnum)) {
 				Set<Types> dicSet = ((DicType)exprType).getDic().keySet();
 				List<Types> list = new ArrayList<Types>();
 				list.addAll(dicSet);
-				return new ListType(list);
+				return new TupleType(list);
 			} else {
-				//TODO EXCEPTION
-				return new ListType();
+				//TODO EXCEPTION tipo no iterable
+				return new TupleType();
 			}
 		
 		case list_type:
@@ -139,15 +141,14 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.list_type.equals(exprTypeEnum)) {
 				return new ListType(((ListType)exprType).getList());
 			} else if (TypeEnum.tuple_type.equals(exprTypeEnum)) {
-				List<Types> tuple = ((TupleType)exprType).getTuple();
-				return new ListType(tuple);
+				return new ListType(((TupleType)exprType).getTuple());
 			} else if (TypeEnum.dict_type.equals(exprTypeEnum)) {
 				Set<Types> dicSet = ((DicType)exprType).getDic().keySet();
 				List<Types> list = new ArrayList<Types>();
 				list.addAll(dicSet);
 				return new ListType(list);
 			} else {
-				//TODO EXCEPTION
+				//TODO EXCEPTION tipo no iterable
 				return new ListType();
 			}
 		case dict_type:
@@ -178,9 +179,14 @@ public class TransformerExp extends Expression {
 					}
 				}
 				return new DicType(map);
+			} else if(false){
+				//TODO FALTA CONSIDERAR ESTO dict(algo=123,otro="asd")
+				
+			} else {
+				// TODO EXCEPTION tipo no iterable
+				return new DicType();
 			}
 			
-			//TODO FALTA CONSIDERAR ESTO dict(algo=123,otro="asd")
 		default:
 			//TODO EXCEPTION no tendria q llegar aca
 			break;
