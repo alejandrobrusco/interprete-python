@@ -33,7 +33,7 @@ public class IndexType extends Types {
 	@Override
 	public String toStringValue() {
 		
-		return null;
+		return index.toString();
 	}
 
 
