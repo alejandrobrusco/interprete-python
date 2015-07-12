@@ -1,9 +1,6 @@
 package com.language.types;
 
-import java.util.List;
 import java.util.Map;
-
-import com.language.types.Types;
 
 public class DicType extends Types {
 
