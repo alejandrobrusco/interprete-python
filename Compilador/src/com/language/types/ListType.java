@@ -24,8 +24,10 @@ public class ListType extends Types {
 	@Override
 	public void print() {
 		System.out.print("[");
+		Types first = value.remove(0);
+		System.out.println(first.toStringValue());
 		for (Types types : value) {
-			System.out.print(types.toStringValue() + ",");
+			System.out.print("," + types.toStringValue());
 		}
 		System.out.print("]");
 	}
