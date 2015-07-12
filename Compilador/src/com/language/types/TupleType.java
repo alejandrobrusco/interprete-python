@@ -20,8 +20,10 @@ public class TupleType extends Types {
 	@Override
 	public void print() {
 		System.out.print("(");
+		Types first = value.remove(0);
+		System.out.print(first.toStringValue());
 		for (Types types : value) {
-			System.out.print(types.toStringValue() + ",");
+			System.out.print("," + types.toStringValue());
 		}
 		System.out.print(")");
 	}
