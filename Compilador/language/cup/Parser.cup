@@ -297,12 +297,12 @@ expression				::=  MINUS expression:expr
 								
 						  | INTEGER:value												
 								{: RESULT = new IntegerExp((String)value); :}
-					  	  | FLOAT:value
-								{: RESULT = new FloatExp(((String)value)); :}	
-						  | LONG:value
-								{: RESULT = new LongExp(((String)value)); :}
+					  	  | FLOATATION:value
+								{: RESULT = new FloatExp((String)value); :}	
+						  | LONGER:value
+								{: RESULT = new LongExp((String)value); :}
 						  | STRING:value
-								{: RESULT = new StringExp(((String)value)); :}
+								{: RESULT = new StringExp((String)value); :}
 								
 						  | IDENTIFIER:value
 								{: RESULT = new IdentifierExp((String)value); :}

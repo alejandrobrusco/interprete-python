@@ -52,7 +52,7 @@ LineTerminator = \r|\n|\r\n
 WhiteSpace     = [ \f]+
 
 Digit					= [0-9]
-Integer                 = 0 | [1-9]{Digit}*
+Integer                 = (0 | [1-9]){Digit}*
 Float                   = {Integer}?\.{Digit}*
 Long                    = {Integer}[lL]
 Letter                  = [a-zA-Z]
