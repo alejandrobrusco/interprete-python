@@ -292,63 +292,48 @@ print ""
 
 
 print "GREATEROREQUAL"
+# No se implemento esta operacion con los diccionarios, tuplas ni listas
 
 print s >= s
 print s >= f
 print s >= l
 print s >= i
 print s >= b
-# No se implemento esta operacion con los diccionarios
 #print s >= d
-# No se implemento esta operacion con las tuplas
 #print s >= t
-# No se implemento esta operacion con las listas
 #print s >= lista
 print f >= s
 print f >= f
 print f >= l
 print f >= i
 print f >= b
-# No se implemento esta operacion con los diccionarios
 #print f >= d
-# No se implemento esta operacion con las tuplas
 #print f >= t
-# No se implemento esta operacion con las listas
 #print f >= lista
 print l >= s
 print l >= f
 print l >= l
 print l >= i
 print l >= b
-# No se implemento esta operacion con los diccionarios
 #print l >= d
-# No se implemento esta operacion con las tuplas
 #print l >= t
-# No se implemento esta operacion con las listas
 #print l >= lista
 print i >= s
 print i >= f
 print i >= l
 print i >= i
 print i >= b
-# No se implemento esta operacion con los diccionarios
 #print i >= d
-# No se implemento esta operacion con las tuplas
 #print i >= t
-# No se implemento esta operacion con las listas
 #print i >= lista
 print b >= s
 print b >= f
 print b >= l
 print b >= i
 print b >= b
-# No se implemento esta operacion con los diccionarios
 #print b >= d
-# No se implemento esta operacion con las tuplas
 #print b >= t
-# No se implemento esta operacion con las listas
 #print b >= lista
-# No se implemento esta operacion con los diccionarios
 #print d >= s
 #print d >= f
 #print d >= l
@@ -357,13 +342,11 @@ print b >= b
 #print d >= d
 #print d >= t
 #print d >= lista
-# No se implemento esta operacion con las tuplas
 #print t >= s
 #print t >= f
 #print t >= l
 #print t >= i
 #print t >= b
-# No se implemento esta operacion con los diccionarios
 #print t >= d
 #print t >= t
 #print t >= lista
@@ -372,74 +355,56 @@ print b >= b
 #print lista >= l
 #print lista >= i
 #print lista >= b
-# No se implemento esta operacion con los diccionarios
 #print lista >= d
-# No se implemento esta operacion con las tuplas
 #print lista >= t
-# No se implemento esta operacion con las listas
 #print lista >= lista
 
 print ""
 
 
 print "GREATER"
+# No se implemento esta operacion con los diccionarios, tuplas ni listas
 
 print s > s
 print s > f
 print s > l
 print s > i
 print s > b
-# No se implemento esta operacion con los diccionarios
 #print s > d
-# No se implemento esta operacion con las tuplas
 #print s > t
-# No se implemento esta operacion con las listas
 #print s > lista
 print f > s
 print f > f
 print f > l
 print f > i
 print f > b
-# No se implemento esta operacion con los diccionarios
 #print f > d
-# No se implemento esta operacion con las tuplas
 #print f > t
-# No se implemento esta operacion con las listas
 #print f > lista
 print l > s
 print l > f
 print l > l
 print l > i
 print l > b
-# No se implemento esta operacion con los diccionarios
 #print l > d
-# No se implemento esta operacion con las tuplas
 #print l > t
-# No se implemento esta operacion con las listas
 #print l > lista
 print i > s
 print i > f
 print i > l
 print i > i
 print i > b
-# No se implemento esta operacion con los diccionarios
 #print i > d
-# No se implemento esta operacion con las tuplas
 #print i > t
-# No se implemento esta operacion con las listas
 #print i > lista
 print b > s
 print b > f
 print b > l
 print b > i
 print b > b
-# No se implemento esta operacion con los diccionarios
 #print b > d
-# No se implemento esta operacion con las tuplas
 #print b > t
-# No se implemento esta operacion con las listas
 #print b > lista
-# No se implemento esta operacion con los diccionarios
 #print d > s
 #print d > f
 #print d > l
@@ -448,91 +413,69 @@ print b > b
 #print d > d
 #print d > t
 #print d > lista
-# No se implemento esta operacion con las tuplas
 #print t > s
 #print t > f
 #print t > l
 #print t > i
 #print t > b
-# No se implemento esta operacion con los diccionarios
 #print t > d
-# No se implemento esta operacion con las tuplas
 #print t > t
 #print t > lista
-# No se implemento esta operacion con las listas
 #print lista > s
 #print lista > f
 #print lista > l
 #print lista > i
 #print lista > b
-# No se implemento esta operacion con los diccionarios
 #print lista > d
-# No se implemento esta operacion con las tuplas
 #print lista > t
-# No se implemento esta operacion con las listas
 #print lista > lista
 
 print ""
 
 
 print "LESSOREQUAL"
+# No se implemento esta operacion con los diccionarios, tuplas ni listas
 
 print s <= s
 print s <= f
 print s <= l
 print s <= i
 print s <= b
-# No se implemento esta operacion con los diccionarios
 #print s <= d
-# No se implemento esta operacion con las tuplas
 #print s <= t
-# No se implemento esta operacion con las listas
 #print s <= lista
 print f <= s
 print f <= f
 print f <= l
 print f <= i
 print f <= b
-# No se implemento esta operacion con los diccionarios
 #print f <= d
-# No se implemento esta operacion con las tuplas
 #print f <= t
-# No se implemento esta operacion con las listas
 #print f <= lista
 print l <= s
 print l <= f
 print l <= l
 print l <= i
 print l <= b
-# No se implemento esta operacion con los diccionarios
 #print l <= d
-# No se implemento esta operacion con las tuplas
 #print l <= t
-# No se implemento esta operacion con las listas
 #print l <= lista
 print i <= s
 print i <= f
 print i <= l
 print i <= i
 print i <= b
-# No se implemento esta operacion con los diccionarios
 #print i <= d
-# No se implemento esta operacion con las tuplas
 #print i <= t
-# No se implemento esta operacion con las listas
 #print i <= lista
 print b <= s
 print b <= f
 print b <= l
 print b <= i
 print b <= b
-# No se implemento esta operacion con los diccionarios
 #print b <= d
-# No se implemento esta operacion con las tuplas
 #print b <= t
-# No se implemento esta operacion con las listas
 #print b <= lista
-# No se implemento esta operacion con los diccionarios
 #print d <= s
 #print d <= f
 #print d <= l
@@ -541,47 +484,35 @@ print b <= b
 #print d <= d
 #print d <= t
 #print d <= lista
-# No se implemento esta operacion con las tuplas
 #print t <= s
 #print t <= f
 #print t <= l
 #print t <= i
 #print t <= b
-# No se implemento esta operacion con los diccionarios
 #print t <= d
-# No se implemento esta operacion con las tuplas
 #print t <= t
 #print t <= lista
-# No se implemento esta operacion con las listas
 #print lista <= s
-# No se implemento esta operacion con las listas
 #print lista <= f
-# No se implemento esta operacion con las listas
 #print lista <= l
-# No se implemento esta operacion con las listas
 #print lista <= i
-# No se implemento esta operacion con las listas
 #print lista <= b
-# No se implemento esta operacion con los diccionarios
 #print lista <= d
-# No se implemento esta operacion con las tuplas
 #print lista <= t
-# No se implemento esta operacion con las listas
 #print lista <= lista
 
 print ""
 
 
 print "LESS"
+# No se implemento esta operacion con los diccionarios, tuplas ni listas
 
 print s < s
 print s < f
 print s < l
 print s < i
 print s < b
-# No se implemento esta operacion con los diccionarios
 #print s < d
-# No se implemento esta operacion con las tuplas
 #print s < t
 print s < lista
 print f < s
@@ -589,45 +520,33 @@ print f < f
 print f < l
 print f < i
 print f < b
-# No se implemento esta operacion con los diccionarios
 #print f < d
-# No se implemento esta operacion con las tuplas
 #print f < t
-# No se implemento esta operacion con las listas
 #print f < lista
 print l < s
 print l < f
 print l < l
 print l < i
 print l < b
-# No se implemento esta operacion con los diccionarios
 #print l < d
-# No se implemento esta operacion con las tuplas
 #print l < t
-# No se implemento esta operacion con las listas
 #print l < lista
 print i < s
 print i < f
 print i < l
 print i < i
 print i < b
-# No se implemento esta operacion con los diccionarios
 #print i < d
-# No se implemento esta operacion con las tuplas
 #print i < t
-# No se implemento esta operacion con las listas
 #print i < lista
 print b < s
 print b < f
 print b < l
 print b < i
 print b < b
-# No se implemento esta operacion con los diccionarios
 #print b < d
-# No se implemento esta operacion con las tuplas
 #print b < t
 #print b < lista
-# No se implemento esta operacion con los diccionarios
 #print d < s
 #print d < f
 #print d < l
@@ -636,26 +555,20 @@ print b < b
 #print d < d
 #print d < t
 #print d < lista
-# No se implemento esta operacion con las tuplas
 #print t < s
 #print t < f
 #print t < l
 #print t < i
 #print t < b
-# No se implemento esta operacion con los diccionarios
 #print t < d
-# No se implemento esta operacion con las tuplas
 #print t < t
 #print t < lista
-# No se implemento esta operacion con las listas
 #print lista < s
 #print lista < f
 #print lista < l
 #print lista < i
 #print lista < b
-# No se implemento esta operacion con los diccionarios
 #print lista < d
-# No se implemento esta operacion con las tuplas
 #print lista < t
 #print lista < lista
 
