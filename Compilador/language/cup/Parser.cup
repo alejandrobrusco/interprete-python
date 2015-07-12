@@ -251,7 +251,7 @@ expression				::=  MINUS expression:expr
 								:}	
 						  |	LCURLY RCURLY
 								{: RESULT = new DicExp(new HashMap<Expression,Expression>());	:}	
-						  |	LCURLY expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map RCURLY
+						  |	LCURLY expression:exprKey COLON expression:exprValue expression_dict_list:map RCURLY
 								{: 
 									((DicExp)map).put((Expression)exprKey,(Expression)exprValue);
 									RESULT = map;	
@@ -329,7 +329,7 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 									RESULT = new FunctionDefinitionStm((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
 								:};		
 
-expression_dict_list	::= COMMA expression:exprKey SEMI_COLON expression:exprValue expression_dict_list:map 
+expression_dict_list	::= COMMA expression:exprKey COLON expression:exprValue expression_dict_list:map 
 								{: 
 									((DicExp)map).put((Expression)exprKey,(Expression)exprValue);
 									RESULT = map;	
