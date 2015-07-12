@@ -195,7 +195,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 {LineTerminator}	{	if(current_indent > stack.peek()){
 							stack.push(current_indent);
 							yybegin(normal_status);
-							return symbol(sym.INDENT);
+							//return symbol(sym.INDENT);
 						}
 						else if(current_indent == stack.peek()){
 							yybegin(normal_status);

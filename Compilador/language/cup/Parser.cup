@@ -317,7 +317,7 @@ compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:l
 								{: RESULT = new IfStm((Expression)expr, (List<Statement>)list); :}
 						  |	WHILE expression:expr COLON suite:list
 								{: RESULT = new WhileStm((Expression)expr, (List<Statement>)list); :}
-						  |	FOR IDENTIFIER:identifier IN expression:expr SEMI_COLON suite:list
+						  |	FOR IDENTIFIER:identifier IN expression:expr COLON suite:list
 								{: RESULT = new ForStm((String)identifier,(Expression)expr, (List<Statement>)list); :}
 						  |	DEF IDENTIFIER:identifier LPARAN RPARAN COLON suite:list
 								{:	com.language.compilador.AuxiliaryElements.functionList.add((String) identifier);
@@ -339,9 +339,15 @@ expression_dict_list	::= COMMA expression:exprKey SEMI_COLON expression:exprValu
 
 
 suite					::= stmt_list:list NEWLINE
-								{: RESULT = (List<Statement>)list; :}
+								{: 
+									Collections.reverse((List<Statement>)list);
+									RESULT = (List<Statement>)list; 
+								:}
 						  |	NEWLINE INDENT statement_list:list DEDENT
-								{: RESULT = (List<Statement>)list;	:};	  	
+								{: 
+									Collections.reverse((List<Statement>)list);
+									RESULT = (List<Statement>)list;	
+								:};	  	
 
 target					::= IDENTIFIER:id LBRACKET index:i RBRACKET
 								{: RESULT = new TargetExp((String)id,(Expression)i); :};
