@@ -25,7 +25,7 @@ public class ListType extends Types {
 	public void print() {
 		System.out.print("[");
 		Types first = value.remove(0);
-		System.out.println(first.toStringValue());
+		System.out.print(first.toStringValue());
 		for (Types types : value) {
 			System.out.print("," + types.toStringValue());
 		}
