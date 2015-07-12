@@ -1,5 +1,7 @@
 package com.language.types;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class DicType extends Types {
@@ -17,7 +19,22 @@ public class DicType extends Types {
 
 	@Override
 	public void print() {
-		System.out.println(dic.toString());
+		System.out.print("{");
+		List<Types> list = new ArrayList<Types>();
+		list.addAll(dic.keySet());
+		Types first = list.remove(0);
+		printElement(first);
+		for (Types t : list) {
+			System.out.print(", ");
+			printElement(t);
+		}
+		System.out.print("}");
+	}
+
+	private void printElement(Types t) {
+		t.print();
+		System.out.print(": ");
+		dic.get(t).print();
 	}
 	
 	public Map<Types, Types> getDic() {

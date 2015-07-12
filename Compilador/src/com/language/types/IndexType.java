@@ -5,7 +5,6 @@ public class IndexType extends Types {
 	public final static String ONLY_INDEX = "ONLY_INDEX";
 	public final static String EMPTY_ = "ONLY_INDEX";
 
-	
 	Long from;
 	Long to;
 	Long step;
@@ -18,7 +17,6 @@ public class IndexType extends Types {
 		this.index = index;
 
 	}
-	
 
 	@Override
 	public TypeEnum getType() {

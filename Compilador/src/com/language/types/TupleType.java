@@ -21,7 +21,7 @@ public class TupleType extends Types {
 	public void print() {
 		System.out.print("(");
 		Types first = value.remove(0);
-		System.out.print(first.toStringValue());
+		first.print();
 		for (Types types : value) {
 			System.out.print("," + types.toStringValue());
 		}
