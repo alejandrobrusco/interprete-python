@@ -1,7 +1,6 @@
 package com.language.model.expression;
 
 import com.language.types.FloatType;
-import com.language.types.LongType;
 import com.language.types.Types;
 
 public class FloatExp extends Expression {
@@ -12,6 +11,7 @@ public class FloatExp extends Expression {
 		this.value = new Float(value);
 	}
 	
+	@Override
 	public Types eval() {
 		return new FloatType(value);
 	}

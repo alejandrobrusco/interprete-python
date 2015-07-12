@@ -11,6 +11,7 @@ public class LongExp extends Expression {
 		this.value = new Long(value);
 	}
 	
+	@Override
 	public Types eval() {
 		return new LongType(value);
 	}
