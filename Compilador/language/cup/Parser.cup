@@ -7,6 +7,7 @@ import com.language.model.expression.*;
 import com.language.model.operators.*;
 import com.language.model.statements.*;
 import com.language.exceptions.*;
+import com.language.types.TypeEnum;
 
 terminal String SIGN;
 terminal String PLUS;
@@ -281,6 +282,21 @@ expression				::=  MINUS expression:expr
 								{: RESULT = new LongExp((String)value); :}
 						  | STRING:value
 								{: RESULT = new StringExp((String)value); :}
+						
+						  | INT:value LPARAN expression:expr RPARAN												
+								{: RESULT = new TransformerExp((Expression) expr,TypeEnum.int_type); :}
+					  	  | FLOAT:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.float_type); :}	
+						  | LONG:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.long_type); :}
+						  | STR:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.string_type); :}		
+						  | TUPLE:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.tuple_type); :}	
+						  | DICT:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.dict_type); :}
+						  | LIST:value LPARAN expression:expr RPARAN
+								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.list_type); :}		
 								
 						  | IDENTIFIER:value
 								{: RESULT = new IdentifierExp((String)value); :}
