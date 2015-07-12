@@ -41,5 +41,9 @@ public class ListType extends Types {
 		return this.value.toString();
 	}
 	
+	public void setList(List<Types> value){
+		this.value = value;
+	}
+	
 
 }

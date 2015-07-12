@@ -157,7 +157,10 @@ statement_list 			::= statement:stmt statement_list:list
 								{: RESULT = new LinkedList<Statement>(); :};
 								
 statement    			::= stmt_list:list NEWLINE 
-								{: RESULT = list; :}	
+								{: 
+									Collections.reverse((List<Statement>)list);
+									RESULT = list; 
+								:}	
 						  |	compound_statement:compound_stm
 						  	    {:  
 						  	    	List<Statement> list = new LinkedList<Statement>();
@@ -184,7 +187,10 @@ stmt_list				::= simple_statement:simple SEMI_COLON stmt_list:list
 simple_statement		::= expression:expr
 								{: RESULT = new ExpressionStm((Expression)expr);	:}
 						  | PRINT expression_list:list			
-								{: RESULT = new PrintStm((List<Expression>)list);	:}
+								{: 
+									Collections.reverse((List<Expression>)list);
+									RESULT = new PrintStm((List<Expression>)list);	
+								:}
 						  | TYPE LPARAN expression:expr RPARAN
 								{: RESULT = new TypeExp((Expression) expr); :}
 						  | RAW_INPUT LPARAN RPARAN

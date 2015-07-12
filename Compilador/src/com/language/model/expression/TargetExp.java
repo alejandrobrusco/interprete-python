@@ -313,6 +313,7 @@ public class TargetExp extends Expression {
 				}
 				else{
 					list.add(index, valueToAssing.eval());
+					listType.setList(list);
 				}
 			}
 			else{
@@ -321,7 +322,6 @@ public class TargetExp extends Expression {
 				
 				if (valueToAssing.eval().getType().equals(TypeEnum.list_type)){
 					
-					List<Types> subListToRemove = new ArrayList<Types>();
 					List<Types> subListToAdd = ((ListType)valueToAssing.eval()).getList();
 					
 					boolean returnEmptyList = false;
@@ -360,6 +360,7 @@ public class TargetExp extends Expression {
 								firstPart.addAll(secondPart);
 
 								list = new ArrayList<>(firstPart);
+								listType.setList(list);
 
 							}
 						}
@@ -398,7 +399,7 @@ public class TargetExp extends Expression {
 								firstPart.addAll(secondPart);
 
 								list = new ArrayList<>(firstPart);
-
+								listType.setList(list);
 							}
 						}
 					}
@@ -434,7 +435,7 @@ public class TargetExp extends Expression {
 								firstPart.addAll(secondPart);
 
 								list = new ArrayList<>(firstPart);
-
+								listType.setList(list);
 							}
 						}
 					}
@@ -470,7 +471,7 @@ public class TargetExp extends Expression {
 								firstPart.addAll(secondPart);
 
 								list = new ArrayList<>(firstPart);
-
+								listType.setList(list);
 							}
 						}
 					}
