@@ -49,6 +49,7 @@ terminal String RCURLY;
 terminal String COLON;
 terminal String SEMI_COLON;
 terminal String COMMA;
+terminal String DOT;
 
 terminal String PRINT;
 terminal String TYPE;
@@ -71,24 +72,8 @@ terminal String TUPLE;
 terminal String LIST;
 terminal String DICT;
 terminal String RAW_INPUT;
-terminal String HAS_KEY;
-terminal String ITEMS;
-terminal String KEYS;
-terminal String POP;
-terminal String VALUES;
-terminal String COUNT;
-terminal String FIND;
-terminal String JOIN;
-terminal String SPLIT;
-terminal String REPLACE;
-terminal String LENGTH;
-terminal String APPEND;
-terminal String EXTEND;
-terminal String INDEX;
-terminal String INSERT;
-terminal String SIZE;
-terminal String STRING;
 
+terminal String STRING;
 terminal String FLOATATION;
 terminal String INTEGER;
 terminal String LONGER;
@@ -202,7 +187,9 @@ simple_statement		::= expression:expr
 						  |	target:value ASSIGN expression:expr
 								{: RESULT = new TargetAssignStm((Expression)value, (Expression)expr); :}
 						  |	IDENTIFIER:value LPARAN expression_list:list RPARAN
-								{: RESULT = new FunctionExp (new IdentifierExp((String)value), (LinkedList<Expression>)list); :}		
+								{: RESULT = new FunctionExp (new IdentifierExp((String)value), (List<Expression>)list); :}
+						  |	IDENTIFIER:value DOT IDENTIFIER:predefined LPARAN expression_list:list RPARAN
+								{: RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value),new IdentifierExp((String)predefined), (List<Expression>)list); :}		
 						  | RETURN expression:expr
 						  		{: RESULT = new ReturnStm ((Expression)expr); :};
 
