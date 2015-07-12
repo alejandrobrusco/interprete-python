@@ -514,7 +514,7 @@ print s < i
 print s < b
 #print s < d
 #print s < t
-print s < lista
+#print s < lista
 print f < s
 print f < f
 print f < l
