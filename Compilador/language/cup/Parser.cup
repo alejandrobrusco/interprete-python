@@ -222,7 +222,10 @@ expression				::=  MINUS expression:expr
 						  |	LPARAN expression:expr RPARAN
 								{: RESULT = new ParenthesesExp((Expression)expr); :}
 						  |	LPARAN expression_list:list RPARAN
-								{: RESULT = new TupleExp((List<Expression>)list); :}							
+								{: 
+									Collections.reverse((List<Expression>)list);
+									RESULT = new TupleExp((List<Expression>)list); 
+								:}							
 						  |	LBRACKET expression_list:list RBRACKET
 								{:  
 									Collections.reverse((List<Expression>)list);
