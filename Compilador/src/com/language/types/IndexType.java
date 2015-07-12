@@ -24,8 +24,8 @@ public class IndexType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print(this.getType());
+	public String print() {
+		return this.getType().toString();
 	}
 
 	@Override

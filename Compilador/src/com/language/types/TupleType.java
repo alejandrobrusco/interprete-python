@@ -18,16 +18,17 @@ public class TupleType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print("(");
+	public String print() {
+		String ret = "(";
 		if (!this.value.isEmpty()){
 			Types first = this.value.remove(0);
-			first.print();
+			ret = ret.concat(first.print());
 			for (Types types : this.value) {
-				System.out.print("," + types.toStringValue());
+				ret = ret.concat("," + types.print());
 			}
 		}
-		System.out.print(")");
+		ret = ret.concat(")");
+		return ret;
 	}
 	
 	public List<Types> getTuple() {

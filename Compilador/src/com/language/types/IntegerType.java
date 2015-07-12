@@ -16,8 +16,8 @@ public class IntegerType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print(value);
+	public String print() {
+		return String.valueOf(value);
 	}
 	
 	public Integer getInteger(){

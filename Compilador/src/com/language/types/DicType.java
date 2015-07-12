@@ -21,25 +21,27 @@ public class DicType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print("{");
+	public String print() {
+		 String ret = "{";
 		if (!this.dic.isEmpty()){
 			List<Types> list = new ArrayList<Types>();
 			list.addAll(dic.keySet());
 			Types first = list.remove(0);
-			printElement(first);
+			ret = ret.concat(printElement(first));
 			for (Types t : list) {
-				System.out.print(", ");
-				printElement(t);
+				ret = ret.concat(", ");
+				ret = ret.concat(printElement(t));
 			}
 		}
-		System.out.print("}");
+		ret = ret.concat("}");
+		return ret;
 	}
 
-	private void printElement(Types t) {
-		t.print();
-		System.out.print(": ");
-		dic.get(t).print();
+	private String printElement(Types t) {
+		String ret = t.print();
+		ret = ret.concat(": ");
+		ret = ret.concat(dic.get(t).print());
+		return ret;
 	}
 	
 	public Map<Types, Types> getDic() {

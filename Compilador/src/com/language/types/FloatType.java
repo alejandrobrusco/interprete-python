@@ -16,8 +16,8 @@ public class FloatType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print(value);
+	public String print() {
+		return String.valueOf(value);
 	}
 	
 	public Float getFloat() {

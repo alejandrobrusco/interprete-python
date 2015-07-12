@@ -16,12 +16,14 @@ public class BooleanType extends Types {
 	}
 
 	@Override
-	public void print() {
+	public String print() {
+		String ret = "";
 		if (value){
-			System.out.print("True");
+			ret ="True";
 		} else {
-			System.out.print("False");
+			ret ="False";
 		}
+		return ret;
 	}
 	
 	public Boolean getBoolean() {

@@ -16,8 +16,8 @@ public class TypeType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print("<type '"+ type +"'>");
+	public String print() {
+		return "<type '"+ type +"'>";
 	}
 	
 	public String getTypeValue() {

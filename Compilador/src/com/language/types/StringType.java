@@ -16,8 +16,8 @@ public class StringType extends Types {
 	}
 
 	@Override
-	public void print() {
-		System.out.print(value);
+	public String print() {
+		return value;
 	}
 	
 	public String getString() {
