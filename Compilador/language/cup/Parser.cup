@@ -176,20 +176,11 @@ simple_statement		::= expression:expr
 									Collections.reverse((List<Expression>)list);
 									RESULT = new PrintStm((List<Expression>)list);	
 								:}
-						  | TYPE LPARAN expression:expr RPARAN
-								{: RESULT = new TypeExp((Expression) expr); :}
-						  | RAW_INPUT LPARAN RPARAN
-								{: RESULT = new RawInputExp(); :}
-						  | RAW_INPUT LPARAN expression:expr RPARAN
-								{: RESULT = new RawInputExp((Expression) expr); :}		
 						  | IDENTIFIER:value ASSIGN expression:expr
 								{: RESULT = new AssignStm(new IdentifierExp((String)value), (Expression)expr); :}
 						  |	target:value ASSIGN expression:expr
 								{: RESULT = new TargetAssignStm((Expression)value, (Expression)expr); :}
-						  |	IDENTIFIER:value LPARAN expression_list:list RPARAN
-								{: RESULT = new FunctionExp (new IdentifierExp((String)value), (List<Expression>)list); :}
-						  |	IDENTIFIER:value DOT IDENTIFIER:predefined LPARAN expression_list:list RPARAN
-								{: RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value),new IdentifierExp((String)predefined), (List<Expression>)list); :}		
+
 						  | RETURN expression:expr
 						  		{: RESULT = new ReturnStm ((Expression)expr); :};
 
@@ -295,7 +286,18 @@ expression				::=  MINUS expression:expr
 								{: RESULT = new IdentifierExp((String)value); :}
 								
 						  | target:value
-						  		{: RESULT = value; :};
+						  		{: RESULT = value; :}
+						  
+						  | TYPE LPARAN expression:expr RPARAN
+								{: RESULT = new TypeExp((Expression) expr); :}
+						  | RAW_INPUT LPARAN RPARAN
+								{: RESULT = new RawInputExp(); :}
+						  | RAW_INPUT LPARAN expression:expr RPARAN
+								{: RESULT = new RawInputExp((Expression) expr); :}
+						  |	IDENTIFIER:value LPARAN expression_list:list RPARAN
+								{: RESULT = new FunctionExp (new IdentifierExp((String)value), (List<Expression>)list); :}
+						  |	IDENTIFIER:value DOT IDENTIFIER:predefined LPARAN expression_list:list RPARAN
+								{: RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value),new IdentifierExp((String)predefined), (List<Expression>)list); :};
 
 								
 compound_statement		::= IF expression:expr COLON suite:listIf ELSE COLON suite:listElse
