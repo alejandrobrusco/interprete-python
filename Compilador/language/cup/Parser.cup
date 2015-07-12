@@ -183,7 +183,13 @@ simple_statement		::= expression:expr
 								{: RESULT = new TargetAssignStm((Expression)value, (Expression)expr); :}
 
 						  | RETURN expression:expr
-						  		{: RESULT = new ReturnStm ((Expression)expr); :};
+						  		{: RESULT = new ReturnStm ((Expression)expr); :}
+						  		
+						  | CONTINUE
+						        {: RESULT = new ContinueStm(); :}
+						        
+						  | BREAK
+						        {: RESULT = new BreakStm(); :};
 
 expression_list			::=  expression:expr COMMA expression_list:list 
 								{: ((List<Expression>)list).add((Expression)expr); 
