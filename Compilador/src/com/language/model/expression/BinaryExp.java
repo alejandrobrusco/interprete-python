@@ -14,6 +14,7 @@ import com.language.types.StringType;
 import com.language.types.TupleType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
+import com.language.utils.Values;
 
 public class BinaryExp extends Expression {
 	
@@ -184,10 +185,11 @@ public class BinaryExp extends Expression {
 // typeEvalLog
 	
 	public Types stringEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		String lStringValue = "";
-		String rStringValue = "";
 		
-		obtenerStringValues(lType,rType,lStringValue,rStringValue,esElPrimero);
+		Values values = obtenerStringValues(lType,rType,esElPrimero);
+		
+		String lStringValue = (String) values.getlValue();
+		String rStringValue = (String) values.getrValue();
 
 		if (operator.equals(BinaryOp.less)){
 			return new BooleanType(lStringValue.compareTo(rStringValue) < 0);
@@ -220,31 +222,28 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types floatEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Float lFloatValue = 0f;
-		Float rFloatValue = 0f;
+
+		Values values = obtenerFloatValues(lType,rType,esElPrimero);
+		
+		Float lFloatValue = (Float) values.getlValue();
+		Float rFloatValue = (Float) values.getrValue();
 		
 		if (operator.equals(BinaryOp.less)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue < rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue > rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue <= rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue >= rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.equal)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue == rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.notEqual)){
-			obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
 			return new BooleanType(lFloatValue != rFloatValue);
 		}
 		else if (operator.equals(BinaryOp.or)){
@@ -260,10 +259,11 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types longEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Long lLongValue = 0l;
-		Long rLongValue = 0l;
 		
-		obtenerLongValues(lType,rType,lLongValue,rLongValue,esElPrimero);
+		Values values = obtenerLongValues(lType,rType,esElPrimero);
+
+		Long lLongValue = (Long) values.getlValue();
+		Long rLongValue = (Long) values.getrValue();
 		
 		if (operator.equals(BinaryOp.less)){
 			return new BooleanType(lLongValue < rLongValue);
@@ -296,28 +296,29 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types intEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Integer lLongValue = 0;
-		Integer rLongValue = 0;
 		
-		obtenerIntValues(lType,rType,lLongValue,rLongValue,esElPrimero);
+		Values values = obtenerIntValues(lType,rType,esElPrimero);
+
+		Integer lIntValue = (Integer) values.getlValue();
+		Integer rIntValue = (Integer) values.getrValue();
 		
 		if (operator.equals(BinaryOp.less)){
-			return new BooleanType(lLongValue < rLongValue);
+			return new BooleanType(lIntValue < rIntValue);
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			return new BooleanType(lLongValue > rLongValue);
+			return new BooleanType(lIntValue > rIntValue);
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			return new BooleanType(lLongValue <= rLongValue);
+			return new BooleanType(lIntValue <= rIntValue);
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			return new BooleanType(lLongValue >= rLongValue);
+			return new BooleanType(lIntValue >= rIntValue);
 		}
 		else if (operator.equals(BinaryOp.equal)){
-			return new BooleanType(lLongValue == rLongValue);
+			return new BooleanType(lIntValue == rIntValue);
 		}
 		else if (operator.equals(BinaryOp.notEqual)){
-			return new BooleanType(lLongValue != rLongValue);
+			return new BooleanType(lIntValue != rIntValue);
 		}
 		else if (operator.equals(BinaryOp.or)){
 			return lType;
@@ -332,28 +333,29 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types boolEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Integer lBoolValue = 0;
-		Integer rBoolValue = 0;
 		
-		obtenerBoolValues(lType,rType,lBoolValue,rBoolValue,esElPrimero);
+		Values values = obtenerBoolValues(lType,rType,esElPrimero);
+		
+		Integer lBoolIntValue = (Integer) values.getlValue();
+		Integer rBoolIntValue = (Integer) values.getrValue();
 		
 		if (operator.equals(BinaryOp.less)){
-			return new BooleanType(lBoolValue < rBoolValue);
+			return new BooleanType(lBoolIntValue < rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			return new BooleanType(lBoolValue > rBoolValue);
+			return new BooleanType(lBoolIntValue > rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			return new BooleanType(lBoolValue <= rBoolValue);
+			return new BooleanType(lBoolIntValue <= rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			return new BooleanType(lBoolValue >= rBoolValue);
+			return new BooleanType(lBoolIntValue >= rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.equal)){
-			return new BooleanType(lBoolValue == rBoolValue);
+			return new BooleanType(lBoolIntValue == rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.notEqual)){
-			return new BooleanType(lBoolValue != rBoolValue);
+			return new BooleanType(lBoolIntValue != rBoolIntValue);
 		}
 		else if (operator.equals(BinaryOp.or)){
 			return lType;
@@ -568,10 +570,10 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types floatEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Float lFloatValue = 0f;
-		Float rFloatValue = 0f;
+		Values values = obtenerFloatValues(lType,rType,esElPrimero);
 		
-		obtenerFloatValues(lType,rType,lFloatValue,rFloatValue,esElPrimero);
+		Float lFloatValue = (Float) values.getlValue();
+		Float rFloatValue = (Float) values.getrValue();
 		
 		if (operator.equals(BinaryOp.add)){
 			return new FloatType(lFloatValue + rFloatValue);
@@ -599,10 +601,11 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types longEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Long lLongValue = 0l;
-		Long rLongValue = 0l;
 		
-		obtenerLongValues(lType,rType,lLongValue,rLongValue,esElPrimero);
+		Values values = obtenerLongValues(lType,rType,esElPrimero);
+
+		Long lLongValue = (Long) values.getlValue();
+		Long rLongValue = (Long) values.getrValue();
 		
 		if (operator.equals(BinaryOp.add)){
 			return new LongType(lLongValue + rLongValue);
@@ -645,10 +648,10 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types intEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Integer lIntValue = 0;
-		Integer rIntValue = 0;
-		
-		obtenerIntValues(lType,rType,lIntValue,rIntValue,esElPrimero);
+		Values values = obtenerIntValues(lType,rType,esElPrimero);
+
+		Integer lIntValue = (Integer) values.getlValue();
+		Integer rIntValue = (Integer) values.getrValue();
 		
 		if (operator.equals(BinaryOp.add)){
 			return new IntegerType(lIntValue + rIntValue);
@@ -691,11 +694,12 @@ public class BinaryExp extends Expression {
 	}
 	
 	public Types boolEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		Integer lBoolIntValue = 0;
-		Integer rBoolIntValue = 0;
 		
-		obtenerBoolValues(lType,rType,lBoolIntValue,rBoolIntValue,esElPrimero);
+		Values values = obtenerBoolValues(lType,rType,esElPrimero);
 		
+		Integer lBoolIntValue = (Integer) values.getlValue();
+		Integer rBoolIntValue = (Integer) values.getrValue();
+
 		if (operator.equals(BinaryOp.add)){
 			return new IntegerType(lBoolIntValue + rBoolIntValue);
 		}
@@ -801,7 +805,9 @@ public class BinaryExp extends Expression {
 	
 // obtenerTypeValues
 
-	private void obtenerStringValues(Types lType, Types rType, String lStringValue, String rStringValue, boolean esElPrimero) {
+	private Values obtenerStringValues(Types lType, Types rType,boolean esElPrimero) {
+		String lStringValue = "";
+		String rStringValue = "";
 		if (esElPrimero) {
 			lStringValue = ((StringType) lType).getString();
 			if (rType.getType().equals(TypeEnum.float_type)){
@@ -834,9 +840,13 @@ public class BinaryExp extends Expression {
 			}
 			rStringValue = ((StringType) rType).getString();
 		}
+		return new Values(lStringValue, rStringValue);
 	}
 	
-	private void obtenerFloatValues(Types lType, Types rType, Float lFloatValue, Float rFloatValue, boolean esElPrimero) {
+	private Values obtenerFloatValues(Types lType, Types rType, boolean esElPrimero) {
+		Float lFloatValue = 0f;
+		Float rFloatValue = 0f;
+		
 		if (esElPrimero) {
 			lFloatValue = ((FloatType) lType).getFloat();
 			if (rType.getType().equals(TypeEnum.float_type)){
@@ -869,9 +879,14 @@ public class BinaryExp extends Expression {
 			}
 			rFloatValue = ((FloatType) rType).getFloat();
 		}
+		return new Values(lFloatValue, rFloatValue);
 	}
 
-	private void obtenerLongValues(Types lType, Types rType, Long lLongValue, Long rLongValue, boolean esElPrimero) {
+	private Values obtenerLongValues(Types lType, Types rType, boolean esElPrimero) {
+		
+		Long lLongValue = 0l;
+		Long rLongValue = 0l;
+		
 		if (esElPrimero) {
 			lLongValue = ((LongType) lType).getLong();
 			if (rType.getType().equals(TypeEnum.long_type)){
@@ -900,9 +915,13 @@ public class BinaryExp extends Expression {
 			}
 			rLongValue = ((LongType) rType).getLong();
 		}
+		return new Values(lLongValue, rLongValue);
 	}
 	
-	private void obtenerIntValues(Types lType, Types rType, Integer lIntValue, Integer rIntValue, boolean esElPrimero) {
+	private Values obtenerIntValues(Types lType, Types rType,boolean esElPrimero) {
+		Integer lIntValue = 0;
+		Integer rIntValue = 0;
+		
 		if (esElPrimero) {
 			lIntValue = ((IntegerType) lType).getInteger();
 			if (rType.getType().equals(TypeEnum.int_type)){
@@ -925,9 +944,15 @@ public class BinaryExp extends Expression {
 			}
 			rIntValue = ((IntegerType) rType).getInteger();
 		}
+		
+		return new Values(lIntValue,rIntValue);
 	}
 	
-	private void obtenerBoolValues(Types lType, Types rType, Integer lBoolIntValue, Integer rBoolIntValue, boolean esElPrimero) {
+	private Values obtenerBoolValues(Types lType, Types rType, boolean esElPrimero) {
+		
+		Integer lBoolIntValue = 0;
+		Integer rBoolIntValue = 0;
+		
 		if (esElPrimero) {
 			lBoolIntValue = ((BooleanType) lType).getIntegerValue();
 			if (rType.getType().equals(TypeEnum.boolean_type)){
@@ -944,6 +969,7 @@ public class BinaryExp extends Expression {
 			}
 			rBoolIntValue = ((BooleanType) rType).getIntegerValue();
 		}
+		return new Values(lBoolIntValue,rBoolIntValue);
 	}
 	
 // divisionEnteraType
