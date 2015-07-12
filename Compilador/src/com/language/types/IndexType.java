@@ -27,8 +27,7 @@ public class IndexType extends Types {
 
 	@Override
 	public void print() {
-		// TODO Auto-generated method stub
-
+		System.out.print(this.getType());
 	}
 
 	@Override

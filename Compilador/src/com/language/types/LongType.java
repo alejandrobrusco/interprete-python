@@ -17,7 +17,7 @@ public class LongType extends Types {
 
 	@Override
 	public void print() {
-		System.out.println(value);
+		System.out.print(value);
 	}
 	
 	public Long getLong() {

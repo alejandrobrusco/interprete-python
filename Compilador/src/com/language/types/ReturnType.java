@@ -15,7 +15,7 @@ public class ReturnType extends Types{
 
 	@Override
 	public void print() {
-		System.out.println("return "+ value.toStringValue());		
+		System.out.print(value.toStringValue());		
 	}
 
 	@Override

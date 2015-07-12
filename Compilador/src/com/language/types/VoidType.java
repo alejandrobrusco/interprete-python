@@ -9,6 +9,7 @@ public class VoidType extends Types {
 
 	@Override
 	public void print() {
+		System.out.print(this.getType());
 	}
 
 	@Override

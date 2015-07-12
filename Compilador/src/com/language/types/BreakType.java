@@ -9,7 +9,7 @@ public class BreakType extends Types {
 
 	@Override
 	public void print() {
-		System.out.println(this.getType());
+		System.out.print(this.getType());
 	}
 
 	@Override
