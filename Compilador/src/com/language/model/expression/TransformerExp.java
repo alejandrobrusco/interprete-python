@@ -1,6 +1,18 @@
 package com.language.model.expression;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.language.types.DicType;
+import com.language.types.FloatType;
 import com.language.types.IntegerType;
+import com.language.types.ListType;
+import com.language.types.LongType;
+import com.language.types.StringType;
+import com.language.types.TupleType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
 
@@ -16,34 +28,125 @@ public class TransformerExp extends Expression {
 	
 	@Override
 	public Types eval() {
+		TypeEnum exprTypeEnum;
 		Types exprType = expr.eval();
-		TypeEnum exprTypeEnum = exprType.getType();
 		switch (toType) {
 		case int_type:
-			return new IntegerType(Integer.parseInt(exprType.toStringValue()));
-//			if (TypeEnum.int_type.equals(exprTypeEnum)){
-//				
-//			} else if (TypeEnum.long_type.equals(exprTypeEnum)){
-//				
-//			} else if (TypeEnum.float_type.equals(exprTypeEnum)){
-//				
-//			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
-//				
-//			} else {
-//				
-//			}
+			if (exprType == null){
+				exprType = new IntegerType(0); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.int_type.equals(exprTypeEnum)){
+				return new IntegerType(Integer.parseInt(exprType.toStringValue()));
+			} else if (TypeEnum.long_type.equals(exprTypeEnum)){
+				return new IntegerType(Integer.parseInt(exprType.toStringValue()));
+			} else if (TypeEnum.float_type.equals(exprTypeEnum)){
+				String stringValue = exprType.toStringValue();
+				return new IntegerType(Integer.parseInt(stringValue.substring(0,stringValue.indexOf("."))));
+			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
+				return new IntegerType(Integer.parseInt(exprType.toStringValue()));
+			} else {
+				//TODO EXCEPTION
+				return new IntegerType(999999999);
+			}
 		case long_type:
-			break;
+			if (exprType == null){
+				exprType = new LongType(0L); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.int_type.equals(exprTypeEnum)){
+				return new LongType(Long.parseLong(exprType.toStringValue()));
+			} else if (TypeEnum.long_type.equals(exprTypeEnum)){
+				return new LongType(Long.parseLong(exprType.toStringValue()));
+			} else if (TypeEnum.float_type.equals(exprTypeEnum)){
+				String stringValue = exprType.toStringValue();
+				return new LongType(Long.parseLong(stringValue.substring(0,stringValue.indexOf("."))));
+			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
+				return new LongType(Long.parseLong(exprType.toStringValue()));
+			} else {
+				//TODO EXCEPTION
+				return new LongType(999999999L);
+			}
 		case float_type:
-			break;
+			if (exprType == null){
+				exprType = new FloatType(0F); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.int_type.equals(exprTypeEnum)){
+				return new FloatType(Float.parseFloat(exprType.toStringValue()));
+			} else if (TypeEnum.long_type.equals(exprTypeEnum)){
+				return new FloatType(Float.parseFloat(exprType.toStringValue()));
+			} else if (TypeEnum.float_type.equals(exprTypeEnum)){
+				return new FloatType(Float.parseFloat(exprType.toStringValue()));
+			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
+				return new FloatType(Float.parseFloat(exprType.toStringValue()));
+			} else {
+				//TODO EXCEPTION
+				return new FloatType(999999999F);
+			}
 		case string_type:
 			break;
 		case tuple_type:
 			break;
 		case list_type:
-			break;
+			if (exprType == null){
+				exprType = new ListType(new ArrayList<Types>()); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.string_type.equals(exprTypeEnum)){
+				String stringValue = exprType.toStringValue();
+				if (!stringValue.isEmpty()){
+					ArrayList<Types> list = new ArrayList<Types>();
+					char[] charArray = stringValue.toCharArray();
+					for (char c : charArray) {
+						Types t = new StringType(String.valueOf(c));
+						list.add(t);
+					}
+					return new ListType(list);
+				}
+				return new ListType();
+			} else if (TypeEnum.list_type.equals(exprTypeEnum)) {
+				return new ListType(((ListType)exprType).getList());
+			} else if (TypeEnum.dict_type.equals(exprTypeEnum)) {
+				Set<Types> dicSet = ((DicType)exprType).getDic().keySet();
+				List<Types> list = new ArrayList<Types>();
+				list.addAll(dicSet);
+				return new ListType(list);
+			} else {
+				//TODO EXCEPTION
+				return new ListType();
+			}
 		case dict_type:
-			break;
+			if (exprType == null){
+				exprType = new ListType(new ArrayList<Types>()); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.list_type.equals(exprTypeEnum)){
+				List<Types> list = ((ListType)exprType).getList();
+				if (list == null){
+					return new DicType();
+				}
+				Map<Types,Types> map = new HashMap<Types,Types>();
+				for (Types types : list) {
+					if (TypeEnum.tuple_type.equals(types.getType())){
+						List<Types> tuple = ((TupleType)types).getTuple();
+						if (tuple.size() == 2){
+							Types key = tuple.get(0);
+							Types value = tuple.get(1);
+							map.put(key, value);
+						} else {
+							//TODO EXCEPTION (tienen que ser tuplas de 2 elementos)
+							return null;
+						}
+					} else {
+						//TODO EXCEPTION (tienen que ser tuplas de 2 elementos)
+						return null;
+					}
+				}
+				return new DicType(map);
+			}
+			
+			//TODO FALTA CONSIDERAR ESTO dict(algo=123,otro="asd")
 		default:
 			//TODO EXCEPTION no tendria q llegar aca
 			break;

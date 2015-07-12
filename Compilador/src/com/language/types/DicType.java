@@ -8,6 +8,9 @@ public class DicType extends Types {
 
 	Map<Types,Types> dic;
 	
+	public DicType(){
+	}
+	
 	public DicType(Map<Types,Types> map){
 		this.dic = map;
 	}
@@ -20,13 +23,15 @@ public class DicType extends Types {
 	@Override
 	public void print() {
 		System.out.print("{");
-		List<Types> list = new ArrayList<Types>();
-		list.addAll(dic.keySet());
-		Types first = list.remove(0);
-		printElement(first);
-		for (Types t : list) {
-			System.out.print(", ");
-			printElement(t);
+		if (!this.dic.isEmpty()){
+			List<Types> list = new ArrayList<Types>();
+			list.addAll(dic.keySet());
+			Types first = list.remove(0);
+			printElement(first);
+			for (Types t : list) {
+				System.out.print(", ");
+				printElement(t);
+			}
 		}
 		System.out.print("}");
 	}
