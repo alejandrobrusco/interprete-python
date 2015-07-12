@@ -85,9 +85,40 @@ public class TransformerExp extends Expression {
 				return new FloatType(999999999F);
 			}
 		case string_type:
-			break;
+			if (exprType == null){
+				exprType = new StringType(""); 
+			}
+			exprTypeEnum = exprType.getType();
+			return new StringType(exprType.print());
 		case tuple_type:
-			break;
+			if (exprType == null){
+				exprType = new ListType(new ArrayList<Types>()); 
+			}
+			exprTypeEnum = exprType.getType();
+			if (TypeEnum.string_type.equals(exprTypeEnum)){
+				String stringValue = exprType.toStringValue();
+				if (!stringValue.isEmpty()){
+					ArrayList<Types> list = new ArrayList<Types>();
+					char[] charArray = stringValue.toCharArray();
+					for (char c : charArray) {
+						Types t = new StringType(String.valueOf(c));
+						list.add(t);
+					}
+					return new ListType(list);
+				}
+				return new ListType();
+			} else if (TypeEnum.list_type.equals(exprTypeEnum)) {
+				return new ListType(((ListType)exprType).getList());
+			} else if (TypeEnum.dict_type.equals(exprTypeEnum)) {
+				Set<Types> dicSet = ((DicType)exprType).getDic().keySet();
+				List<Types> list = new ArrayList<Types>();
+				list.addAll(dicSet);
+				return new ListType(list);
+			} else {
+				//TODO EXCEPTION
+				return new ListType();
+			}
+		
 		case list_type:
 			if (exprType == null){
 				exprType = new ListType(new ArrayList<Types>()); 
@@ -107,6 +138,9 @@ public class TransformerExp extends Expression {
 				return new ListType();
 			} else if (TypeEnum.list_type.equals(exprTypeEnum)) {
 				return new ListType(((ListType)exprType).getList());
+			} else if (TypeEnum.tuple_type.equals(exprTypeEnum)) {
+				List<Types> tuple = ((TupleType)exprType).getTuple();
+				return new ListType(tuple);
 			} else if (TypeEnum.dict_type.equals(exprTypeEnum)) {
 				Set<Types> dicSet = ((DicType)exprType).getDic().keySet();
 				List<Types> list = new ArrayList<Types>();

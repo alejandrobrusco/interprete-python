@@ -1,5 +1,6 @@
 package com.language.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.language.types.Types;
@@ -21,9 +22,10 @@ public class TupleType extends Types {
 	public String print() {
 		String ret = "(";
 		if (!this.value.isEmpty()){
-			Types first = this.value.remove(0);
+			List<Types> valueClone = new ArrayList<Types>(this.value);
+			Types first = valueClone.remove(0);
 			ret = ret.concat(first.print());
-			for (Types types : this.value) {
+			for (Types types : valueClone) {
 				ret = ret.concat("," + types.print());
 			}
 		}
