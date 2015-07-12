@@ -16,12 +16,15 @@ public class PrintStm extends Statement {
 	
 	public Types eval() {
 		if (expressions != null){
+			Expression last = expressions.remove(expressions.size()-1);
 			for (Expression expression : expressions) {
 				Types eval = expression.eval();
-				eval.print();
-				System.out.print(" ");
+				String toPrint = eval.print();
+				System.out.print(toPrint + " ");
 			}
-			System.out.println();
+			Types eval = last.eval();
+			String toPrint = eval.print();
+			System.out.println(toPrint);
 		}
 		return new VoidType();
 	}
