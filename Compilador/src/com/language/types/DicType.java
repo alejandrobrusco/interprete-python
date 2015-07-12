@@ -17,7 +17,7 @@ public class DicType extends Types {
 
 	@Override
 	public void print() {
-		
+		System.out.println(dic.toString());
 	}
 	
 	public Map<Types, Types> getDic() {
