@@ -364,8 +364,7 @@ suite					::= stmt_list:list NEWLINE
 								:} 
 						  | NEWLINE suite:list
 						        {:
-						        	Collections.reverse((List<Statement>)list);
-									RESULT = (List<Statement>)list;	
+						        	RESULT = (List<Statement>)list;	
 						        :};	
 						     
 		     

@@ -1,5 +1,6 @@
 package com.language.model.statements;
 
+import com.language.exceptions.IlegalStatementException;
 import com.language.model.expression.Expression;
 import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
@@ -22,8 +23,7 @@ public class ContinueStm extends Statement {
 			return new ContinueType();
 		}
 		else{
-			// Exception: no se puede Continue
-			return null;
+			throw new IlegalStatementException("CONTINUE Sentence not in Iteration Definition\n");
 		}
 		
 	}

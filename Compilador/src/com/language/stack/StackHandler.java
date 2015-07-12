@@ -13,8 +13,7 @@ public class StackHandler {
 	private static StackHandler instance = null;
 	private Stack scopeStack;
 	
-	private boolean contextReturn;
-	
+	private List<Boolean> scopeReturn;
 	private List<ControlVariable> scopeControlVariables; // lista para control de scope con break, continue
 	private Map<String, FunctionDefinitionStm> functionDefinitions;// list for functions
 
@@ -28,6 +27,10 @@ public class StackHandler {
 		this.scopeControlVariables = new ArrayList<ControlVariable>();
 		ControlVariable controlVar = new ControlVariable();
 		this.scopeControlVariables.add(controlVar);
+		
+		this.scopeReturn = new ArrayList<Boolean>();
+		this.scopeReturn.add(Boolean.FALSE);
+
 	}
 	
 	public static StackHandler getInstance() {
@@ -74,16 +77,22 @@ public class StackHandler {
 		this.scopeControlVariables.remove(last);
 	}
 	
+	public void openReturnScope(){
+		this.scopeReturn.add(Boolean.TRUE);
+	}
+	
+	public void closeReturnScope(){
+		int last = this.scopeReturn.size()-1;
+		this.scopeReturn.remove(last);
+	}
+	
 	public ControlVariable getActualScopeControlVariable(){
 		int last = this.scopeControlVariables.size()-1;
 		return this.scopeControlVariables.get(last);
 	}
-
-	public boolean isContextoReturn() {
-		return contextReturn;
-	}
-
-	public void setContextReturn(boolean contextoReturn) {
-		this.contextReturn = contextoReturn;
+	
+	public Boolean getScopeReturn(){
+		int last = this.scopeReturn.size()-1;
+		return this.scopeReturn.get(last);
 	}
 }

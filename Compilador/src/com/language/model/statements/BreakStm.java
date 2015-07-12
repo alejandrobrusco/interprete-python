@@ -1,5 +1,6 @@
 package com.language.model.statements;
 
+import com.language.exceptions.IlegalStatementException;
 import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
 import com.language.types.BreakType;
@@ -21,8 +22,7 @@ public class BreakStm extends Statement {
 			return new BreakType();
 		}
 		else{
-			// Exception: no se puede Continue
-			return null;
+			throw new IlegalStatementException("BREAK Sentence not in Iteration Definition\n");
 		}
 	}
 	

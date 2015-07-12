@@ -36,7 +36,7 @@ public class FunctionExp extends Expression {
 					stack.addVariableToActualScope(definedParameters.get(index), parameterType);
 					index++;
 				}
-				stackHandler.setContextReturn(true);
+				stackHandler.openReturnScope();
 				List<Statement> statemensList = function.getStatemensList();
 				Types ret = null;
 				for (Statement statement : statemensList) {
@@ -46,7 +46,7 @@ public class FunctionExp extends Expression {
 					}
 				}
 				
-				stackHandler.setContextReturn(false);
+				stackHandler.closeReturnScope();
 				stack.closeScope();
 				
 				if (ret instanceof ReturnType){

@@ -3,7 +3,9 @@ package com.language.model.statements;
 import java.util.Collections;
 import java.util.List;
 
+import com.language.stack.StackHandler;
 import com.language.types.Types;
+import com.language.types.VoidType;
 
 public class FunctionDefinitionStm extends Statement {
 	String identifier;
@@ -26,7 +28,12 @@ public class FunctionDefinitionStm extends Statement {
 	}
 	
 	public Types eval() {
-		// no hace nada
-		return null;
+		
+		StackHandler handler = StackHandler.getInstance();
+		
+		handler.addFunction(this.identifier, this);
+		
+		return new VoidType();
+		
 	}
 }
