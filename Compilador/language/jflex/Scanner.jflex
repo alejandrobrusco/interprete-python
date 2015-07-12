@@ -23,7 +23,6 @@ import com.language.model.*;
 
 %{
 	private SymbolFactory sf;
-	private StringBuffer string = new StringBuffer();
 
 	public Scanner(java.io.InputStream r, SymbolFactory sf) {
 		this(r);
@@ -31,9 +30,11 @@ import com.language.model.*;
 	}
 
 	private Symbol symbol(int type) {
+		System.out.println("symbol: " + type + "\n");
 		return new Symbol(type, yyline, yycolumn);
 	}
 	private Symbol symbol(int type, Object value) {
+		System.out.println("symbol: " + type + "\n");
 		return new Symbol(type, yyline, yycolumn, value);
 	}
 	
@@ -45,7 +46,7 @@ import com.language.model.*;
 %}
 
 %eofval{
-    return symbol(sym.EOF);
+	return symbol(sym.EOF);
 %eofval}
 
 LineTerminator = \r|\n|\r\n
@@ -122,6 +123,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 "def"				{ return symbol(sym.DEF); }
 "for"				{ return symbol(sym.FOR); }
 "while"				{ return symbol(sym.WHILE); }
+"in"                { return symbol(sym.IN); }
 
 "continue"			{ return symbol(sym.CONTINUE); }
 "break"				{ return symbol(sym.BREAK); }
@@ -140,8 +142,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 \"{3}(.|\n)*?\"{3}		{ return symbol(sym.STRING, yytext()); }
 \"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
 '{3}(.|\n)*?'{3}		{ return symbol(sym.STRING, yytext()); }
-'([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); }
-
+'([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); } 
 
 {Float}					{return symbol(sym.FLOATATION, yytext()); }
 {Integer}				{return symbol(sym.INTEGER, yytext()); }
@@ -150,8 +151,11 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 {WhiteSpace}        	{ /* ignore */ }
 
-{LineTerminator}	{ yybegin(indent_status);
-					  current_indent = 0;
+{LineTerminator}	{ 
+				      current_indent = 0;	
+				      System.out.println("ident: " + current_indent + "\n");
+					  System.out.println("status: 0");	
+					  yybegin(indent_status);
 					  return symbol(sym.NEWLINE);
 					}
 
@@ -164,29 +168,55 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 .					{	yypushback(1);
 						if(current_indent > stack.peek()){
 							stack.push(current_indent);
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 1");
 							yybegin(normal_status);
 							return symbol(sym.INDENT);
 						}
 						else if(current_indent == stack.peek()){
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 2");
 							yybegin(normal_status);
 						}
 						else{
 							int tmp = stack.pop();
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 3");
 							return symbol(sym.DEDENT);
 						}
 					}
 {LineTerminator}	{	if(current_indent > stack.peek()){
-							stack.push(current_indent);
-							yybegin(normal_status);
+							//stack.push(current_indent);
+							//System.out.println("ident: " + current_indent + "\n");
+							//System.out.println("status: 4");
+							//yybegin(normal_status);
 							//return symbol(sym.INDENT);
+							
+							//yybegin(normal_status);
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 5");
+							current_indent = 0;
+							return symbol(sym.NEWLINE);
 						}
 						else if(current_indent == stack.peek()){
-							yybegin(normal_status);
+							//yybegin(normal_status);
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 5");
+							current_indent = 0;
+							return symbol(sym.NEWLINE);
 						}
 						else{
-							yypushback(1);
-							int tmp = stack.pop();
-							return symbol(sym.DEDENT);
+							//yypushback(1);
+							//System.out.println("ident: " + current_indent + "\n");
+							//System.out.println("status: 6");
+							//int tmp = stack.pop();
+							//return symbol(sym.DEDENT);
+							
+							//yybegin(normal_status);
+							System.out.println("ident: " + current_indent + "\n");
+							System.out.println("status: 5");
+							current_indent = 0;
+							return symbol(sym.NEWLINE);
 						}
 					}
 }

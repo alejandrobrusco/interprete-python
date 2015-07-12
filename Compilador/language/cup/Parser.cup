@@ -352,7 +352,14 @@ suite					::= stmt_list:list NEWLINE
 								{: 
 									Collections.reverse((List<Statement>)list);
 									RESULT = (List<Statement>)list;	
-								:};	  	
+								:} 
+						  | NEWLINE suite:list
+						        {:
+						        	Collections.reverse((List<Statement>)list);
+									RESULT = (List<Statement>)list;	
+						        :};	
+						     
+		     
 
 target					::= IDENTIFIER:id LBRACKET index:i RBRACKET
 								{: RESULT = new TargetExp((String)id,(Expression)i); :};
