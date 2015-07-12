@@ -113,6 +113,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 ":"					{ return symbol(sym.COLON, ":"); }
 ";"					{ return symbol(sym.SEMI_COLON, ";"); }
 ","					{ return symbol(sym.COMMA, ","); }
+"."					{ return symbol(sym.DOT, "."); }
 
 "print"				{ return symbol(sym.PRINT); }
 "type"				{ return symbol(sym.TYPE); }
@@ -136,24 +137,6 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 "raw_input"			{ return symbol(sym.RAW_INPUT); }
 
-/*FUNCIONES PREDEFINIDAS*/
-"has_key"			{ return symbol(sym.HAS_KEY); }		
-"items"				{ return symbol(sym.ITEMS); }
-"keys"				{ return symbol(sym.KEYS); }
-"pop"				{ return symbol(sym.POP); }
-"values"			{ return symbol(sym.VALUES); }
-"count"				{ return symbol(sym.COUNT); }
-"find"				{ return symbol(sym.FIND); }
-"join"				{ return symbol(sym.JOIN); }
-"split"				{ return symbol(sym.SPLIT); }
-"replace"			{ return symbol(sym.REPLACE); }
-"length"			{ return symbol(sym.LENGTH); }
-"append"			{ return symbol(sym.APPEND); }
-"extend"			{ return symbol(sym.EXTEND); }
-"index"				{ return symbol(sym.INDEX); }
-"insert"			{ return symbol(sym.INSERT); }
-"size"				{ return symbol(sym.SIZE); }
-			
 \"{3}(.|\n)*?\"{3}		{ return symbol(sym.STRING, yytext()); }
 \"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
 '{3}(.|\n)*?'{3}		{ return symbol(sym.STRING, yytext()); }
