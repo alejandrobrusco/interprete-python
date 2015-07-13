@@ -184,6 +184,9 @@ simple_statement		::= expression:expr
 
 						  | RETURN expression:expr
 						  		{: RESULT = new ReturnStm ((Expression)expr); :}
+						  
+						  | RETURN
+						  		{: RESULT = new ReturnStm (null); :}
 						  		
 						  | CONTINUE
 						        {: RESULT = new ContinueStm(); :}

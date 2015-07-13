@@ -5,6 +5,7 @@ import com.language.model.expression.Expression;
 import com.language.stack.StackHandler;
 import com.language.types.ReturnType;
 import com.language.types.Types;
+import com.language.types.VoidType;
 
 public class ReturnStm extends Statement {
 
@@ -20,9 +21,14 @@ public class ReturnStm extends Statement {
 		
 		Boolean returnScope = handler.getScopeReturn();
 		if (returnScope){
-			Types evalType = expr.eval();
-			Types returnType = new ReturnType(evalType);
-			return returnType;
+			if (expr!=null){
+				Types evalType = expr.eval();
+				Types returnType = new ReturnType(evalType);
+				return returnType;
+			}
+			else{
+				return new VoidType();
+			}
 		}
 		else{
 			throw new IlegalStatementException("RETURN Sentence not in Function Definition\n");

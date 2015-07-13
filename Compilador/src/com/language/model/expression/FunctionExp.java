@@ -26,6 +26,7 @@ public class FunctionExp extends Expression {
 			String functionId = ((IdentifierExp) idExp).getId();
 			StackHandler stackHandler = StackHandler.getInstance();
 			FunctionDefinitionStm function = stackHandler.findFunction(functionId);
+			stackHandler.openFunctionScope();
 			List<String> definedParameters = function.getParametersList();
 			if (definedParameters.size() == this.parametersList.size()){
 				Stack stack = stackHandler.getStack();
@@ -54,7 +55,7 @@ public class FunctionExp extends Expression {
 				} else {
 					ret = new VoidType();
 				}
-				
+				stackHandler.closeFunctionScope();
 				return ret;
 			} else {
 				//TODO EXCEPTION cant parametros
