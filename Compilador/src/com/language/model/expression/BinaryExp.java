@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.language.exceptions.OperationNotExistException;
 import com.language.model.operators.BinaryOp;
 import com.language.types.BooleanType;
 import com.language.types.DicType;
@@ -38,32 +39,28 @@ public class BinaryExp extends Expression {
 			if (lType.getType().equals(TypeEnum.string_type) || (rType.getType().equals(TypeEnum.string_type))){
 				try {
 					return stringEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
@@ -73,38 +70,32 @@ public class BinaryExp extends Expression {
 					// no pregunto si el FLOAT esElPrimero o el segundo y convierto ambos a FLOAT (a pesar de que al menos 1 ya sea FLOAT).
 					// El motivo de esto es para no duplicar código y hacer 2 funciones prácticamente idéntias 
 					return floatEvalArit(lType, operator, rType);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.long_type) || (rType.getType().equals(TypeEnum.long_type))){
 				try {
 					return longEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.long_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.int_type) || (rType.getType().equals(TypeEnum.int_type))){
 				try {
 					return intEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.int_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.boolean_type) || (rType.getType().equals(TypeEnum.boolean_type))){
 				try {
 					return boolEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.boolean_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else {
-				// [TODO] Excepción de TIPOS
-				return null;
 			}
 			
 		} else if (!tipoOperador(operator)) { // Es Lógica
@@ -122,53 +113,51 @@ public class BinaryExp extends Expression {
 			// Si son de distintos Types y al menos uno no es numerables (Float, Long, Int, Bool) 
 			if ((getTypeValue(lType) != 0 || getTypeValue(rType) != 0) &&
 					(getTypeValue(lType) != getTypeValue(rType))) {
-				return difTypesComparison(lType, operator, rType);
+				try {
+					return difTypesComparison(lType, operator, rType);
+				} catch (OperationNotExistException e) {
+					e.printStackTrace();
+				}
 			} // Si ambos son numerables (Float, Long, Int, Bool)
 			else if (lOrder == 0 && rOrder == 0) {
-				return evalNumerableLog(lType, operator, rType);
+				try {
+					return evalNumerableLog(lType, operator, rType);
+				} catch (OperationNotExistException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			if (lType.getType().equals(TypeEnum.string_type) || (rType.getType().equals(TypeEnum.string_type))){
 				try {
 					return stringEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (OperationNotExistException e) {
 					e.printStackTrace();
 				}
 			}
 			else {
-				// [TODO] Excepción de TIPOS
-				return null;
 			}
 			
-			
-		} else {
-			// [TODO] Operación no definida
-			return null;
 		}
 		return null;
 	}
@@ -176,7 +165,7 @@ public class BinaryExp extends Expression {
 					
 // typeEvalLog
 	
-	public Types stringEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types stringEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		String lStringValue = ((StringType) lType).getString();
 		String rStringValue = ((StringType) rType).getString();
@@ -200,12 +189,11 @@ public class BinaryExp extends Expression {
 			return new BooleanType(lStringValue.compareTo(rStringValue) != 0);
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types floatEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types floatEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 
 		Values values = obtenerFloatValues(lType,rType);
 		
@@ -231,12 +219,11 @@ public class BinaryExp extends Expression {
 			return new BooleanType(lFloatValue.floatValue() != rFloatValue.floatValue());
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types dictEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types dictEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 
 		if (operator.equals(BinaryOp.equal)){
 			Map<Types, Types> lDict = ((DicType) lType).getDic();
@@ -273,12 +260,11 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types tupleEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types tupleEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		if (operator.equals(BinaryOp.equal)){
 			List<Types> lTuple = ((TupleType) lType).getTuple();
@@ -315,12 +301,11 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types listEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types listEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		if (operator.equals(BinaryOp.equal)){
 			if (lType.getType().equals(TypeEnum.list_type) && (rType.getType().equals(TypeEnum.list_type))) {
@@ -365,14 +350,13 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 		
 // typeEvalArit
 	
-	public Types stringEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types stringEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) {
 		// La implementación es un poco distinta a las demás implementaciones de xEvalArit(...) porque es bastante particular este tipo
 		if (operator.equals(BinaryOp.add)){
 			if (lType.getType().equals(TypeEnum.string_type) && (rType.getType().equals(TypeEnum.string_type))){ // "Hola" + "Chau" = "HolaChau". No es necesario hacer el análogo a este ya que los 2 son StringType y no importa el esElPrimero
@@ -380,7 +364,7 @@ public class BinaryExp extends Expression {
 				String lS = ((StringType) lType).getString().concat(rS);
 				return new StringType(lS);
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}				
 		}
 		else if (operator.equals(BinaryOp.mult)){ // Sólo puede ser una multiplicación de un número por un String.
@@ -403,7 +387,7 @@ public class BinaryExp extends Expression {
 			else if (numericType.getType().equals(TypeEnum.boolean_type)){
 				it = ((BooleanType) numericType).getIntegerValue().longValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 			String aux = "";
 			for (long i=0; i< it; i++){
@@ -411,12 +395,11 @@ public class BinaryExp extends Expression {
 			}
 			return new StringType(aux);
 		} else { // Operación inválida
-			// [TODO] Excepción de TIPOS
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
-		return null;
 	}
 	
-	public Types floatEvalArit(Types lType, BinaryOp operator, Types rType) throws Exception{
+	public Types floatEvalArit(Types lType, BinaryOp operator, Types rType) throws OperationNotExistException{
 		Values values = obtenerFloatValues(lType,rType);
 		
 		Float lFloatValue = (Float) values.getlValue();
@@ -443,11 +426,11 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.pow)){ // HAY RIESGO DE OVERFLOW !!!
 			return new FloatType(floatPow(lFloatValue, rFloatValue));
 		} else {
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types longEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types longEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		Values values = obtenerLongValues(lType,rType,esElPrimero);
 
@@ -496,11 +479,11 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.bRShift)){
 			return new LongType(lLongValue >> rLongValue);
 		} else {
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types intEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types intEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		Values values = obtenerIntValues(lType,rType,esElPrimero);
 
 		Integer lIntValue = (Integer) values.getlValue();
@@ -548,11 +531,11 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.bRShift)){
 			return new IntegerType(lIntValue >> rIntValue);
 		} else {
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types boolEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types boolEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		Values values = obtenerBoolValues(lType,rType,esElPrimero);
 		
@@ -598,20 +581,18 @@ public class BinaryExp extends Expression {
 			else if (operator.equals(BinaryOp.bOr)){
 				return new BooleanType(((BooleanType) lType).getBoolean() | ((BooleanType) rType).getBoolean());
 			} else {
-				// [TODO] Excepción de TIPOS
-				return null;
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 		} else { // No hay otros operadores definidos
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 
-	public Types dictEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
-		// [TODO] Excepción de TIPOS
-		return null;
+	public Types dictEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
+		throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 	}
 	
-	public Types tupleEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types tupleEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		if (operator.equals(BinaryOp.add)){
 			List<Types> lTuple = ((TupleType) lType).getTuple();
@@ -620,11 +601,11 @@ public class BinaryExp extends Expression {
 			res.addAll(rTuple);
 			return new TupleType(res);
 		} else { // No hay otros operadores definidos
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
-	public Types listEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws Exception{
+	public Types listEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
 		if (operator.equals(BinaryOp.add)){
 			List<Types> lList = ((ListType) lType).getList();
@@ -633,12 +614,12 @@ public class BinaryExp extends Expression {
 			res.addAll(rList);
 			return new ListType(res);
 		} else { // No hay otros operadores definidos
-			return null;
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 	}
 	
 // obtenerTypeValues
-
+/*
 	private Values obtenerStringValues(Types lType, Types rType,boolean esElPrimero) {
 		String lStringValue = "";
 		String rStringValue = "";
@@ -676,8 +657,9 @@ public class BinaryExp extends Expression {
 		}
 		return new Values(lStringValue, rStringValue);
 	}
+*/
 	
-	private Values obtenerFloatValues(Types lType, Types rType) {
+	private Values obtenerFloatValues(Types lType, Types rType) throws OperationNotExistException {
 		Float lFloatValue = 0f;
 		Float rFloatValue = 0f;
 		
@@ -692,7 +674,7 @@ public class BinaryExp extends Expression {
 		else if (lType.getType().equals(TypeEnum.boolean_type)){
 			lFloatValue = ((BooleanType) lType).getIntegerValue().floatValue();
 		} else{
-			// [TODO] Excepción de TIPOS
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 		
 		if (rType.getType().equals(TypeEnum.float_type)){
@@ -706,12 +688,12 @@ public class BinaryExp extends Expression {
 		else if (rType.getType().equals(TypeEnum.boolean_type)){
 			rFloatValue = ((BooleanType) rType).getIntegerValue().floatValue();
 		} else{
-			// [TODO] Excepción de TIPOS
+			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 		}
 		return new Values(lFloatValue, rFloatValue);
 	}
 
-	private Values obtenerLongValues(Types lType, Types rType, boolean esElPrimero) {
+	private Values obtenerLongValues(Types lType, Types rType, boolean esElPrimero) throws OperationNotExistException {
 		
 		Long lLongValue = 0l;
 		Long rLongValue = 0l;
@@ -727,7 +709,7 @@ public class BinaryExp extends Expression {
 			else if (rType.getType().equals(TypeEnum.boolean_type)){
 				rLongValue = ((BooleanType) rType).getIntegerValue().longValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 		}
 		else {
@@ -747,7 +729,7 @@ public class BinaryExp extends Expression {
 		return new Values(lLongValue, rLongValue);
 	}
 	
-	private Values obtenerIntValues(Types lType, Types rType,boolean esElPrimero) {
+	private Values obtenerIntValues(Types lType, Types rType,boolean esElPrimero) throws OperationNotExistException {
 		Integer lIntValue = 0;
 		Integer rIntValue = 0;
 		
@@ -759,7 +741,7 @@ public class BinaryExp extends Expression {
 			else if (rType.getType().equals(TypeEnum.boolean_type)){
 				rIntValue = ((BooleanType) rType).getIntegerValue().intValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 		}
 		else {
@@ -769,7 +751,7 @@ public class BinaryExp extends Expression {
 			else if (lType.getType().equals(TypeEnum.boolean_type)){
 				lIntValue = ((BooleanType) lType).getIntegerValue().intValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 			rIntValue = ((IntegerType) rType).getInteger();
 		}
@@ -777,7 +759,7 @@ public class BinaryExp extends Expression {
 		return new Values(lIntValue,rIntValue);
 	}
 	
-	private Values obtenerBoolValues(Types lType, Types rType, boolean esElPrimero) {
+	private Values obtenerBoolValues(Types lType, Types rType, boolean esElPrimero) throws OperationNotExistException {
 		
 		Integer lBoolIntValue = 0;
 		Integer rBoolIntValue = 0;
@@ -787,14 +769,14 @@ public class BinaryExp extends Expression {
 			if (rType.getType().equals(TypeEnum.boolean_type)){
 				rBoolIntValue = ((BooleanType) rType).getIntegerValue().intValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 		}
 		else {
 			if (lType.getType().equals(TypeEnum.boolean_type)){
 				lBoolIntValue = ((BooleanType) lType).getIntegerValue().intValue();
 			} else{
-				// [TODO] Excepción de TIPOS
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 			rBoolIntValue = ((BooleanType) rType).getIntegerValue();
 		}
@@ -893,7 +875,7 @@ public class BinaryExp extends Expression {
 		}
 	}
 	
-	private BooleanType difTypesComparison(Types lType, BinaryOp operator, Types rType){
+	private BooleanType difTypesComparison(Types lType, BinaryOp operator, Types rType) throws OperationNotExistException{
 		
 		if (operator.equals(BinaryOp.equal)) {
 			return new BooleanType(false);
@@ -915,13 +897,12 @@ public class BinaryExp extends Expression {
 			else if (operator.equals(BinaryOp.lessOrEqual)){
 				return new BooleanType(lOrder <= rOrder);
 			} else {
-				// TODO: Excepción de Tipos
-				return null;
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 		}
 	}
 	
-	public BooleanType evalNumerableLog(Types lType, BinaryOp operator, Types rType){
+	public BooleanType evalNumerableLog(Types lType, BinaryOp operator, Types rType) throws OperationNotExistException{
 		Values values = obtenerFloatValues(lType,rType);
 		
 		Float lFloatValue = (Float) values.getlValue();
