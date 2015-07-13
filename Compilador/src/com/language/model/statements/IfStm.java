@@ -5,6 +5,9 @@ import java.util.List;
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
 import com.language.types.BooleanType;
+import com.language.types.FloatType;
+import com.language.types.IntegerType;
+import com.language.types.LongType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
 import com.language.types.VoidType;
@@ -22,7 +25,7 @@ public class IfStm extends Statement {
 	public Types eval() {
 		Types eval = expression.eval();
 		Types ret = null;
-		if (TypeEnum.boolean_type.equals(eval.getType())){
+		if (eval.toBooleanValue()!= null && eval.toBooleanValue()){
 			
 			if(((BooleanType)eval).getBoolean().equals(Boolean.TRUE)){
 		

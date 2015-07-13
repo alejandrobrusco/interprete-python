@@ -14,6 +14,11 @@ public class FloatType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.float_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return this.value.floatValue() !=0;
+	}
 
 	@Override
 	public String print() {

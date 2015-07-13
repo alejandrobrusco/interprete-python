@@ -14,6 +14,11 @@ public class IntegerType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.int_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return this.value.intValue() !=0;
+	}
 
 	@Override
 	public String print() {

@@ -20,6 +20,11 @@ public class StringType extends Types {
 		return value;
 	}
 	
+	@Override
+	public Boolean toBooleanValue(){
+		return !this.value.isEmpty();
+	}
+	
 	public String getString() {
 		return this.value;
 	}

@@ -21,6 +21,11 @@ public class ListType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.list_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return !this.value.isEmpty();
+	}
 
 	@Override
 	public String print() {

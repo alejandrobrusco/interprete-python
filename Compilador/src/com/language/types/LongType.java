@@ -14,6 +14,11 @@ public class LongType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.long_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return this.value.longValue() !=0;
+	}
 
 	@Override
 	public String print() {

@@ -11,6 +11,11 @@ public class VoidType extends Types {
 	public String print() {
 		return this.getType().toString();
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return false;
+	}
 
 	@Override
 	public String toStringValue() {

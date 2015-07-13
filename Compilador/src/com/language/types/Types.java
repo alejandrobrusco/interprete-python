@@ -5,6 +5,10 @@ public abstract class Types {
 	public abstract String print();
 	public abstract String toStringValue();	
 	
+	public Boolean toBooleanValue(){
+		return null;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Types){

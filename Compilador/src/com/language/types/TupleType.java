@@ -21,6 +21,11 @@ public class TupleType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.tuple_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return !this.value.isEmpty();
+	}
 
 	@Override
 	public String print() {

@@ -33,9 +33,9 @@ public class WhileStm extends Statement {
 		
 		Types t = null;
 		
-		if (condition.getType().equals(TypeEnum.boolean_type)){
-			BooleanType condValue = (BooleanType) condition;
-			while (condValue.getBoolean()){
+		if (condition.toBooleanValue()!=null){
+			boolean execute = condition.toBooleanValue();
+			while (execute){
 				
 				boolean evalCondition = true;
 				
@@ -60,8 +60,8 @@ public class WhileStm extends Statement {
 				
 				if (evalCondition){
 					condition = this.expression.eval();
-					if (condition.getType().equals(TypeEnum.boolean_type)){
-						condValue = (BooleanType) condition;
+					if (condition.toBooleanValue()!=null){
+						execute = condition.toBooleanValue();
 					}
 					else{
 						// type Exception
@@ -70,7 +70,7 @@ public class WhileStm extends Statement {
 
 				}
 				else{
-					condValue.setBoolean(Boolean.FALSE);
+					execute = false;
 				}
 			}
 			

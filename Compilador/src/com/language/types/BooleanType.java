@@ -14,6 +14,11 @@ public class BooleanType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.boolean_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return value;
+	}
 
 	@Override
 	public String print() {

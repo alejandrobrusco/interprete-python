@@ -23,8 +23,8 @@ public class IfElseStm extends Statement {
 	public Types eval() {
 		Types eval = expression.eval();
 		Types ret = null;
-		if (TypeEnum.boolean_type.equals(eval.getType())){
-			if (((BooleanType)eval).getBoolean()){
+		if (eval.toBooleanValue()!=null){
+			if (eval.toBooleanValue()){
 				if (ifStatementList != null){
 					for (Statement statement : ifStatementList) {
 						ret = statement.eval();

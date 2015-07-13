@@ -14,6 +14,11 @@ public class TypeType extends Types {
 	public TypeEnum getType() {
 		return TypeEnum.type_type;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return this.type.equals(TypeEnum.none_type.getPythonType());
+	}
 
 	@Override
 	public String print() {

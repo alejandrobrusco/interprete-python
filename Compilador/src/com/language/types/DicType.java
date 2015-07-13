@@ -14,6 +14,11 @@ public class DicType extends Types {
 	public DicType(Map<Types,Types> map){
 		this.dic = map;
 	}
+	
+	@Override
+	public Boolean toBooleanValue(){
+		return !dic.isEmpty();
+	}
 
 	@Override
 	public TypeEnum getType() {

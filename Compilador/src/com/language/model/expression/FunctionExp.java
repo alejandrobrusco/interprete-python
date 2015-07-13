@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.language.model.statements.FunctionDefinitionStm;
@@ -14,7 +15,7 @@ public class FunctionExp extends Expression {
 
 	Expression idExp;
 	List<Expression> parametersList;
-	
+
 	public FunctionExp(Expression idExpr, List<Expression> parametersList) {
 		this.idExp = idExpr;
 		this.parametersList = parametersList;
@@ -22,35 +23,42 @@ public class FunctionExp extends Expression {
 
 	@Override
 	public Types eval() {
-		if (idExp instanceof IdentifierExp){
+		if (idExp instanceof IdentifierExp) {
 			String functionId = ((IdentifierExp) idExp).getId();
 			StackHandler stackHandler = StackHandler.getInstance();
 			FunctionDefinitionStm function = stackHandler.findFunction(functionId);
 			stackHandler.openFunctionScope();
 			List<String> definedParameters = function.getParametersList();
-			if (definedParameters.size() == this.parametersList.size()){
+			if (definedParameters.size() == this.parametersList.size()) {
 				Stack stack = stackHandler.getStack();
-				stack.openScope();
-				int index = 0;
+				List<Types> paramsValues = new ArrayList<Types>();
 				for (Expression parameterExp : parametersList) {
 					Types parameterType = parameterExp.eval();
-					stack.addVariableToActualScope(definedParameters.get(index), parameterType);
+					paramsValues.add(parameterType);
+				}
+
+				int index = 0;
+				stack.openScope();
+
+				for (Types types : paramsValues) {
+					stack.addVariableToActualScope(definedParameters.get(index), types);
 					index++;
 				}
+
 				stackHandler.openReturnScope();
 				List<Statement> statemensList = function.getStatemensList();
 				Types ret = null;
 				for (Statement statement : statemensList) {
 					ret = statement.eval();
-					if (ret instanceof ReturnType ){
+					if (ret instanceof ReturnType) {
 						break;
 					}
 				}
-				
+
 				stackHandler.closeReturnScope();
 				stack.closeScope();
-				
-				if (ret instanceof ReturnType){
+
+				if (ret instanceof ReturnType) {
 					ret = ((ReturnType) ret).getValueType();
 				} else {
 					ret = new VoidType();
@@ -58,14 +66,14 @@ public class FunctionExp extends Expression {
 				stackHandler.closeFunctionScope();
 				return ret;
 			} else {
-				//TODO EXCEPTION cant parametros
+				// TODO EXCEPTION cant parametros
 				return new VoidType();
 			}
-		}else{
-			//TODO EXCEPTION no es 
+		} else {
+			// TODO EXCEPTION no es
 			return new VoidType();
 		}
-		
+
 	}
 
 }
