@@ -146,7 +146,7 @@ statement    			::= stmt_list:list NEWLINE
 								{: 
 									Collections.reverse((List<Statement>)list);
 									RESULT = list; 
-								:}	
+								:}
 						  |	compound_statement:compound_stm
 						  	    {:  
 						  	    	List<Statement> list = new LinkedList<Statement>();

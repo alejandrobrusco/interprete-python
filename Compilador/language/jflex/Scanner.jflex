@@ -151,13 +151,18 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 {WhiteSpace}        	{ /* ignore */ }
 
-{LineTerminator}	{ 
-				      current_indent = 0;	
-				      System.out.println("ident: " + current_indent + "\n");
-					  System.out.println("status: 0");	
-					  yybegin(indent_status);
-					  return symbol(sym.NEWLINE);
-					}
+{LineTerminator}		{ 
+					      current_indent = 0;	
+						  yybegin(indent_status);
+						  return symbol(sym.NEWLINE);
+						}
+
+<<EOF>>   		  		{
+						  yypushback(yylength());
+						  yybegin(indent_status);
+						  return symbol(sym.NEWLINE);
+						}
+
 
 }
 
@@ -168,63 +173,36 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 .					{	yypushback(1);
 						if(current_indent > stack.peek()){
 							stack.push(current_indent);
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 1");
 							yybegin(normal_status);
 							return symbol(sym.INDENT);
 						}
 						else if(current_indent == stack.peek()){
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 2");
 							yybegin(normal_status);
 						}
 						else{
 							int tmp = stack.pop();
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 3");
 							return symbol(sym.DEDENT);
 						}
 					}
-{LineTerminator}	{	if(current_indent > stack.peek()){
-							//stack.push(current_indent);
-							//System.out.println("ident: " + current_indent + "\n");
-							//System.out.println("status: 4");
-							//yybegin(normal_status);
-							//return symbol(sym.INDENT);
-							
-							//yybegin(normal_status);
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 5");
-							current_indent = 0;
-							return symbol(sym.NEWLINE);
-						}
-						else if(current_indent == stack.peek()){
-							//yybegin(normal_status);
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 5");
-							current_indent = 0;
-							return symbol(sym.NEWLINE);
-						}
-						else{
-							//yypushback(1);
-							//System.out.println("ident: " + current_indent + "\n");
-							//System.out.println("status: 6");
-							//int tmp = stack.pop();
-							//return symbol(sym.DEDENT);
-							
-							//yybegin(normal_status);
-							System.out.println("ident: " + current_indent + "\n");
-							System.out.println("status: 5");
-							current_indent = 0;
-							return symbol(sym.NEWLINE);
-						}
+
+{LineTerminator}	{	
+						current_indent = 0;
+						return symbol(sym.NEWLINE);
 					}
+
+<<EOF>>     		{	if (!stack.isEmpty() && stack.pop()!=0){
+							yypushback(yylength());
+							return symbol(sym.DEDENT);
+						}
+
+					  	return symbol(sym.EOF);
+					}
+					
 }
 
 
-{Comment}               { /* ignore */ }
+{Comment}           { /* ignore */ }
 
-. 						{
-							throw new ParsingException("Illegal character at line " + yyline + ", column " + yycolumn + " >> " + yytext());
-						}
-
+. 					{
+						throw new ParsingException("Illegal character at line " + yyline + ", column " + yycolumn + " >> " + yytext());
+					}
