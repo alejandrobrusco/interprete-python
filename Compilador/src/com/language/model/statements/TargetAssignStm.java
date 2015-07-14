@@ -1,5 +1,6 @@
 package com.language.model.statements;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.model.expression.Expression;
 import com.language.model.expression.TargetExp;
 import com.language.types.Types;
@@ -26,8 +27,8 @@ public class TargetAssignStm extends Statement {
 			
 		}
 		else{
-			// General error
-			return null;
+			throw new TypeErrorException("General parsing error on evaluating Target Expression");
+
 		}
 		
 	}

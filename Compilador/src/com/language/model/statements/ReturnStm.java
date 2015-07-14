@@ -31,7 +31,7 @@ public class ReturnStm extends Statement {
 			}
 		}
 		else{
-			throw new IlegalStatementException("RETURN Sentence not in Function Definition\n");
+			throw new IlegalStatementException("\'return\' sentence not in Function Definition\n");
 		}
 		
 	}

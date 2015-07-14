@@ -2,6 +2,7 @@ package com.language.model.statements;
 
 import java.util.List;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
 import com.language.types.BooleanType;
@@ -44,8 +45,8 @@ public class IfStm extends Statement {
 			}
 		}
 		else{
-			// EXCEPTION Type Error
-			return null;
+			throw new TypeErrorException("Not correct type expression on sentence \'if\'");
+
 		}
 		
 		return ret;

@@ -87,15 +87,6 @@ public class StackHandler {
 		else{
 			throw new FunctionNotExistException("Function \'" + id + "\' is not defined.");
 		}
-		
-//		boolean exist = this.globalFunctionDefinition.containsKey(id);
-//		
-//		if (!exist){
-//			throw new FunctionNotExistException("Function \'" + id + "\' is not defined.");
-//		}
-//		else{
-//			return this.globalFunctionDefinition.get(id);
-//		}
 
 	}
 	

@@ -2,6 +2,7 @@ package com.language.model.statements;
 
 import java.util.List;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.model.expression.Expression;
 import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
@@ -79,8 +80,8 @@ public class WhileStm extends Statement {
 			return t;
 		}
 		else{
-			// EXCEPTION: type error
-			return null;
+			throw new TypeErrorException("Not correct type expression on sentence \'while\'");
+
 		}
 	}
 	

@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.language.exceptions.IlegalArgumentException;
+import com.language.exceptions.VariableNotExistException;
 import com.language.stack.Stack;
 import com.language.stack.StackHandler;
 import com.language.types.BooleanType;
@@ -62,8 +64,7 @@ public class PredefinedFunctionExp extends Expression {
 			if (variableType == null){
 				variableType = stack.findInGlobalScope(variableId);
 				if (variableType == null){
-					// TODO EXCEPTION
-					return new VoidType();
+					throw new VariableNotExistException("Variable \'" + variableId +"\' is not defined");
 				}
 			}
 			
@@ -78,8 +79,7 @@ public class PredefinedFunctionExp extends Expression {
 						boolean containsKey = ((DicType) variableType).getDic().containsKey(key);
 						return new BooleanType(containsKey);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 					}
 				case ITEMS:
 					if (parametersList.size()==0){
@@ -98,8 +98,7 @@ public class PredefinedFunctionExp extends Expression {
 						
 						return new ListType(list);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 					}
 				case KEYS:
 					if (parametersList.size()==0){
@@ -108,8 +107,8 @@ public class PredefinedFunctionExp extends Expression {
 						list.addAll(dicSet);
 						return new ListType(list);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+
 					}
 				case POP:
 					if (parametersList.size()==1){
@@ -117,20 +116,18 @@ public class PredefinedFunctionExp extends Expression {
 						Types value = ((DicType) variableType).getDic().remove(key);
 						return value;
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case VALUES:
 					if (parametersList.size()==0){
 						List<Types> dicValues = (List<Types>) ((DicType) variableType).getDic().values();
 						return new ListType(dicValues);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 					}
 				default:
-					//TODO EXCEPTION no es una funcion predefinida para dict
-					return new VoidType();
+					throw new IlegalArgumentException("Function \'" + predefinedId + "\' is not valid function for \'dict\' type");
 				}
 			}
 			else if (TypeEnum.string_type.equals(type)){
@@ -152,12 +149,11 @@ public class PredefinedFunctionExp extends Expression {
 							}
 							return new IntegerType(count);
 						} else {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case FIND:
 					if (parametersList.size()==1){
@@ -168,8 +164,7 @@ public class PredefinedFunctionExp extends Expression {
 							int indexOf = str.indexOf(subStr);
 							return new IntegerType(indexOf);
 						} else {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 						
 					} else if (parametersList.size()==2){
@@ -182,15 +177,12 @@ public class PredefinedFunctionExp extends Expression {
 							int indexOf = str.indexOf(subStr,i);
 							return new IntegerType(indexOf);
 						} else  if (TypeEnum.int_type.equals(startType.getType())) {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument must be an \'str\' type");
 						} else {
-							//TODO EXCEPTION no es un integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument must be an \'int\' or \'long\' type");
 						} 
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one or two arguments");
 					}
 				case JOIN:
 					if (parametersList.size()==1){
@@ -201,12 +193,12 @@ public class PredefinedFunctionExp extends Expression {
 							String retStr = String.join(str, joinStr);
 							return new StringType(retStr);
 						} else {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
+
 						}
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 					
 				case SPLIT:
@@ -223,12 +215,11 @@ public class PredefinedFunctionExp extends Expression {
 							}
 							return new ListType(strSplitList);
 						} else {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case REPLACE:
 					if (parametersList.size()==2){
@@ -241,15 +232,15 @@ public class PredefinedFunctionExp extends Expression {
 							String replaceFirst = str.replaceFirst(oldStr, newStr);
 							return new StringType(replaceFirst);
 						} else if (TypeEnum.string_type.equals(newStrType.getType())) {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
+
 						} else {
-							//TODO EXCEPTION no es un string
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
+
 						}
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains exactly two argument");
+
 					}
 				case LENGTH:
 					if (parametersList.size()==0){
@@ -257,12 +248,12 @@ public class PredefinedFunctionExp extends Expression {
 						int length = str.length();
 						return new IntegerType(length);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+
 					}
 				default:
-					//TODO EXCEPTION no es una funcion predefinida para string
-					return new VoidType();
+					throw new IlegalArgumentException("Function \'" + predefinedId + "\' is not valid function for \'str\' type");
+
 				}
 			}
 			else if (TypeEnum.list_type.equals(type)){
@@ -273,8 +264,8 @@ public class PredefinedFunctionExp extends Expression {
 						boolean ret = ((ListType) variableType).getList().add(value);
 						return new BooleanType(ret);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case COUNT:
 					if (parametersList.size()==1){
@@ -288,8 +279,8 @@ public class PredefinedFunctionExp extends Expression {
 						}
 						return new IntegerType(count);
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case EXTEND:
 					if (parametersList.size()==1){
@@ -310,15 +301,15 @@ public class PredefinedFunctionExp extends Expression {
 								elements.add(strType);
 							}
 						}else{
-							//TODO EXCEPTION type
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument type must be: \'dict\',\'list\',\'tuple\',\'str\'");
+
 						}
 						boolean ret = list.addAll(elements);
 						return new BooleanType(ret);
 						
 					} else {
-						//TODO EXCEPTION no tiene un parametro
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}
 				case INDEX:
 					if (parametersList.size()==1){
@@ -333,8 +324,8 @@ public class PredefinedFunctionExp extends Expression {
 							count++;
 						}
 						
-						//TODO EXCEPTION no se encuentra el indice
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list.");
+
 						
 					} else if (parametersList.size()==2){
 						List<Types> list = ((ListType) variableType).getList();
@@ -352,12 +343,12 @@ public class PredefinedFunctionExp extends Expression {
 								count++;
 							}
 							
-							//TODO EXCEPTION no se encuentra el indice
-							return new VoidType();
+							throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
+
 							
 						} else {
-							//TODO EXCEPTION start no es tipo integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
+
 						}
 					} else if (parametersList.size()==3){
 						List<Types> list = ((ListType) variableType).getList();
@@ -377,19 +368,19 @@ public class PredefinedFunctionExp extends Expression {
 								count++;
 							}
 							
-							//TODO EXCEPTION no se encuentra el indice
-							return new VoidType();
+							throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
+
 							
 						} else if (TypeEnum.int_type.equals(end.getType())) {
-							//TODO EXCEPTION start no es tipo integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
+
 						} else {
-							//TODO EXCEPTION end  no es tipo integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' third argument should be \'int\' type");
+
 						}
 					} else {
-						//TODO EXCEPTION cantidad de argumentos
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains almost three arguments");
+
 					}
 				case INSERT:
 					if (parametersList.size()==2){
@@ -402,12 +393,11 @@ public class PredefinedFunctionExp extends Expression {
 							list.add(i, value);
 							return new VoidType();
 						} else {
-							//TODO EXCEPTION end  no es tipo integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument should be \'int\' type");
+
 						}						
 					} else {
-						//TODO EXCEPTION cantidad de argumentos
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains two arguments");
 					}
 				case POP:
 					if (parametersList.size()==1){
@@ -419,33 +409,32 @@ public class PredefinedFunctionExp extends Expression {
 							boolean ret = list.remove(i);
 							return new BooleanType(ret);
 						} else {
-							//TODO EXCEPTION end  no es tipo integer
-							return new VoidType();
+							throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument should be \'int\' type");
+
 						}
 						
 					} else {
-						//TODO EXCEPTION cantidad de argumentos
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+
 					}						
 				case SIZE:
 					if (parametersList.size()==0){
 						List<Types> list = ((ListType) variableType).getList();
 						return new IntegerType(list.size());
 					} else {
-						//TODO EXCEPTION cantidad de argumentos
-						return new VoidType();
+						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+
 					}						
 				default:
-					//TODO EXCEPTION no es una funcion predefinida para dict
-					return new VoidType();
+					throw new IlegalArgumentException("Function \'" + predefinedId + "\' is not valid function for \'list\' type");
+
 				}
 			} else {
-				// TODO EXCEPTION type no valido
-				return new VoidType();
+				throw new IlegalArgumentException("Error: " + variableId + " isnt\'t of type \'dict\', \'list\' or \'str\'");
+
 			}
 		}else{
-			//TODO EXCEPTION no es un identificador
-			return new VoidType();
+			throw new VariableNotExistException("General parsing error at executing Pre-defined Function");
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.model.operators.UnaryOp;
 import com.language.types.BooleanType;
 import com.language.types.FloatType;
@@ -46,8 +47,7 @@ public class UnaryExp extends Expression {
 				
 			}
 			else{
-				// [TODO] Excepción de TIPOS
-				return null;
+				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
 			}
 		}
 		else if (t.getType().equals(TypeEnum.long_type)){
@@ -76,8 +76,8 @@ public class UnaryExp extends Expression {
 				return new LongType(-(l+1));
 			}
 			else{
-				// [TODO] Excepción de TIPOS
-				return null;
+				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+
 			}
 		}
 		else if (t.getType().equals(TypeEnum.int_type)){
@@ -106,8 +106,8 @@ public class UnaryExp extends Expression {
 				return new IntegerType(-(i+1));
 			}
 			else{
-				// [TODO] Excepción de TIPOS
-				return null;
+				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+
 			}
 		}
 		else if (t.getType().equals(TypeEnum.boolean_type)){
@@ -130,13 +130,13 @@ public class UnaryExp extends Expression {
 				return new IntegerType(-(bValue+1));
 			}
 			else{
-				// [TODO] Excepción de TIPOS
-				return null;
+				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+
 			}
 		}
 		else{
-			// [TODO] Excepción de TIPOS
-			return null;
+			throw new TypeErrorException("Unary Operator " + "can not be applied to \'" + t.getType().getPythonType() + "\'");
+
 		}
 	}
 

@@ -22,7 +22,7 @@ public class BreakStm extends Statement {
 			return new BreakType();
 		}
 		else{
-			throw new IlegalStatementException("BREAK Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("\'break\' Sentence not in Iteration Definition\n");
 		}
 	}
 	

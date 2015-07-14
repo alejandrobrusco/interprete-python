@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.exceptions.VariableNotExistException;
 import com.language.stack.StackHandler;
 import com.language.types.Types;
 
@@ -29,8 +30,8 @@ public class IdentifierExp extends Expression {
 			return globalVariable;
 		}
 		else{
-			// EXCEPTION
-			return null;
+			throw new VariableNotExistException("Variable \'" + id +"\' is not defined");
+
 		}
 		
 	}

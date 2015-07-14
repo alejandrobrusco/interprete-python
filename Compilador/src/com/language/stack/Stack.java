@@ -45,7 +45,6 @@ public class Stack {
 	
 	public Types findInGlobalScope(String id){
 		Scope globalScope = this.stackList.get(0);
-		
 		return globalScope.findVariable(id);
 		
 	}

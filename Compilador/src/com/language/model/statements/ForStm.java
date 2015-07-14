@@ -3,6 +3,7 @@ package com.language.model.statements;
 import java.util.List;
 import java.util.Set;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.model.expression.Expression;
 import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
@@ -166,8 +167,7 @@ public class ForStm extends Statement {
 			
 		}
 		else{
-			// Type Exception
-			return null;
+			throw new TypeErrorException("Not Iteration type on sentence \'for\'");
 		}
 	}
 	

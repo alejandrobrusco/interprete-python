@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.language.exceptions.OutOfBoundException;
+import com.language.exceptions.TypeErrorException;
 import com.language.types.DicType;
 import com.language.types.IndexType;
 import com.language.types.ListType;
@@ -41,8 +43,8 @@ public class TargetExp extends Expression {
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
-					// EXCEPTION: out of index
-					return null;
+					throw new OutOfBoundException("Index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
+
 				}
 				else{
 					return list.get(index);
@@ -254,13 +256,11 @@ public class TargetExp extends Expression {
 					return new ListType(retList);
 				}
 				
-				// EXCEPTION - > no debería ocurrir
 				return null;
 			}
 		}
 		else{
-			// EXCEPTION: tiene que ser una lista el id
-			return null;
+			throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 	}
 	
@@ -309,7 +309,7 @@ public class TargetExp extends Expression {
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
-					// EXCEPTION: out of index
+					throw new OutOfBoundException("Index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
 				}
 				else{
 					list.add(index, valueToAssing.eval());
@@ -482,7 +482,7 @@ public class TargetExp extends Expression {
 					
 				}
 				else{
-					// EXCEPTION: tiene q ser lista
+					throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
 					
 				}
 			
@@ -501,7 +501,7 @@ public class TargetExp extends Expression {
 			
 		}
 		else{
-			// EXCPETION Type Error
+			throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 		
 	}

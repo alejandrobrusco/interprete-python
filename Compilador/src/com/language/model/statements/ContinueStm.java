@@ -23,7 +23,7 @@ public class ContinueStm extends Statement {
 			return new ContinueType();
 		}
 		else{
-			throw new IlegalStatementException("CONTINUE Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("\'continue\' Sentence not in Iteration Definition\n");
 		}
 		
 	}
