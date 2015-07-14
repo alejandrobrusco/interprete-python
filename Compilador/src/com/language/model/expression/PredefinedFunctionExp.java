@@ -324,7 +324,7 @@ public class PredefinedFunctionExp extends Expression {
 							count++;
 						}
 						
-						throw new IlegalArgumentException("Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list.");
+						throw new IlegalArgumentException("In Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value \'" + value.toStringValue() + "\' isn\'t in list.");
 
 						
 					} else if (parametersList.size()==2){
