@@ -6,8 +6,9 @@ import com.language.types.Types;
 public class StringExp extends Expression {
 
 	String value;
+	int line;
 	
-	public StringExp(String value){
+	public StringExp(String value, int line){
 		if (value.startsWith("\"\"\"") || value.startsWith("'''") ){
 			value = value.substring(3,value.length()-3);
 		}else if (value.startsWith("\"") || value.startsWith("'")){
@@ -52,6 +53,7 @@ public class StringExp extends Expression {
 		
 		value = new String(copy);
 		this.value = value;
+		this.line = line;
 	}
 	
 	@Override

@@ -14,11 +14,13 @@ public class IfElseStm extends Statement {
 	Expression expression;
 	List<Statement> ifStatementList;
 	List<Statement> elseStatementList;
+	int line;
 	
-	public IfElseStm(Expression expression, List<Statement> ifStatementList, List<Statement> elseStatementList){
+	public IfElseStm(Expression expression, List<Statement> ifStatementList, List<Statement> elseStatementList, int line){
 		this.expression = expression;
 		this.ifStatementList = ifStatementList;
 		this.elseStatementList = elseStatementList;
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -50,7 +52,7 @@ public class IfElseStm extends Statement {
 			return ret;
 		}
 		else{
-			throw new TypeErrorException("Not correct type expression on sentence \'if\'");
+			throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence \'if\'");
 		}
 	}
 	

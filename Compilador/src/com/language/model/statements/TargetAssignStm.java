@@ -9,10 +9,12 @@ public class TargetAssignStm extends Statement {
 
 	Expression expr1;
 	Expression expr2;
+	int line;
 	
-	public TargetAssignStm(Expression expr1, Expression expr2) {
+	public TargetAssignStm(Expression expr1, Expression expr2, int line) {
 		this.expr1= expr1;
 		this.expr2 = expr2;
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -27,7 +29,7 @@ public class TargetAssignStm extends Statement {
 			
 		}
 		else{
-			throw new TypeErrorException("General parsing error on evaluating Target Expression");
+			throw new TypeErrorException("Error at line "+ this.line +": General parsing error on evaluating Target Expression");
 
 		}
 		

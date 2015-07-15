@@ -10,9 +10,11 @@ import com.language.types.VoidType;
 public class PrintStm extends Statement {
 	
 	List<Expression> expressions;
+	int line;
 	
-	public PrintStm(List<Expression> expressions){
+	public PrintStm(List<Expression> expressions, int line){
 		this.expressions = expressions;
+		this.line = line;
 	}
 	
 	public Types eval() {

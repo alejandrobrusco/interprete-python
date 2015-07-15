@@ -20,10 +20,12 @@ public class TransformerExp extends Expression {
 	
 	private Expression expr;
 	private TypeEnum toType;
+	int line;
 	
-	public TransformerExp(Expression expr, TypeEnum toType){
+	public TransformerExp(Expression expr, TypeEnum toType, int line){
 		this.expr = expr;
 		this.toType = toType;
+		this.line = line;
 	}
 	
 	@Override

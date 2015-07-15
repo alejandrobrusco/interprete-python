@@ -17,10 +17,12 @@ public class IfStm extends Statement {
 
 	Expression expression;
 	List<Statement> statementList;
+	int line;
 	
-	public IfStm(Expression expression, List<Statement> statementList){
+	public IfStm(Expression expression, List<Statement> statementList, int line){
 		this.expression = expression;
 		this.statementList = statementList;
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -45,7 +47,7 @@ public class IfStm extends Statement {
 			}
 		}
 		else{
-			throw new TypeErrorException("Not correct type expression on sentence \'if\'");
+			throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence \'if\'");
 
 		}
 		

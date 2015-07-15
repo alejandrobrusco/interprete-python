@@ -23,11 +23,13 @@ public class BinaryExp extends Expression {
 	Expression expression1;
 	BinaryOp operator;
 	Expression expression2;
+	int line;
 	
-	public BinaryExp(Expression expression1, BinaryOp operator, Expression expression2){
+	public BinaryExp(Expression expression1, BinaryOp operator, Expression expression2, int line){
 		this.expression1 = expression1;
 		this.operator = operator;
 		this.expression2 = expression2;
+		this.line = line;
 	}
 	
 	@Override

@@ -9,8 +9,11 @@ import com.language.types.ReturnType;
 import com.language.types.Types;
 
 public class ContinueStm extends Statement {
+	
+	int line;
 
-	public ContinueStm() {
+	public ContinueStm(int line) {
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -23,7 +26,7 @@ public class ContinueStm extends Statement {
 			return new ContinueType();
 		}
 		else{
-			throw new IlegalStatementException("\'continue\' Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("Error at line " + this.line + ": \'continue\' Sentence not in Iteration Definition\n");
 		}
 		
 	}

@@ -14,10 +14,12 @@ public class WhileStm extends Statement {
 
 	Expression expression;
 	List<Statement> statementList;
+	int line;
 	
-	public WhileStm(Expression expression, List<Statement> statementList){
+	public WhileStm(Expression expression, List<Statement> statementList, int line){
 		this.expression = expression;
 		this.statementList = statementList;
+		this.line = line;
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class WhileStm extends Statement {
 			return t;
 		}
 		else{
-			throw new TypeErrorException("Not correct type expression on sentence \'while\'");
+			throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence \'while\'");
 
 		}
 	}

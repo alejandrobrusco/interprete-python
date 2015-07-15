@@ -5,8 +5,10 @@ import com.language.types.Types;
 
 public class FalseExp extends Expression {
 	
-	public FalseExp(){
-		
+	int line;
+	
+	public FalseExp(int line){
+		this.line = line;
 	}
 	
 	@Override

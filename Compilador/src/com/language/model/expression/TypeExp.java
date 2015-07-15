@@ -6,9 +6,11 @@ import com.language.types.Types;
 public class TypeExp extends Expression {
 
 	Expression expr;
+	int line;
 	
-	public TypeExp(Expression expr){
+	public TypeExp(Expression expr, int line){
 		this.expr = expr;
+		this.line = line;
 	}
 
 	@Override

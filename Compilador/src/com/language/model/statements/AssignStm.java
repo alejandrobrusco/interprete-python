@@ -11,10 +11,12 @@ public class AssignStm extends Statement {
 
 	IdentifierExp id;
 	Expression expression;
+	int line;
 	
-	public AssignStm(IdentifierExp id, Expression expression){
+	public AssignStm(IdentifierExp id, Expression expression, int line){
 		this.id = id;
 		this.expression = expression;
+		this.line = line;
 	}
 	
 	public Types eval(){

@@ -10,9 +10,11 @@ import com.language.types.VoidType;
 public class ReturnStm extends Statement {
 
 	Expression expr;
+	int line;
 
-	public ReturnStm(Expression expr) {
+	public ReturnStm(Expression expr, int line) {
 		this.expr = expr;
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -31,7 +33,7 @@ public class ReturnStm extends Statement {
 			}
 		}
 		else{
-			throw new IlegalStatementException("\'return\' sentence not in Function Definition\n");
+			throw new IlegalStatementException("Error at line "+ this.line +": \'return\' sentence not in Function Definition");
 		}
 		
 	}

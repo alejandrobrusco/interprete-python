@@ -8,8 +8,10 @@ import com.language.types.Types;
 
 public class BreakStm extends Statement {
 
+	int line;
 
-	public BreakStm() {
+	public BreakStm(int line) {
+		this.line = line;
 	}
 	
 	public Types eval() {
@@ -22,7 +24,7 @@ public class BreakStm extends Statement {
 			return new BreakType();
 		}
 		else{
-			throw new IlegalStatementException("\'break\' Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("Error at line " + this.line + ": \'break\' Sentence not in Iteration Definition\n");
 		}
 	}
 	

@@ -19,10 +19,8 @@ public class StackHandler {
 	private List<FunctionScope> functionsScope;
 	private List<Boolean> scopeReturn;
 	private List<ControlVariable> scopeControlVariables; // lista para control de scope con break, continue
-	private Map<String, FunctionDefinitionStm> globalFunctionDefinition;// list for functions
 
 	private StackHandler() {
-		this.globalFunctionDefinition = new HashMap<String, FunctionDefinitionStm>();
 		
 		this.functionsScope = new ArrayList<FunctionScope>();
 		this.functionsScope.add(new FunctionScope());
@@ -48,7 +46,6 @@ public class StackHandler {
 	}
 	
 	public void reset() {
-		globalFunctionDefinition = new HashMap<String, FunctionDefinitionStm>();
 		scopeStack = new Stack();
 	}
 
@@ -63,7 +60,7 @@ public class StackHandler {
 		this.functionsScope.get(last).addFunction(id, func);
 	}
 	
-	public FunctionDefinitionStm findFunction(String id) {
+	public FunctionDefinitionStm findFunction(String id, int line) {
 		
 		FunctionDefinitionStm result = null;
 		
@@ -85,7 +82,7 @@ public class StackHandler {
 			return result;
 		}
 		else{
-			throw new FunctionNotExistException("Function \'" + id + "\' is not defined.");
+			throw new FunctionNotExistException("Error at line " + line +": function \'" + id + "\' is not defined.");
 		}
 
 	}

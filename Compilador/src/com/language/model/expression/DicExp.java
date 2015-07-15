@@ -10,13 +10,19 @@ import com.language.types.Types;
 public class DicExp extends Expression {
 	
 	Map<Expression,Expression> map;
+	int line;
 	
-	public DicExp(Map<Expression,Expression> map){
+	public DicExp(Map<Expression,Expression> map, int line){
 		this.map = map;
+		this.line = line;
 	}
 	
 	public void put(Expression key, Expression value){
 		map.put(key, value);
+	}
+	
+	public void setLine(int line){
+		this.line = line;
 	}
 
 	@Override

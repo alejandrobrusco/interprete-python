@@ -7,9 +7,11 @@ import com.language.types.Types;
 public class IdentifierExp extends Expression {
 
 	String id;
+	int line;
 	
-	public IdentifierExp(String id){
+	public IdentifierExp(String id, int line){
 		this.id = id;
+		this.line = line;
 	}
 	
 	public String getId() {
@@ -30,7 +32,7 @@ public class IdentifierExp extends Expression {
 			return globalVariable;
 		}
 		else{
-			throw new VariableNotExistException("Variable \'" + id +"\' is not defined");
+			throw new VariableNotExistException("Error at line " + this.line + ": variable \'" + id +"\' is not defined");
 
 		}
 		

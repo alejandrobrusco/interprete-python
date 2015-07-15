@@ -8,13 +8,16 @@ import com.language.types.Types;
 public class RawInputExp extends Expression {
 
 	Expression expression;
+	int line;
 	
-	public RawInputExp(){
+	public RawInputExp(int line){
 		this.expression = null;
+		this.line = line;
 	}
 	
-	public RawInputExp(Expression expr){
+	public RawInputExp(Expression expr, int line){
 		this.expression = expr;
+		this.line = line;
 	}
 	
 	@Override

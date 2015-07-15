@@ -17,10 +17,12 @@ public class TargetExp extends Expression {
 
 	IdentifierExp id;
 	Expression expr;
+	int line;
 	
-	public TargetExp(String id, Expression expr) {
-		this.id = new IdentifierExp(id);
+	public TargetExp(String id, Expression expr, int line) {
+		this.id = new IdentifierExp(id,line);
 		this.expr = expr;
+		this.line = line;
 	}
 
 
@@ -43,7 +45,7 @@ public class TargetExp extends Expression {
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
-					throw new OutOfBoundException("Index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
+					throw new OutOfBoundException("Error at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
 
 				}
 				else{
@@ -260,7 +262,7 @@ public class TargetExp extends Expression {
 			}
 		}
 		else{
-			throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
+			throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 	}
 	
@@ -309,7 +311,7 @@ public class TargetExp extends Expression {
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
-					throw new OutOfBoundException("Index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
+					throw new OutOfBoundException("Error at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
 				}
 				else{
 					list.add(index, valueToAssing.eval());
@@ -482,7 +484,7 @@ public class TargetExp extends Expression {
 					
 				}
 				else{
-					throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
+					throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
 					
 				}
 			
@@ -501,7 +503,7 @@ public class TargetExp extends Expression {
 			
 		}
 		else{
-			throw new TypeErrorException("Variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
+			throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 		
 	}

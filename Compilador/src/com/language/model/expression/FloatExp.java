@@ -6,9 +6,11 @@ import com.language.types.Types;
 public class FloatExp extends Expression {
 
 	Float value;
+	int line;
 	
-	public FloatExp(String value){
+	public FloatExp(String value, int line){
 		this.value = new Float(value);
+		this.line = line;
 	}
 	
 	@Override

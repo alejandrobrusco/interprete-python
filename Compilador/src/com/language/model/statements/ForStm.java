@@ -18,11 +18,13 @@ public class ForStm extends Statement {
 	String id; 
 	Expression expression;
 	List<Statement> statementList;
+	int line;
 	
-	public ForStm(String id,Expression expression, List<Statement> statementList){
+	public ForStm(String id,Expression expression, List<Statement> statementList, int line){
 		this.id = id;
 		this.expression = expression;
 		this.statementList = statementList;
+		this.line = line;
 	}
 	
 	@Override
@@ -167,7 +169,7 @@ public class ForStm extends Statement {
 			
 		}
 		else{
-			throw new TypeErrorException("Not Iteration type on sentence \'for\'");
+			throw new TypeErrorException("Error at line " + this.line +": not Iteration type on sentence \'for\'");
 		}
 	}
 	

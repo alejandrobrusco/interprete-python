@@ -3,6 +3,7 @@ package com.language.model.expression;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.language.exceptions.IlegalArgumentException;
 import com.language.model.statements.FunctionDefinitionStm;
 import com.language.model.statements.Statement;
 import com.language.stack.Stack;
@@ -15,10 +16,12 @@ public class FunctionExp extends Expression {
 
 	Expression idExp;
 	List<Expression> parametersList;
+	int line;
 
-	public FunctionExp(Expression idExpr, List<Expression> parametersList) {
+	public FunctionExp(Expression idExpr, List<Expression> parametersList, int line) {
 		this.idExp = idExpr;
 		this.parametersList = parametersList;
+		this.line = line;
 	}
 
 	@Override
@@ -26,7 +29,7 @@ public class FunctionExp extends Expression {
 		if (idExp instanceof IdentifierExp) {
 			String functionId = ((IdentifierExp) idExp).getId();
 			StackHandler stackHandler = StackHandler.getInstance();
-			FunctionDefinitionStm function = stackHandler.findFunction(functionId);
+			FunctionDefinitionStm function = stackHandler.findFunction(functionId,this.line);
 			stackHandler.openFunctionScope();
 			List<String> definedParameters = function.getParametersList();
 			if (definedParameters.size() == this.parametersList.size()) {
@@ -66,12 +69,11 @@ public class FunctionExp extends Expression {
 				stackHandler.closeFunctionScope();
 				return ret;
 			} else {
-				// TODO EXCEPTION cant parametros
-				return new VoidType();
+				throw new IlegalArgumentException("Error at line " + this.line + ": function must be called with " + definedParameters.size() + " arguments");
 			}
 		} else {
-			// TODO EXCEPTION no es
-			return new VoidType();
+			throw new IlegalArgumentException("Error at line " + this.line + ": general error parsin FunctionExp");
+
 		}
 
 	}

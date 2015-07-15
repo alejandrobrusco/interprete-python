@@ -13,10 +13,12 @@ public class UnaryExp extends Expression {
 
 	UnaryOp operator;
 	Expression expression;
+	int line;
 	
-	public UnaryExp(UnaryOp operator, Expression expression){
+	public UnaryExp(UnaryOp operator, Expression expression, int line){
 		this.operator = operator;
 		this.expression = expression;
+		this.line = line;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class UnaryExp extends Expression {
 				
 			}
 			else{
-				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+				throw new TypeErrorException("Error at line " + this.line +": operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
 			}
 		}
 		else if (t.getType().equals(TypeEnum.long_type)){
@@ -76,7 +78,7 @@ public class UnaryExp extends Expression {
 				return new LongType(-(l+1));
 			}
 			else{
-				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+				throw new TypeErrorException("Error at line " + this.line +": operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
 
 			}
 		}
@@ -106,7 +108,7 @@ public class UnaryExp extends Expression {
 				return new IntegerType(-(i+1));
 			}
 			else{
-				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+				throw new TypeErrorException("Error at line " + this.line +": operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
 
 			}
 		}
@@ -130,12 +132,12 @@ public class UnaryExp extends Expression {
 				return new IntegerType(-(bValue+1));
 			}
 			else{
-				throw new TypeErrorException("Operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
+				throw new TypeErrorException("Error at line " + this.line +": operator " + "\'" + operator.getPythonOperation() + "\' can not be applied to \'" + t.getType().getPythonType() + "\'");
 
 			}
 		}
 		else{
-			throw new TypeErrorException("Unary Operator " + "can not be applied to \'" + t.getType().getPythonType() + "\'");
+			throw new TypeErrorException("Error at line " + this.line +": unary operator " + "can not be applied to \'" + t.getType().getPythonType() + "\'");
 
 		}
 	}

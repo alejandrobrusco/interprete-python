@@ -5,8 +5,10 @@ import com.language.types.Types;
 
 public class TrueExp extends Expression {
 
-	public TrueExp(){
-		
+	int line;
+	
+	public TrueExp(int line){
+		this.line = line;
 	}
 	
 	@Override

@@ -9,9 +9,11 @@ import com.language.types.Types;
 public class ListExp extends Expression {
 
 	List<Expression> list;
+	int line;
 	
-	public ListExp(List<Expression> list) {
+	public ListExp(List<Expression> list, int line) {
 		this.list = list;
+		this.line = line;
 	}
 
 	@Override

@@ -9,9 +9,11 @@ import com.language.types.Types;
 public class TupleExp extends Expression {
 
 	List<Expression> list;
+	int line;
 	
-	public TupleExp(List<Expression> value){
+	public TupleExp(List<Expression> value, int line){
 		this.list = value;
+		this.line = line;
 	}
 	
 	public Types eval() {

@@ -11,12 +11,14 @@ public class FunctionDefinitionStm extends Statement {
 	String identifier;
 	List<String> parametersList;
 	List<Statement> statementsList;
+	int line;
 	
-	public FunctionDefinitionStm(String identifier, List<String> identifierList, List<Statement> statementList) {
+	public FunctionDefinitionStm(String identifier, List<String> identifierList, List<Statement> statementList, int line) {
 		this.identifier = identifier;
 		Collections.reverse(identifierList);
 		this.parametersList = identifierList;
 		this.statementsList = statementList;
+		this.line = line;
 	}
 	
 	public List<String> getParametersList() {
