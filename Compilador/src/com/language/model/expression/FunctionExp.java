@@ -41,8 +41,8 @@ public class FunctionExp extends Expression {
 				if (!parametersList.isEmpty() && parametersList.get(0) instanceof AssignExp){
 					// Si se pasan parametros de la forma a=1,b=2
 					for (Expression assignExp : parametersList) {
-						IdentifierExp idExp = ((AssignExp) assignExp).getId();
-						String id = idExp.getId();
+						Expression idExp = ((AssignExp) assignExp).getId();
+						String id = ((IdentifierExp)idExp).getId();
 						if (paramsHead.contains(id)){
 							throw new IlegalArgumentException("Error at line " + this.line + ": keyword " + id + " argument repeated");
 						}

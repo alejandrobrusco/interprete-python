@@ -326,6 +326,11 @@ expression				::=  MINUS:m expression:expr
 								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.tuple_type,valueleft); :}	
 						  | DICT:value LPARAN expression_or_empty:expr RPARAN
 								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.dict_type,valueleft); :}
+						  | DICT:value LPARAN IDENTIFIER:valueAs ASSIGN expression:expr expression_stm_list:list RPARAN
+								{: Expression assign = new AssignExp(new IdentifierExp((String)valueAs,valueAsleft), (Expression)expr,valueAsleft);
+								   ((List<Expression>)list).add((Expression)assign);
+								   RESULT = new TransformerExp(List<Expression>list,TypeEnum.dict_type,valueleft); 
+								:}
 						  | LIST:value LPARAN expression_or_empty:expr RPARAN
 								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.list_type,valueleft); :}		
 								

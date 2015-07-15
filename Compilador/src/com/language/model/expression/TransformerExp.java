@@ -23,9 +23,17 @@ public class TransformerExp extends Expression {
 	private Expression expr;
 	private TypeEnum toType;
 	int line;
+	private List<Expression> list;
 	
 	public TransformerExp(Expression expr, TypeEnum toType, int line){
 		this.expr = expr;
+		this.toType = toType;
+		this.line = line;
+		this.list = null;
+	}
+	public TransformerExp(List<Expression> list, TypeEnum toType, int line){
+		this.list = list;
+		this.expr = null;
 		this.toType = toType;
 		this.line = line;
 	}
@@ -33,7 +41,12 @@ public class TransformerExp extends Expression {
 	@Override
 	public Types eval() {
 		TypeEnum exprTypeEnum;
-		Types exprType = expr.eval();
+		Types exprType;
+		if (this.expr != null){
+			exprType = expr.eval();
+		} else {
+			exprType = null;
+		}
 		switch (toType) {
 		case int_type:
 			if (exprType == null){
@@ -156,37 +169,46 @@ public class TransformerExp extends Expression {
 				return new ListType();
 			}
 		case dict_type:
-			if (exprType == null){
-				exprType = new ListType(new ArrayList<Types>()); 
-			}
-			exprTypeEnum = exprType.getType();
-			if (TypeEnum.list_type.equals(exprTypeEnum)){
-				List<Types> list = ((ListType)exprType).getList();
-				if (list == null){
+			if (list.isEmpty()){
+				if (exprType == null ){
+					exprType = new ListType(new ArrayList<Types>());
+				}
+				exprTypeEnum = exprType.getType();
+				if (TypeEnum.list_type.equals(exprTypeEnum)){
+					List<Types> list = ((ListType)exprType).getList();
+					if (list == null){
+						return new DicType();
+					}
+					Map<Types,Types> map = new HashMap<Types,Types>();
+					for (Types types : list) {
+						if (TypeEnum.tuple_type.equals(types.getType())){
+							List<Types> tuple = ((TupleType)types).getTuple();
+							if (tuple.size() == 2){
+								Types key = tuple.get(0);
+								Types value = tuple.get(1);
+								map.put(key, value);
+							} else {
+								throw new IlegalArgumentException("Error at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
+							}
+						} else {
+							throw new TypeErrorException("Error at line " + this.line +": cannot convert dictionary update sequence element #0 to a sequence");
+						}
+					}
+				} else {
+					// TODO EXCEPTION tipo no iterable
 					return new DicType();
 				}
+			} else {
 				Map<Types,Types> map = new HashMap<Types,Types>();
-				for (Types types : list) {
-					if (TypeEnum.tuple_type.equals(types.getType())){
-						List<Types> tuple = ((TupleType)types).getTuple();
-						if (tuple.size() == 2){
-							Types key = tuple.get(0);
-							Types value = tuple.get(1);
-							map.put(key, value);
-						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
-						}
-					} else {
-						throw new TypeErrorException("Error at line " + this.line +": cannot convert dictionary update sequence element #0 to a sequence");
-					}
+				
+				for (Expression assigExp : list) {
+					Expression keyExp = ((AssignExp)assigExp).getId();
+					Expression valueExp = ((AssignExp)assigExp).getExpression();
+					Types keyType = keyExp.eval();
+					Types valueType = valueExp.eval();
+					map.put(keyType, valueType);
 				}
 				return new DicType(map);
-			} else if(false){
-				//TODO FALTA CONSIDERAR ESTO dict(algo=123,otro="asd")
-				
-			} else {
-				// TODO EXCEPTION tipo no iterable
-				return new DicType();
 			}
 			
 		default:
