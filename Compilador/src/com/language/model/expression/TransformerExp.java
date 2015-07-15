@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.language.exceptions.IlegalArgumentException;
+import com.language.exceptions.TypeErrorException;
 import com.language.types.DicType;
 import com.language.types.FloatType;
 import com.language.types.IntegerType;
@@ -177,8 +178,6 @@ public class TransformerExp extends Expression {
 						}
 					} else {
 						throw new TypeErrorException("Error at line " + this.line +": dcannot convert dictionary update sequence element #0 to a sequence"+ tuple.size() +"; 2 is required");
-						//TODO EXCEPTION (tienen que ser tuplas de 2 elementos)
-						return null;
 					}
 				}
 				return new DicType(map);
