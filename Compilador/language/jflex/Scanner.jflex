@@ -31,11 +31,11 @@ import com.language.model.*;
 
 	private Symbol symbol(int type) {
 		System.out.println("symbol: " + type + "\n");
-		return new Symbol(type, yyline, yycolumn);
+		return new Symbol(type, yyline+1, yycolumn+1);
 	}
 	private Symbol symbol(int type, Object value) {
 		System.out.println("symbol: " + type + "\n");
-		return new Symbol(type, yyline, yycolumn, value);
+		return new Symbol(type, yyline+1, yycolumn+1, value);
 	}
 	
 	private static final int TAB_LENGTH = 4;

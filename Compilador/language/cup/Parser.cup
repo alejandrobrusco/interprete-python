@@ -196,7 +196,7 @@ simple_statement		::= expression:expr
 						        {: RESULT = new BreakStm(bleft); :};
 						        
 expression_stm_list 	::=	COMMA IDENTIFIER:value ASSIGN expression:expr expression_stm_list:list 
-								{:  Expression assign = new AssignExp(new IdentifierExp((String)value), (Expression)expr);
+								{:  Expression assign = new AssignExp(new IdentifierExp((String)value,valueleft), (Expression)expr,valueleft);
 									((List<Expression>)list).add((Expression)assign);
 									RESULT = list; 
 								:}
@@ -341,9 +341,9 @@ expression				::=  MINUS:m expression:expr
 									RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value,valueleft),new IdentifierExp((String)predefined,valueleft), (List<Expression>)list, valueleft);
 								:}
 						  |	IDENTIFIER:value LPARAN IDENTIFIER:valueAs ASSIGN expression:expr expression_stm_list:list RPARAN 
-								{:  Expression assign = new AssignExp(new IdentifierExp((String)valueAs), (Expression)expr);
+								{:  Expression assign = new AssignExp(new IdentifierExp((String)valueAs,valueAsleft), (Expression)expr,valueAsleft);
 									((List<Expression>)list).add((Expression)assign);
-									RESULT = new FunctionExp (new IdentifierExp((String)value), (List<Expression>)list);
+									RESULT = new FunctionExp (new IdentifierExp((String)value,valueleft), (List<Expression>)list,valueleft);
 								:};
 
 								
