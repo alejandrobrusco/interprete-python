@@ -1,11 +1,8 @@
 package com.language.stack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 import com.language.exceptions.FunctionNotExistException;
 import com.language.model.statements.FunctionDefinitionStm;
@@ -52,8 +49,6 @@ public class StackHandler {
 	public Stack getStack() {
 		return scopeStack;
 	}
-	
-	
 
 	public void addFunction(String id, FunctionDefinitionStm func) {
 		int last = this.functionsScope.size()-1;

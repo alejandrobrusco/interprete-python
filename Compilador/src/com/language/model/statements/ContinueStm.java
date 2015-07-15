@@ -1,11 +1,9 @@
 package com.language.model.statements;
 
 import com.language.exceptions.IlegalStatementException;
-import com.language.model.expression.Expression;
 import com.language.stack.ControlVariable;
 import com.language.stack.StackHandler;
 import com.language.types.ContinueType;
-import com.language.types.ReturnType;
 import com.language.types.Types;
 
 public class ContinueStm extends Statement {

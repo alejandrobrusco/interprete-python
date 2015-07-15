@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.language.exceptions.IlegalArgumentException;
 import com.language.types.DicType;
 import com.language.types.FloatType;
 import com.language.types.IntegerType;
@@ -172,10 +173,10 @@ public class TransformerExp extends Expression {
 							Types value = tuple.get(1);
 							map.put(key, value);
 						} else {
-							//TODO EXCEPTION (tienen que ser tuplas de 2 elementos)
-							return null;
+							throw new IlegalArgumentException("Error at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
 						}
 					} else {
+						throw new TypeErrorException("Error at line " + this.line +": dcannot convert dictionary update sequence element #0 to a sequence"+ tuple.size() +"; 2 is required");
 						//TODO EXCEPTION (tienen que ser tuplas de 2 elementos)
 						return null;
 					}
