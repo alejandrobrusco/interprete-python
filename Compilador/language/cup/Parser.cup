@@ -9,6 +9,15 @@ import com.language.model.statements.*;
 import com.language.exceptions.*;
 import com.language.types.TypeEnum;
 
+parser code {:
+	public void syntax_error(Symbol s){
+		int line = s.left;
+		int column = s.right;
+		throw new ParsingException("Syntax error at line " + line + ", column " + column);
+		
+	}
+:}
+
 terminal String SIGN;
 terminal String PLUS;
 terminal String MINUS;

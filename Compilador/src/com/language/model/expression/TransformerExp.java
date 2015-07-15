@@ -177,7 +177,7 @@ public class TransformerExp extends Expression {
 							throw new IlegalArgumentException("Error at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
 						}
 					} else {
-						throw new TypeErrorException("Error at line " + this.line +": dcannot convert dictionary update sequence element #0 to a sequence"+ tuple.size() +"; 2 is required");
+						throw new TypeErrorException("Error at line " + this.line +": cannot convert dictionary update sequence element #0 to a sequence");
 					}
 				}
 				return new DicType(map);
