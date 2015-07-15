@@ -100,6 +100,7 @@ non terminal	expression_list;
 non terminal	index;
 non terminal	expression_or_empty;
 non terminal	expression_dict_list;
+non terminal	expression_stm_list;
 
 /* Precedences */
 precedence left IF, ELSE;
@@ -190,9 +191,17 @@ simple_statement		::= expression:expr
 						  		
 						  | CONTINUE:c
 						        {: RESULT = new ContinueStm(cleft); :}
-						        
+
 						  | BREAK:b
 						        {: RESULT = new BreakStm(bleft); :};
+						        
+expression_stm_list 	::=	COMMA IDENTIFIER:value ASSIGN expression:expr expression_stm_list:list 
+								{:  Expression assign = new AssignExp(new IdentifierExp((String)value), (Expression)expr);
+									((List<Expression>)list).add((Expression)assign);
+									RESULT = list; 
+								:}
+						  |  /* epsilon */
+						  		{:  RESULT = new LinkedList<Expression>(); :};
 
 expression_list			::=  expression:expr COMMA expression_list:list 
 								{: ((List<Expression>)list).add((Expression)expr); 
@@ -324,9 +333,18 @@ expression				::=  MINUS:m expression:expr
 						  | RAW_INPUT:r LPARAN expression:expr RPARAN
 								{: RESULT = new RawInputExp((Expression) expr,rleft); :}
 						  |	IDENTIFIER:value LPARAN expression_list:list RPARAN
-								{: RESULT = new FunctionExp (new IdentifierExp((String)value,valueleft), (List<Expression>)list, valueleft); :}
+								{:	Collections.reverse((List<Expression>)list);
+									RESULT = new FunctionExp (new IdentifierExp((String)value,valueleft), (List<Expression>)list, valueleft);
+								:}
 						  |	IDENTIFIER:value DOT IDENTIFIER:predefined LPARAN expression_list:list RPARAN
-								{: RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value,valueleft),new IdentifierExp((String)predefined,valueleft), (List<Expression>)list, valueleft); :};
+								{:	Collections.reverse((List<Expression>)list);
+									RESULT = new PredefinedFunctionExp(new IdentifierExp((String)value,valueleft),new IdentifierExp((String)predefined,valueleft), (List<Expression>)list, valueleft);
+								:}
+						  |	IDENTIFIER:value LPARAN IDENTIFIER:valueAs ASSIGN expression:expr expression_stm_list:list RPARAN 
+								{:  Expression assign = new AssignExp(new IdentifierExp((String)valueAs), (Expression)expr);
+									((List<Expression>)list).add((Expression)assign);
+									RESULT = new FunctionExp (new IdentifierExp((String)value), (List<Expression>)list);
+								:};
 
 								
 compound_statement		::= IF:i expression:expr COLON suite:listIf ELSE COLON suite:listElse

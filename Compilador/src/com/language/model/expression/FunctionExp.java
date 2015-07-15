@@ -34,17 +34,35 @@ public class FunctionExp extends Expression {
 			List<String> definedParameters = function.getParametersList();
 			if (definedParameters.size() == this.parametersList.size()) {
 				Stack stack = stackHandler.getStack();
+
 				List<Types> paramsValues = new ArrayList<Types>();
-				for (Expression parameterExp : parametersList) {
-					Types parameterType = parameterExp.eval();
-					paramsValues.add(parameterType);
+				List<String> paramsHead = new ArrayList<String>();
+				
+				if (!parametersList.isEmpty() && parametersList.get(0) instanceof AssignExp){
+					// Si se pasan parametros de la forma a=1,b=2
+					for (Expression assignExp : parametersList) {
+						IdentifierExp idExp = ((AssignExp) assignExp).getId();
+						String id = idExp.getId();
+						paramsHead.add(id);
+						
+						Expression expExp = ((AssignExp) assignExp).getExpression();
+						Types exp = expExp.eval();
+						paramsValues.add(exp);
+					}
+				} else {
+					// si se pasan los parametros sin la cabecera o no hay parametros
+					for (Expression parameterExp : parametersList) {
+						Types parameterType = parameterExp.eval();
+						paramsValues.add(parameterType);
+					}
+					paramsHead.addAll(definedParameters);
 				}
 
 				int index = 0;
 				stack.openScope();
 
 				for (Types types : paramsValues) {
-					stack.addVariableToActualScope(definedParameters.get(index), types);
+					stack.addVariableToActualScope(paramsHead.get(index), types);
 					index++;
 				}
 
