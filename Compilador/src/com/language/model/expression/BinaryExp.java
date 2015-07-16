@@ -42,28 +42,28 @@ public class BinaryExp extends Expression {
 				try {
 					return stringEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if ((lType.getType().equals(TypeEnum.float_type)) || (rType.getType().equals(TypeEnum.float_type))){
@@ -73,28 +73,28 @@ public class BinaryExp extends Expression {
 					// El motivo de esto es para no duplicar código y hacer 2 funciones prácticamente idéntias 
 					return floatEvalArit(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.long_type) || (rType.getType().equals(TypeEnum.long_type))){
 				try {
 					return longEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.long_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.int_type) || (rType.getType().equals(TypeEnum.int_type))){
 				try {
 					return intEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.int_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.boolean_type) || (rType.getType().equals(TypeEnum.boolean_type))){
 				try {
 					return boolEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.boolean_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else {
@@ -118,14 +118,14 @@ public class BinaryExp extends Expression {
 				try {
 					return difTypesComparison(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			} // Si ambos son numerables (Float, Long, Int, Bool)
 			else if (lOrder == 0 && rOrder == 0) {
 				try {
 					return evalNumerableLog(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			
@@ -133,31 +133,32 @@ public class BinaryExp extends Expression {
 				try {
 					return stringEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
 				} catch (OperationNotExistException e) {
-					e.printStackTrace();
+					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 				}
 			}
 			else {
+				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
 			}
 			
 		}
