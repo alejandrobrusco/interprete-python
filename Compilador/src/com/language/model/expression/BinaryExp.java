@@ -15,6 +15,7 @@ import com.language.types.LongType;
 import com.language.types.StringType;
 import com.language.types.TupleType;
 import com.language.types.TypeEnum;
+import com.language.types.TypeType;
 import com.language.types.Types;
 import com.language.utils.Values;
 
@@ -153,6 +154,13 @@ public class BinaryExp extends Expression {
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
+				} catch (OperationNotExistException e) {
+					throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
+				}
+			}
+			else if (lType.getType().equals(TypeEnum.type_type) || (rType.getType().equals(TypeEnum.type_type))){
+				try {
+					return typeEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.type_type));
 				} catch (OperationNotExistException e) {
 					throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
@@ -302,6 +310,30 @@ public class BinaryExp extends Expression {
 			String rString = ((TupleType) rType).getTuple().toString();
 			Integer res = lString.compareTo(rString);
 			return new BooleanType(res.intValue() <= 0);
+		}
+		else{
+			throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
+		}
+	}
+	
+	public Types typeEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
+		if (operator.equals(BinaryOp.equal)){
+			if (lType.getType().equals(TypeEnum.type_type) && (rType.getType().equals(TypeEnum.type_type))) {
+				String t1 =((TypeType) lType).getTypeValue();
+				String t2 =((TypeType) rType).getTypeValue();
+				return new BooleanType(t1.equals(t2));
+			} else {
+				return new BooleanType(false);
+			}
+		}
+		else if (operator.equals(BinaryOp.notEqual)){
+			if (lType.getType().equals(TypeEnum.type_type) && (rType.getType().equals(TypeEnum.type_type))) {
+				String t1 =((TypeType) lType).getTypeValue();
+				String t2 =((TypeType) rType).getTypeValue();
+				return new BooleanType(!t1.equals(t2));
+			} else {
+				return new BooleanType(false);
+			}
 		}
 		else{
 			throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
@@ -872,6 +904,9 @@ public class BinaryExp extends Expression {
 		}
 		else if (t.getType().equals(TypeEnum.tuple_type)){
 			return 4;
+		}
+		else if (t.getType().equals(TypeEnum.type_type)){
+			return 5;
 		}
 		else {
 			return 0;

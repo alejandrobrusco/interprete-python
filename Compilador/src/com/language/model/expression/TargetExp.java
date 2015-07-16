@@ -10,6 +10,7 @@ import com.language.exceptions.TypeErrorException;
 import com.language.types.DicType;
 import com.language.types.IndexType;
 import com.language.types.ListType;
+import com.language.types.TupleType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
 
@@ -297,6 +298,251 @@ public class TargetExp extends Expression {
 				throw new TypeErrorException("\nError at line " + this.line +": dict \'" + this.id.getId() + "\' hasn\'t element with key \'"+  indexType.getMapKey().toStringValue() +"\'");
 
 			}
+		}
+		else if (variableValue.getType().equals(TypeEnum.tuple_type) && expressionValue.getType().equals(TypeEnum.index_type)){
+			
+			IndexType indexType = (IndexType) expressionValue;
+			TupleType tupleType = (TupleType) variableValue;
+			List<Types> list = tupleType.getTuple();
+
+			
+			if (indexType.getIndex()!=null){
+			
+				long maxIndex = list.size() -1;
+				
+				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
+				
+				if (index<0 || index>maxIndex){
+					throw new OutOfBoundException("\nError at line " + this.line +": index " + Long.parseLong(expressionValue.toStringValue()) + " is out of Bound of List called \'" + this.id.getId() + "\'");
+
+				}
+				else{
+					return list.get(index);
+				}
+			}
+			else{
+				
+				List<Types> retList = new ArrayList<Types>();
+				boolean returnEmptyList = false;
+				boolean returnOriginalList = false;
+
+				
+				/*** SIN VALORES DE STEP ***/
+				
+				// Sin step (con ini y fin)
+				if (indexType.getFrom()!=null && indexType.getTo()!=null && indexType.getStep()==null){
+					
+					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					
+					/* Si los valores se van de rango, lo pongo el extremo */
+					if (to > list.size()-1){
+						to = list.size();
+					}
+					
+					if (from < 0){
+						from = 0;
+					}
+
+					returnEmptyList = this.returnEmptyList(from, to);
+					returnOriginalList = this.returnOriginalList(list.size(), from, to);
+					
+					if (!returnEmptyList){
+						if (returnOriginalList){
+							return new TupleType(list);
+							}
+						else{
+							retList = list.subList(from, to);
+							return new TupleType(retList);
+						}
+					}
+				}
+				
+				// Sin step (con ini, sin fin)
+				if (indexType.getFrom()!=null && indexType.getTo()==null && indexType.getStep()==null){
+					
+					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+					
+					returnEmptyList = this.returnEmptyList(from, list.size()-1);
+					returnOriginalList = this.returnOriginalList(list.size(), from, list.size()-1);
+
+					if (!returnEmptyList){
+						if (returnOriginalList){
+							return new TupleType(list);
+						}
+						else{
+							retList = list.subList(from, list.size());
+							return new TupleType(retList);
+						}
+					}
+				}
+				
+				// Sin step (sin ini, con fin)
+				if (indexType.getFrom()==null && indexType.getTo()!=null && indexType.getStep()==null){
+					
+					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					
+					returnEmptyList = this.returnEmptyList(0, to);
+					returnOriginalList = this.returnOriginalList(list.size(), 0, to);
+
+					if (!returnEmptyList){
+						if (returnOriginalList){
+							return new TupleType(list);
+						}
+						else{
+							retList = list.subList(0, to);
+							return new TupleType(retList);
+						}
+					}
+				}
+				
+				// Sin step (sin ini, sin fin)
+				if (indexType.getFrom()==null && indexType.getTo()==null && indexType.getStep()==null){
+					
+					return new TupleType(list);
+				}
+				
+				/*** CON VALORES DE STEP ***/
+
+				// Con step (con ini y con fin)
+				if (indexType.getFrom()!=null && indexType.getTo()!=null && indexType.getStep()!=null){
+					
+					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
+					
+					returnEmptyList = this.returnEmptyList(from, to);
+					
+					/* Si los valores se van de rango, lo pongo el extremo */
+					if (to > list.size()-1){
+						to = list.size();
+					}
+					
+					if (from < 0){
+						from = 0;
+					}
+
+					
+					if (by==0){
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
+					}
+
+					if (by<0 || returnEmptyList){
+						retList = new ArrayList<Types>();
+					}
+					else{
+						retList = new ArrayList<Types>();
+						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
+							retList.add(list.get(i));
+						}
+					}
+					
+					return new TupleType(retList);
+				}
+				
+				// Con step (con ini y sin fin)
+				if (indexType.getFrom()!=null && indexType.getTo()==null && indexType.getStep()!=null){
+					
+					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
+					int to = list.size() - 1;
+					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
+					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					
+					if (by==0){
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
+					}
+
+					if (by<0 || returnEmptyList){
+						retList = new ArrayList<Types>();
+					}
+					else{
+						retList = new ArrayList<Types>();
+						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
+							retList.add(list.get(i));
+						}
+					}
+					
+					return new TupleType(retList);
+				}
+				
+				// Con step (sin ini y con fin)
+				if (indexType.getFrom()==null && indexType.getTo()!=null && indexType.getStep()!=null){
+					
+					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					int from = 0;
+					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
+					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					
+					if (by==0){
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
+					}
+
+					if (by<0 || returnEmptyList){
+						retList = new ArrayList<Types>();
+					}
+					else{
+						retList = new ArrayList<Types>();
+						for (int i=from;i<to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
+							retList.add(list.get(i));
+						}
+					}
+					
+					return new TupleType(retList);
+				}
+				
+				// Con step (sin ini y sin fin)
+				if (indexType.getFrom()==null && indexType.getTo()==null && indexType.getStep()!=null){
+					
+					int to = list.size()-1;
+					int from = 0;
+					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
+					
+					returnEmptyList = this.returnEmptyList(from, to);
+
+					if (by==0){
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
+					}
+
+					if (by<0 || returnEmptyList){
+						retList = new ArrayList<Types>();
+					}
+					else{
+						retList = new ArrayList<Types>();
+						for (int i=from;i<=to;i=i+by){
+							
+							if (i>=list.size()){
+								break;
+							}
+							
+							retList.add(list.get(i));
+						}
+					}
+					
+					return new TupleType(retList);
+				}
+				
+				return new TupleType(retList);
+			}
+			
 		}
 		else{
 			throw new TypeErrorException("\nError at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");

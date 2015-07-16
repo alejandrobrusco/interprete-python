@@ -49,6 +49,10 @@ public class TupleType extends Types {
 				
 				ret = ret.concat(", " + valueToPrint);
 			}
+			
+			if (this.value.size()==1){
+				ret = ret.concat(",");
+			}
 		}
 		ret = ret.concat(")");
 		return ret;
