@@ -28,7 +28,7 @@ public class DicType extends Types {
 	@Override
 	public String print() {
 		 String ret = "{";
-		if (!this.dic.isEmpty()){
+		if (this.dic != null && !this.dic.isEmpty()){
 			List<Types> list = new ArrayList<Types>();
 			list.addAll(dic.keySet());
 			Types first = list.remove(0);

@@ -30,7 +30,7 @@ public class TupleType extends Types {
 	@Override
 	public String print() {
 		String ret = "(";
-		if (!this.value.isEmpty()){
+		if (this.value!=null && !this.value.isEmpty()){
 			List<Types> valueClone = new ArrayList<Types>(this.value);
 			Types first = valueClone.remove(0);
 			ret = ret.concat(first.print());

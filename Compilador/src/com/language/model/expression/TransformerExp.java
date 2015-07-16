@@ -169,14 +169,14 @@ public class TransformerExp extends Expression {
 				return new ListType();
 			}
 		case dict_type:
-			if (list.isEmpty()){
+			if (list == null){
 				if (exprType == null ){
 					exprType = new ListType(new ArrayList<Types>());
 				}
 				exprTypeEnum = exprType.getType();
 				if (TypeEnum.list_type.equals(exprTypeEnum)){
 					List<Types> list = ((ListType)exprType).getList();
-					if (list == null){
+					if (list == null || list.isEmpty()){
 						return new DicType();
 					}
 					Map<Types,Types> map = new HashMap<Types,Types>();
@@ -213,8 +213,7 @@ public class TransformerExp extends Expression {
 			
 		default:
 			//TODO EXCEPTION no tendria q llegar aca
-			break;
+			return new DicType();
 		}
-		return null;
 	}
 }

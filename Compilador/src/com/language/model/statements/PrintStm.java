@@ -18,7 +18,7 @@ public class PrintStm extends Statement {
 	}
 	
 	public Types eval() {
-		if (!expressions.isEmpty()){
+		if (expressions != null && !expressions.isEmpty()){
 			List<Expression> expressionClone = new ArrayList<Expression>(this.expressions);
 			Expression last = expressionClone.remove(expressionClone.size()-1);
 			for (Expression expression : expressionClone) {
