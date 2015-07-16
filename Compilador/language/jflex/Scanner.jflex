@@ -33,9 +33,7 @@ import com.language.exceptions.*;
 	
 	Stack<Integer> stack = new Stack<Integer>();
 	private int current_indent;
-	
-	private StringBuffer string = new StringBuffer();
-	
+
 %}
 
 %eofval{
@@ -58,7 +56,6 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 %state indent_status
 %state normal_status
-%state triple_quoted
 
 %%
 
@@ -133,9 +130,9 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 "raw_input"			{ return symbol(sym.RAW_INPUT); }
 
-\"{3}				{ yybegin(triple_quoted); string.setLength(0); }
+\"{3}[^\"{3}]*?\"{3}	{ return symbol(sym.STRING, yytext()); }
 \"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
-'{3}(.|\n)*?'{3}		{ return symbol(sym.STRING, yytext()); }
+'{3}[^'{3}]*?'{3}		{ return symbol(sym.STRING, yytext()); }
 '([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); } 
 
 {Float}					{return symbol(sym.FLOATATION, yytext()); }
@@ -194,13 +191,6 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 					
 }
 
-<triple_quoted>	{
-\"{3}             { yybegin(indent_status);
-					System.out.println(string.toString()); 
-                      return symbol(sym.STRING, string.toString()); }
-[^\"{3}]*?               	{ string.append( yytext() ); 
-							System.out.println(string.toString());}
-}
 
 
 {Comment}           { /* ignore */ }
