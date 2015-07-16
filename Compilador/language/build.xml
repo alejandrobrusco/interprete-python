@@ -1,4 +1,4 @@
-<project name="Compiler" default="cup" basedir=".">
+<project name="Compiler" default="main" basedir=".">
 
 	<property name="cup" location="cup" />
 	<property name="jflex" location="jflex" />
@@ -8,6 +8,10 @@
 	<property name="dist" location="jar" />
 	<property name="lib" location="lib" />
 	<property name="bin" location="bin" />
+	<property name="build" location="../build" />
+	<property name="main-class" value="com.language.compilador.Compilador"/>
+	<property name="java-cup-runtime" value="../lib/java-cup-11a-runtime.jar"/>
+	<property name="jar-dest" value="${build}/jar/Compilador.jar"/>
 
 	<property environment="env" />
 
@@ -34,6 +38,10 @@
 
 	<taskdef name="cup" classname="java_cup.anttask.CUPTask" classpath="${bin}/java-cup-11a.jar" />
 
+	<target name="clean">
+        	<delete dir="${build}"/>
+	</target>
+
 	<target name="init">
 		<mkdir dir="${classes}" />
 		<mkdir dir="${java}" />
@@ -57,5 +65,30 @@
 			</fileset>
 		</copy>
 	</target>
+	
+	<target name="compile">
+        	<mkdir dir="${build}/classes"/>
+	        <javac srcdir="../src" destdir="${build}/classes" >
+			<classpath>
+				<pathelement path="${java-cup-runtime}"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="jar">
+		<mkdir dir="${build}/jar"/>
+		<jar destfile="${jar-dest}" basedir="${build}/classes">
+			<zipgroupfileset dir="lib" includes="${java-cup-runtime}" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
 
+	<target name="run">
+		<java jar="${jar-dest}" fork="true"/>
+	</target>
+	
+	<target name="main" depends="clean,init,jflex,cup,compile,jar,run"/>
+	
 </project>
