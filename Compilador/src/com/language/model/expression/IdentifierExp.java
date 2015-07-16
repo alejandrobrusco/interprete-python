@@ -32,7 +32,7 @@ public class IdentifierExp extends Expression {
 			return globalVariable;
 		}
 		else{
-			throw new VariableNotExistException("Error at line " + this.line + ": variable \'" + id +"\' is not defined");
+			throw new VariableNotExistException("\nError at line " + this.line + ": variable \'" + id +"\' is not defined");
 
 		}
 		

@@ -66,7 +66,7 @@ public class WhileStm extends Statement {
 						execute = condition.toBooleanValue();
 					}
 					else{
-						throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence 'while'");
+						throw new TypeErrorException("\nError at line " + this.line +": not correct type expression on sentence 'while'");
 					}
 
 				}
@@ -80,7 +80,7 @@ public class WhileStm extends Statement {
 			return t;
 		}
 		else{
-			throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence 'while'");
+			throw new TypeErrorException("\nError at line " + this.line +": not correct type expression on sentence 'while'");
 
 		}
 	}

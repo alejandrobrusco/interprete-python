@@ -51,7 +51,7 @@ public class IfElseStm extends Statement {
 			return ret;
 		}
 		else{
-			throw new TypeErrorException("Error at line " + this.line +": not correct type expression on sentence \'if\'");
+			throw new TypeErrorException("\nError at line " + this.line +": not correct type expression on sentence \'if\'");
 		}
 	}
 	

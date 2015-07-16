@@ -42,10 +42,11 @@ public class TargetExp extends Expression {
 			if (indexType.getIndex()!=null){
 			
 				long maxIndex = list.size() -1;
+				
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
-				if (index>maxIndex){
-					throw new OutOfBoundException("Error at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
+				if (index<0 || index>maxIndex){
+					throw new OutOfBoundException("\nError at line " + this.line +": index " + Long.parseLong(expressionValue.toStringValue()) + " is out of Bound of List called \'" + this.id.getId() + "\'");
 
 				}
 				else{
@@ -156,7 +157,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -188,7 +189,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -220,7 +221,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -251,7 +252,7 @@ public class TargetExp extends Expression {
 					returnEmptyList = this.returnEmptyList(from, to);
 
 					if (by==0){
-						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
+						throw new IlegalArgumentException("\nError at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -275,8 +276,30 @@ public class TargetExp extends Expression {
 				return new ListType(retList);
 			}
 		}
+		else if (variableValue.getType().equals(TypeEnum.dict_type) && expressionValue.getType().equals(TypeEnum.index_type)){
+			
+			DicType dicType = (DicType)variableValue;
+			IndexType indexType = (IndexType)expressionValue;
+			
+			Map<Types, Types> dic = dicType.getDic();
+			
+			
+			if (indexType.getMapKey().getType().equals(TypeEnum.float_type)){
+				throw new TypeErrorException("\nError at line " + this.line +": dict \'" + this.id.getId() + "\' not support keys of \'float\' type.");
+			}
+			
+			Types ret = dic.get(indexType.getMapKey());
+			
+			if (ret!=null){
+				return ret;
+			}
+			else{
+				throw new TypeErrorException("\nError at line " + this.line +": dict \'" + this.id.getId() + "\' hasn\'t element with key \'"+  indexType.getMapKey().toStringValue() +"\'");
+
+			}
+		}
 		else{
-			throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
+			throw new TypeErrorException("\nError at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 	}
 	
@@ -325,7 +348,7 @@ public class TargetExp extends Expression {
 				int index = this.transformNegativeIndex(list.size(), Long.parseLong(expressionValue.toStringValue()));
 				
 				if (index>maxIndex){
-					throw new OutOfBoundException("Error at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
+					throw new OutOfBoundException("\nError at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
 				}
 				else{
 					list.remove(index);
@@ -352,7 +375,7 @@ public class TargetExp extends Expression {
 						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 						
 						if (this.checkInterval(from, to)){
-							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
+							throw new IlegalArgumentException("\nError at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -388,7 +411,7 @@ public class TargetExp extends Expression {
 						int to = list.size();
 						
 						if (this.checkInterval(from, to)){
-							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
+							throw new IlegalArgumentException("\nError at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -424,7 +447,7 @@ public class TargetExp extends Expression {
 						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 						
 						if (this.checkInterval(from, to)){
-							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
+							throw new IlegalArgumentException("\nError at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -460,7 +483,7 @@ public class TargetExp extends Expression {
 						int to = list.size();
 						
 						if (this.checkInterval(from, to)){
-							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
+							throw new IlegalArgumentException("\nError at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -490,28 +513,30 @@ public class TargetExp extends Expression {
 					}
 					
 					else{
-						throw new IlegalArgumentException("Error at line " + this.line +": operation not implemented");
+						throw new IlegalArgumentException("\nError at line " + this.line +": operation not implemented");
 					}
 					
 				}
 				else{
-					throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
+					throw new TypeErrorException("\nError at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
 					
 				}
 			}
 			
 		}
-		else if (variableValue.getType().equals(TypeEnum.list_type) && (expressionValue.getType().equals(TypeEnum.int_type) || expressionValue.getType().equals(TypeEnum.long_type) || expressionValue.getType().equals(TypeEnum.float_type) || expressionValue.getType().equals(TypeEnum.string_type) || expressionValue.getType().equals(TypeEnum.boolean_type))){
+		else if (variableValue.getType().equals(TypeEnum.dict_type) && (expressionValue.getType().equals(TypeEnum.index_type))){
 			
 			DicType dicType = (DicType)variableValue;
+			IndexType indexType = (IndexType)expressionValue;
+
 			
 			Map<Types, Types> dic = dicType.getDic();
 			
-			dic.put(expressionValue, valueToAssing.eval());
+			dic.put(indexType.getMapKey(), valueToAssing.eval());
 			
 		}
 		else{
-			throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
+			throw new TypeErrorException("\nError at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\' or \'dict\'");
 		}
 		
 	}

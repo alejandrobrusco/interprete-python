@@ -29,7 +29,7 @@ public class TargetAssignStm extends Statement {
 			
 		}
 		else{
-			throw new TypeErrorException("Error at line "+ this.line +": General parsing error on evaluating Target Expression");
+			throw new TypeErrorException("\nError at line "+ this.line +": General parsing error on evaluating Target Expression");
 
 		}
 		

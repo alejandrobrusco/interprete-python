@@ -33,7 +33,7 @@ public class ReturnStm extends Statement {
 			}
 		}
 		else{
-			throw new IlegalStatementException("Error at line "+ this.line +": \'return\' sentence not in Function Definition");
+			throw new IlegalStatementException("\nError at line "+ this.line +": \'return\' sentence not in Function Definition");
 		}
 		
 	}

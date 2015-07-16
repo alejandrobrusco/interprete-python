@@ -77,7 +77,7 @@ public class StackHandler {
 			return result;
 		}
 		else{
-			throw new FunctionNotExistException("Error at line " + line +": function \'" + id + "\' is not defined.");
+			throw new FunctionNotExistException("\nError at line " + line +": function \'" + id + "\' is not defined.");
 		}
 
 	}

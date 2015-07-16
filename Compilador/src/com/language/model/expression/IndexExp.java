@@ -42,7 +42,7 @@ public class IndexExp extends Expression {
 	public IndexExp(Expression simpleIndex,int line) {
 		this.simpleIndex = simpleIndex;
 	}
-
+	
 	@Override
 	public Types eval() {
 		
@@ -51,10 +51,10 @@ public class IndexExp extends Expression {
 			Types index = this.simpleIndex.eval();
 
 			if (index.getType().equals(TypeEnum.int_type) || index.getType().equals(TypeEnum.long_type)) {
-				return new IndexType(null, null, null, Long.valueOf(index.toStringValue()));
-			} else {
-				// Exception types
-				return null;
+				return new IndexType(null, null, null, Long.valueOf(index.toStringValue()),index);
+			} 
+			else{
+				return new IndexType(index);
 			}
 		} else {
 			
@@ -67,7 +67,7 @@ public class IndexExp extends Expression {
 			Long by = (this.eStep==null) ? null : Long.valueOf(eStep.eval().toStringValue());
 
 			// si pasamos el chequeo de tipos
-			return new IndexType(start, end, by, null);
+			return new IndexType(start, end, by, null,null);
 		}
 
 	}
@@ -77,7 +77,7 @@ public class IndexExp extends Expression {
 		if ((expr!=null && !expr.eval().getType().equals(TypeEnum.none_type))){
 
 			if (!(expr!=null && (expr.eval().getType().equals(TypeEnum.long_type) || expr.eval().getType().equals(TypeEnum.int_type)))){
-				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + expr.eval().getType().getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
+				throw new TypeErrorException("\nError at line " + this.line +": could not convert '" + expr.eval().getType().getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
 			}
 		}
 	

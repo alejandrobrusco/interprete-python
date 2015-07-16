@@ -9,13 +9,23 @@ public class IndexType extends Types {
 	Long to;
 	Long step;
 	Long index;
+	Types mapKey;
 	
-	public IndexType(Long from, Long to, Long step, Long index){
+	public IndexType(Long from, Long to, Long step, Long index, Types mapKey){
 		this.from = from;
 		this.to = to;
 		this.step = step;
 		this.index = index;
+		this.mapKey = mapKey;
 
+	}
+	
+	public IndexType(Types mapKey){
+		this.mapKey = mapKey;
+	}
+	
+	public Types getMapKey(){
+		return this.mapKey;
 	}
 
 	@Override

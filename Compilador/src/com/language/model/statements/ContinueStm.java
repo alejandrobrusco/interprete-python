@@ -24,7 +24,7 @@ public class ContinueStm extends Statement {
 			return new ContinueType();
 		}
 		else{
-			throw new IlegalStatementException("Error at line " + this.line + ": \'continue\' Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("\nError at line " + this.line + ": \'continue\' Sentence not in Iteration Definition\n");
 		}
 		
 	}

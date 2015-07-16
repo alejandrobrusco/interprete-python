@@ -44,7 +44,7 @@ public class FunctionExp extends Expression {
 						Expression idExp = ((AssignExp) assignExp).getId();
 						String id = ((IdentifierExp)idExp).getId();
 						if (paramsHead.contains(id)){
-							throw new IlegalArgumentException("Error at line " + this.line + ": keyword " + id + " argument repeated");
+							throw new IlegalArgumentException("\nError at line " + this.line + ": keyword " + id + " argument repeated");
 						}
 						paramsHead.add(id);
 						
@@ -90,10 +90,10 @@ public class FunctionExp extends Expression {
 				stackHandler.closeFunctionScope();
 				return ret;
 			} else {
-				throw new IlegalArgumentException("Error at line " + this.line + ": function must be called with " + definedParameters.size() + " arguments");
+				throw new IlegalArgumentException("\nError at line " + this.line + ": function must be called with " + definedParameters.size() + " arguments");
 			}
 		} else {
-			throw new IlegalArgumentException("Error at line " + this.line + ": general error parsin FunctionExp");
+			throw new IlegalArgumentException("\nError at line " + this.line + ": general error parsin FunctionExp");
 
 		}
 

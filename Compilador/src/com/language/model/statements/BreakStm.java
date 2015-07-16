@@ -24,7 +24,7 @@ public class BreakStm extends Statement {
 			return new BreakType();
 		}
 		else{
-			throw new IlegalStatementException("Error at line " + this.line + ": \'break\' Sentence not in Iteration Definition\n");
+			throw new IlegalStatementException("\nError at line " + this.line + ": \'break\' Sentence not in Iteration Definition\n");
 		}
 	}
 	

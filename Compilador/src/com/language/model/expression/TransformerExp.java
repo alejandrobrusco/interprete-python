@@ -63,7 +63,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new IntegerType(Integer.parseInt(exprType.toStringValue()));
 			} else {
-				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.int_type.getPythonType());
+				throw new TypeErrorException("\nError at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.int_type.getPythonType());
 			}
 		case long_type:
 			if (exprType == null){
@@ -80,7 +80,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new LongType(Long.parseLong(exprType.toStringValue()));
 			} else {
-				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
+				throw new TypeErrorException("\nError at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
 			}
 		case float_type:
 			if (exprType == null){
@@ -96,7 +96,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new FloatType(Float.parseFloat(exprType.toStringValue()));
 			} else {
-				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.float_type.getPythonType());
+				throw new TypeErrorException("\nError at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.float_type.getPythonType());
 			}
 		case string_type:
 			if (exprType == null){
@@ -131,7 +131,7 @@ public class TransformerExp extends Expression {
 				list.addAll(dicSet);
 				return new TupleType(list);
 			} else {
-				throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
+				throw new TypeErrorException("\nError at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 			}
 		
 		case list_type:
@@ -161,7 +161,7 @@ public class TransformerExp extends Expression {
 				list.addAll(dicSet);
 				return new ListType(list);
 			} else {
-				throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
+				throw new TypeErrorException("\nError at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 			}
 		case dict_type:
 			if (list == null){
@@ -183,14 +183,14 @@ public class TransformerExp extends Expression {
 								Types value = tuple.get(1);
 								map.put(key, value);
 							} else {
-								throw new IlegalArgumentException("Error at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
+								throw new IlegalArgumentException("\nError at line " + this.line +": dictionary update sequence element #0 has length "+ tuple.size() +"; 2 is required");
 							}
 						} else {
-							throw new TypeErrorException("Error at line " + this.line +": cannot convert dictionary update sequence element #0 to a sequence");
+							throw new TypeErrorException("\nError at line " + this.line +": cannot convert dictionary update sequence element #0 to a sequence");
 						}
 					}
 				} else {
-					throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
+					throw new TypeErrorException("\nError at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 				}
 			} else {
 				Map<Types,Types> map = new HashMap<Types,Types>();
@@ -206,7 +206,7 @@ public class TransformerExp extends Expression {
 			}
 			
 		default:
-			throw new IlegalArgumentException("Error at line " + this.line + ": general error parsin TransformerExp");
+			throw new IlegalArgumentException("\nError at line " + this.line + ": general error parsin TransformerExp");
 		}
 	}
 }

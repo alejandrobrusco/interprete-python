@@ -17,5 +17,11 @@ public abstract class Types {
 		}
 		return false;
 	}
+	@Override
+	public int hashCode() {
+		return this.getType().getHashCode();
+	}
+	
+	
 	
 }

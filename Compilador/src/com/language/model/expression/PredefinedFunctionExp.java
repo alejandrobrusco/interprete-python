@@ -66,7 +66,7 @@ public class PredefinedFunctionExp extends Expression {
 			if (variableType == null){
 				variableType = stack.findInGlobalScope(variableId);
 				if (variableType == null){
-					throw new VariableNotExistException("Error at line " + this.line +": variable \'" + variableId +"\' is not defined");
+					throw new VariableNotExistException("\nError at line " + this.line +": variable \'" + variableId +"\' is not defined");
 				}
 			}
 			
@@ -81,7 +81,7 @@ public class PredefinedFunctionExp extends Expression {
 						boolean containsKey = ((DicType) variableType).getDic().containsKey(key);
 						return new BooleanType(containsKey);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 					}
 				case ITEMS:
 					if (parametersList.size()==0){
@@ -100,7 +100,7 @@ public class PredefinedFunctionExp extends Expression {
 						
 						return new ListType(list);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 					}
 				case KEYS:
 					if (parametersList.size()==0){
@@ -109,7 +109,7 @@ public class PredefinedFunctionExp extends Expression {
 						list.addAll(dicSet);
 						return new ListType(list);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 
 					}
 				case POP:
@@ -118,7 +118,7 @@ public class PredefinedFunctionExp extends Expression {
 						Types value = ((DicType) variableType).getDic().remove(key);
 						return value;
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case VALUES:
@@ -126,10 +126,10 @@ public class PredefinedFunctionExp extends Expression {
 						List<Types> dicValues = (List<Types>) ((DicType) variableType).getDic().values();
 						return new ListType(dicValues);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 					}
 				default:
-					throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'dict\' type");
+					throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'dict\' type");
 				}
 			}
 			else if (TypeEnum.string_type.equals(type)){
@@ -151,10 +151,10 @@ public class PredefinedFunctionExp extends Expression {
 							}
 							return new IntegerType(count);
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case FIND:
@@ -166,7 +166,7 @@ public class PredefinedFunctionExp extends Expression {
 							int indexOf = str.indexOf(subStr);
 							return new IntegerType(indexOf);
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 						
 					} else if (parametersList.size()==2){
@@ -179,12 +179,12 @@ public class PredefinedFunctionExp extends Expression {
 							int indexOf = str.indexOf(subStr,i);
 							return new IntegerType(indexOf);
 						} else  if (TypeEnum.int_type.equals(startType.getType())) {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument must be an \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument must be an \'str\' type");
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument must be an \'int\' or \'long\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument must be an \'int\' or \'long\' type");
 						} 
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one or two arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one or two arguments");
 					}
 				case JOIN:
 					if (parametersList.size()==1){
@@ -195,11 +195,11 @@ public class PredefinedFunctionExp extends Expression {
 							String retStr = String.join(str, joinStr);
 							return new StringType(retStr);
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 
 						}
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 					
@@ -217,10 +217,10 @@ public class PredefinedFunctionExp extends Expression {
 							}
 							return new ListType(strSplitList);
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case REPLACE:
@@ -234,14 +234,14 @@ public class PredefinedFunctionExp extends Expression {
 							String replaceFirst = str.replaceFirst(oldStr, newStr);
 							return new StringType(replaceFirst);
 						} else if (TypeEnum.string_type.equals(newStrType.getType())) {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
 
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
 
 						}
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains exactly two argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains exactly two argument");
 
 					}
 				case LENGTH:
@@ -250,11 +250,11 @@ public class PredefinedFunctionExp extends Expression {
 						int length = str.length();
 						return new IntegerType(length);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 
 					}
 				default:
-					throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'str\' type");
+					throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'str\' type");
 
 				}
 			}
@@ -266,7 +266,7 @@ public class PredefinedFunctionExp extends Expression {
 						boolean ret = ((ListType) variableType).getList().add(value);
 						return new BooleanType(ret);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case COUNT:
@@ -281,7 +281,7 @@ public class PredefinedFunctionExp extends Expression {
 						}
 						return new IntegerType(count);
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case EXTEND:
@@ -303,14 +303,14 @@ public class PredefinedFunctionExp extends Expression {
 								elements.add(strType);
 							}
 						}else{
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument type must be: \'dict\',\'list\',\'tuple\',\'str\'");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument type must be: \'dict\',\'list\',\'tuple\',\'str\'");
 
 						}
 						boolean ret = list.addAll(elements);
 						return new BooleanType(ret);
 						
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}
 				case INDEX:
@@ -326,7 +326,7 @@ public class PredefinedFunctionExp extends Expression {
 							count++;
 						}
 						
-						throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value \'" + value.toStringValue() + "\' isn\'t in list.");
+						throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value \'" + value.toStringValue() + "\' isn\'t in list.");
 
 						
 					} else if (parametersList.size()==2){
@@ -345,11 +345,11 @@ public class PredefinedFunctionExp extends Expression {
 								count++;
 							}
 							
-							throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
+							throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
 
 							
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
 
 						}
 					} else if (parametersList.size()==3){
@@ -370,18 +370,18 @@ public class PredefinedFunctionExp extends Expression {
 								count++;
 							}
 							
-							throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
+							throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
 
 							
 						} else if (TypeEnum.int_type.equals(end.getType())) {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' second argument should be \'int\' type");
 
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' third argument should be \'int\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' third argument should be \'int\' type");
 
 						}
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains almost three arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains almost three arguments");
 
 					}
 				case INSERT:
@@ -395,11 +395,11 @@ public class PredefinedFunctionExp extends Expression {
 							list.add(i, value);
 							return new VoidType();
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument should be \'int\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument should be \'int\' type");
 
 						}						
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains two arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains two arguments");
 					}
 				case POP:
 					if (parametersList.size()==1){
@@ -411,12 +411,12 @@ public class PredefinedFunctionExp extends Expression {
 							boolean ret = list.remove(i);
 							return new BooleanType(ret);
 						} else {
-							throw new IlegalArgumentException("Error at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument should be \'int\' type");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument should be \'int\' type");
 
 						}
 						
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must contains only one argument");
 
 					}						
 				case SIZE:
@@ -424,19 +424,19 @@ public class PredefinedFunctionExp extends Expression {
 						List<Types> list = ((ListType) variableType).getList();
 						return new IntegerType(list.size());
 					} else {
-						throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
+						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 
 					}						
 				default:
-					throw new IlegalArgumentException("Error at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'list\' type");
+					throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' is not valid function for \'list\' type");
 
 				}
 			} else {
-				throw new IlegalArgumentException("Error at line " + this.line +" : " + variableId + " isnt\'t of type \'dict\', \'list\' or \'str\'");
+				throw new IlegalArgumentException("\nError at line " + this.line +" : " + variableId + " isnt\'t of type \'dict\', \'list\' or \'str\'");
 
 			}
 		}else{
-			throw new VariableNotExistException("Error at line " + this.line +": general parsing error at executing Pre-defined Function");
+			throw new VariableNotExistException("\nError at line " + this.line +": general parsing error at executing Pre-defined Function");
 		}
 	}
 

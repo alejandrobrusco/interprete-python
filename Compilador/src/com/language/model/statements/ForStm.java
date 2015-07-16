@@ -169,7 +169,7 @@ public class ForStm extends Statement {
 			
 		}
 		else{
-			throw new TypeErrorException("Error at line " + this.line +": not Iteration type on sentence \'for\'");
+			throw new TypeErrorException("\nError at line " + this.line +": not Iteration type on sentence \'for\'");
 		}
 	}
 	
