@@ -58,17 +58,17 @@ public class ForStm extends Statement {
 					
 					t = stm.eval();
 					
-					if (t.equals(TypeEnum.break_type)){
+					if (t.getType().equals(TypeEnum.break_type)){
 						stopForElements = true;
 						break;
 					}
 					
-					if (t.equals(TypeEnum.return_type)){
+					if (t.getType().equals(TypeEnum.return_type)){
 						stopForElements = true;
 						break;
 					}
 					
-					if (t.equals(TypeEnum.continue_type)){
+					if (t.getType().equals(TypeEnum.continue_type)){
 						break;
 					}
 				}
