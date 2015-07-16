@@ -14,7 +14,7 @@ public class Compilador {
 		if(args.length == 1){
 			try {
 				Parser parser = new Parser(new Scanner(new FileReader(args[0])));
-				Object value = parser.debug_parse().value;
+				Object value = parser.parse().value;
 				Program program = (Program)value;
 				program.eval();
 				

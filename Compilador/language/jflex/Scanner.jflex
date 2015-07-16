@@ -3,7 +3,6 @@ package com.language.parser;
 import java.util.*;
 import java_cup.runtime.*;
 import com.language.exceptions.*;
-import com.language.model.*;
 
 %%
 
@@ -22,13 +21,6 @@ import com.language.model.*;
 %init}
 
 %{
-	private SymbolFactory sf;
-
-	public Scanner(java.io.InputStream r, SymbolFactory sf) {
-		this(r);
-		this.sf=sf;
-	}
-
 	private Symbol symbol(int type) {
 		return new Symbol(type, yyline+1, yycolumn+1);
 	}
@@ -179,7 +171,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 							yybegin(normal_status);
 						}
 						else{
-							int tmp = stack.pop();
+							stack.pop();
 							return symbol(sym.DEDENT);
 						}
 					}
