@@ -63,8 +63,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new IntegerType(Integer.parseInt(exprType.toStringValue()));
 			} else {
-				//TODO EXCEPTION
-				return new IntegerType(999999999);
+				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.int_type.getPythonType());
 			}
 		case long_type:
 			if (exprType == null){
@@ -81,8 +80,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new LongType(Long.parseLong(exprType.toStringValue()));
 			} else {
-				//TODO EXCEPTION
-				return new LongType(999999999L);
+				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
 			}
 		case float_type:
 			if (exprType == null){
@@ -98,8 +96,7 @@ public class TransformerExp extends Expression {
 			} else if (TypeEnum.string_type.equals(exprTypeEnum)){
 				return new FloatType(Float.parseFloat(exprType.toStringValue()));
 			} else {
-				//TODO EXCEPTION
-				return new FloatType(999999999F);
+				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + exprTypeEnum.getPythonType() + "' to " + TypeEnum.float_type.getPythonType());
 			}
 		case string_type:
 			if (exprType == null){
@@ -134,8 +131,7 @@ public class TransformerExp extends Expression {
 				list.addAll(dicSet);
 				return new TupleType(list);
 			} else {
-				//TODO EXCEPTION tipo no iterable
-				return new TupleType();
+				throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 			}
 		
 		case list_type:
@@ -165,8 +161,7 @@ public class TransformerExp extends Expression {
 				list.addAll(dicSet);
 				return new ListType(list);
 			} else {
-				//TODO EXCEPTION tipo no iterable
-				return new ListType();
+				throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 			}
 		case dict_type:
 			if (list == null){
@@ -195,8 +190,7 @@ public class TransformerExp extends Expression {
 						}
 					}
 				} else {
-					// TODO EXCEPTION tipo no iterable
-					return new DicType();
+					throw new TypeErrorException("Error at line " + this.line +": '" + exprTypeEnum.getPythonType() + "' object is not iterable");
 				}
 			} else {
 				Map<Types,Types> map = new HashMap<Types,Types>();
@@ -212,8 +206,7 @@ public class TransformerExp extends Expression {
 			}
 			
 		default:
-			//TODO EXCEPTION no tendria q llegar aca
-			return new DicType();
+			throw new IlegalArgumentException("Error at line " + this.line + ": general error parsin TransformerExp");
 		}
 	}
 }

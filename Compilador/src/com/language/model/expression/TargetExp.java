@@ -1,10 +1,10 @@
 package com.language.model.expression;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.language.exceptions.IlegalArgumentException;
 import com.language.exceptions.OutOfBoundException;
 import com.language.exceptions.TypeErrorException;
 import com.language.types.DicType;
@@ -138,8 +138,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						// EXCEPTION: step no puede ser zero
-						return null;
+						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -171,8 +170,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						// EXCEPTION: step no puede ser zero
-						return null;
+						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -204,8 +202,7 @@ public class TargetExp extends Expression {
 
 					
 					if (by==0){
-						// EXCEPTION: step no puede ser zero
-						return null;
+						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -236,8 +233,7 @@ public class TargetExp extends Expression {
 					returnEmptyList = this.returnEmptyList(from, to);
 
 					if (by==0){
-						// EXCEPTION: step no puede ser zero
-						return null;
+						throw new IlegalArgumentException("Error at line " + this.line +": step can not be zero");
 					}
 
 					if (by<0 || returnEmptyList){
@@ -326,7 +322,6 @@ public class TargetExp extends Expression {
 					
 					List<Types> subListToAdd = ((ListType)valueToAssing.eval()).getList();
 					
-					boolean returnEmptyList = false;
 					boolean returnOriginalList = false;
 					
 					/*** SIN VALORES DE STEP ***/
@@ -338,7 +333,7 @@ public class TargetExp extends Expression {
 						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 						
 						if (this.checkInterval(from, to)){
-							// Exception : from > to
+							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -363,11 +358,8 @@ public class TargetExp extends Expression {
 
 								list = new ArrayList<>(firstPart);
 								listType.setList(list);
-
 							}
 						}
-						
-						
 					}
 					
 					// Sin step (con ini, sin fin)
@@ -377,7 +369,7 @@ public class TargetExp extends Expression {
 						int to = list.size();
 						
 						if (this.checkInterval(from, to)){
-							// Exception : from > to
+							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -413,7 +405,7 @@ public class TargetExp extends Expression {
 						int to = this.transformNegativeIndex(list.size(), indexType.getTo());
 						
 						if (this.checkInterval(from, to)){
-							// Exception : from > to
+							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -449,7 +441,7 @@ public class TargetExp extends Expression {
 						int to = list.size();
 						
 						if (this.checkInterval(from, to)){
-							// Exception : from > to
+							throw new IlegalArgumentException("Error at line " + this.line +": start index can not be greater than end index (" + from +" > "+ to + ")");
 						}
 						else{
 							returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -479,7 +471,7 @@ public class TargetExp extends Expression {
 					}
 					
 					else{
-						// Exception: tiene step y no lo soportamos!!
+						throw new IlegalArgumentException("Error at line " + this.line +": operation not implemented");
 					}
 					
 				}
@@ -487,9 +479,6 @@ public class TargetExp extends Expression {
 					throw new TypeErrorException("Error at line " + this.line +": variable \'" + this.id.getId() + "\' isn\'t of type \'list\'");
 					
 				}
-			
-				
-				
 			}
 			
 		}

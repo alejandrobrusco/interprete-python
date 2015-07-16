@@ -418,11 +418,11 @@ target					::= IDENTIFIER:id LBRACKET index:i RBRACKET
 								{: RESULT = new TargetExp((String)id,(Expression)i,idleft); :};
 								
 index					::= expression:expr
-								{: RESULT = new IndexExp((Expression)expr); :}
+								{: RESULT = new IndexExp((Expression)expr,exprleft); :}
 						  | expression_or_empty:eIni COLON expression_or_empty:eFin
-						  		{: RESULT = new IndexExp((Expression)eIni, (Expression) eFin); :}
+						  		{: RESULT = new IndexExp((Expression)eIni, (Expression) eFin,eInileft); :}
 						  | expression_or_empty:eIni COLON expression_or_empty:eFin COLON expression_or_empty:eStep
-						  		{: RESULT =  new IndexExp((Expression)eIni,(Expression)eFin, (Expression)eStep); :};								
+						  		{: RESULT =  new IndexExp((Expression)eIni,(Expression)eFin, (Expression)eStep,eInileft); :};								
 								
 expression_or_empty		::=	expression:expr
 								{: RESULT =	expr; :}

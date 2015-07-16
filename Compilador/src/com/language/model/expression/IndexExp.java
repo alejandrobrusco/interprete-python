@@ -1,5 +1,6 @@
 package com.language.model.expression;
 
+import com.language.exceptions.TypeErrorException;
 import com.language.types.IndexType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
@@ -10,19 +11,20 @@ public class IndexExp extends Expression {
 	Expression eFin;
 	Expression eStep;
 	Expression simpleIndex;
+	int line;
 
-	public IndexExp(Expression eIni, Expression eFin, Expression eStep) {
+	public IndexExp(Expression eIni, Expression eFin, Expression eStep,int line) {
 		this.eIni = eIni;
 		this.eFin = eFin;
 		this.eStep = eStep;
 	}
 
-	public IndexExp(Expression eIni, Expression eFin) {
+	public IndexExp(Expression eIni, Expression eFin,int line) {
 		this.eIni = eIni;
 		this.eFin = eFin;
 	}
 
-	public IndexExp(Expression simpleIndex) {
+	public IndexExp(Expression simpleIndex,int line) {
 		this.simpleIndex = simpleIndex;
 	}
 
@@ -53,7 +55,6 @@ public class IndexExp extends Expression {
 			Long end = (this.eFin==null) ? null : Long.valueOf(eFin.eval().toStringValue());
 			Long by = (this.eStep==null) ? null : Long.valueOf(eStep.eval().toStringValue());
 
-
 			// si pasamos el chequeo de tipos
 			return new IndexType(start, end, by, null);
 		}
@@ -63,7 +64,7 @@ public class IndexExp extends Expression {
 	private void checkType(Expression expr) {
 
 		if (!(expr!=null && (expr.eval().getType().equals(TypeEnum.long_type) || expr.eval().getType().equals(TypeEnum.int_type)))){
-			// Lanzar excpeción de tipos
+			throw new TypeErrorException("Error at line " + this.line +": could not convert '" + expr.eval().getType().getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
 		}
 	
 	}
