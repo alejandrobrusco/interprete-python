@@ -1,5 +1,6 @@
 package com.language.types;
 
+import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,21 @@ public class DicType extends Types {
 	}
 
 	private String printElement(Types t) {
-		String ret = t.print();
-		ret = ret.concat(": '" + dic.get(t).print() + "'");
+		
+		String toPrintKey = t.print();
+		
+		if (t.getType().equals(TypeEnum.string_type)){
+			toPrintKey = "'" + t.print() + "'";
+		}
+		
+		String ret = toPrintKey;
+		String toPrintValue = this.dic.get(t).print();
+		
+		if (this.dic.get(t).getType().equals(TypeEnum.string_type)){
+			toPrintValue = "'" + toPrintValue + "'";
+		}
+		
+		ret = ret.concat(": " + toPrintValue);
 		return ret;
 	}
 	

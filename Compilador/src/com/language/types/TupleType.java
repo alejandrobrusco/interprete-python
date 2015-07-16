@@ -33,15 +33,31 @@ public class TupleType extends Types {
 		if (this.value!=null && !this.value.isEmpty()){
 			List<Types> valueClone = new ArrayList<Types>(this.value);
 			Types first = valueClone.remove(0);
-			ret = ret.concat(first.print());
+			
+			String valueToPrint = first.print();
+			if (first.getType().equals(TypeEnum.string_type)){
+				valueToPrint = this.concatCommillas(first.print());
+			}
+			
+			ret = ret.concat(valueToPrint);
 			for (Types types : valueClone) {
-				ret = ret.concat(", " + types.print());
+				
+				valueToPrint = types.print();
+				if (types.getType().equals(TypeEnum.string_type)){
+					valueToPrint = this.concatCommillas(types.print());
+				}
+				
+				ret = ret.concat(", " + valueToPrint);
 			}
 		}
 		ret = ret.concat(")");
 		return ret;
 	}
 	
+	private String concatCommillas(String print) {
+		return "'" + print + "'";
+	}
+
 	public List<Types> getTuple() {
 		return this.value;
 	}

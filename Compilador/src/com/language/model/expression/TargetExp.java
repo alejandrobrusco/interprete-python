@@ -66,6 +66,15 @@ public class TargetExp extends Expression {
 					
 					int from = this.transformNegativeIndex(list.size(), indexType.getFrom());
 					int to = this.transformNegativeIndex(list.size(), indexType.getTo());
+					
+					/* Si los valores se van de rango, lo pongo el extremo */
+					if (to > list.size()-1){
+						to = list.size();
+					}
+					
+					if (from < 0){
+						from = 0;
+					}
 
 					returnEmptyList = this.returnEmptyList(from, to);
 					returnOriginalList = this.returnOriginalList(list.size(), from, to);
@@ -73,7 +82,7 @@ public class TargetExp extends Expression {
 					if (!returnEmptyList){
 						if (returnOriginalList){
 							return new ListType(list);
-						}
+							}
 						else{
 							retList = list.subList(from, to);
 							return new ListType(retList);
@@ -94,7 +103,7 @@ public class TargetExp extends Expression {
 							return new ListType(list);
 						}
 						else{
-							retList = list.subList(from, list.size()-1);
+							retList = list.subList(from, list.size());
 							return new ListType(retList);
 						}
 					}
@@ -135,6 +144,15 @@ public class TargetExp extends Expression {
 					int by = Integer.valueOf(String.valueOf(indexType.getStep()));
 					
 					returnEmptyList = this.returnEmptyList(from, to);
+					
+					/* Si los valores se van de rango, lo pongo el extremo */
+					if (to > list.size()-1){
+						to = list.size();
+					}
+					
+					if (from < 0){
+						from = 0;
+					}
 
 					
 					if (by==0){
@@ -254,7 +272,7 @@ public class TargetExp extends Expression {
 					return new ListType(retList);
 				}
 				
-				return null;
+				return new ListType(retList);
 			}
 		}
 		else{
@@ -264,7 +282,7 @@ public class TargetExp extends Expression {
 	
 	private boolean returnOriginalList(int size, int from, int to) {
 		
-		return (to>=size-1 && from==0);
+		return (to>size-1 && from==0);
 		
 	}
 
@@ -310,6 +328,7 @@ public class TargetExp extends Expression {
 					throw new OutOfBoundException("Error at line " + this.line +": index " + index + " is out of Bound of List called \'" + this.id.getId() + "\'");
 				}
 				else{
+					list.remove(index);
 					list.add(index, valueToAssing.eval());
 					listType.setList(list);
 				}
@@ -349,7 +368,7 @@ public class TargetExp extends Expression {
 									firstPart.add(list.get(i));
 								}
 								
-								for (int i=to;i<(list.size()-1);i++){
+								for (int i=to;i<=(list.size()-1);i++){
 									secondPart.add(list.get(i));
 								}
 								
@@ -385,7 +404,7 @@ public class TargetExp extends Expression {
 									firstPart.add(list.get(i));
 								}
 								
-								for (int i=to;i<(list.size()-1);i++){
+								for (int i=to;i<=(list.size()-1);i++){
 									secondPart.add(list.get(i));
 								}
 								
@@ -421,7 +440,7 @@ public class TargetExp extends Expression {
 									firstPart.add(list.get(i));
 								}
 								
-								for (int i=to;i<(list.size()-1);i++){
+								for (int i=to;i<=(list.size()-1);i++){
 									secondPart.add(list.get(i));
 								}
 								
