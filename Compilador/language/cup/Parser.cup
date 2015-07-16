@@ -109,6 +109,7 @@ non terminal	index;
 non terminal	expression_or_empty;
 non terminal	expression_dict_list;
 non terminal	expression_stm_list;
+non terminal	expression_stm_dict_list;
 
 /* Precedences */
 precedence left IF, ELSE;
@@ -210,6 +211,15 @@ expression_stm_list 	::=	COMMA IDENTIFIER:value ASSIGN expression:expr expressio
 								:}
 						  |  /* epsilon */
 						  		{:  RESULT = new LinkedList<Expression>(); :};
+
+expression_stm_dict_list ::= COMMA IDENTIFIER:value ASSIGN expression:expr expression_stm_dict_list:list 
+								{:  Expression assign = new AssignExp(new StringExp((String)value,valueleft), (Expression)expr,valueleft);
+									((List<Expression>)list).add((Expression)assign);
+									RESULT = list; 
+								:}
+						  |  /* epsilon */
+						  		{:  RESULT = new LinkedList<Expression>(); :};
+
 
 expression_list			::=  expression:expr COMMA expression_list:list 
 								{: ((List<Expression>)list).add((Expression)expr); 
@@ -325,8 +335,8 @@ expression				::=  MINUS:m expression:expr
 								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.tuple_type,valueleft); :}	
 						  | DICT:value LPARAN expression_or_empty:expr RPARAN
 								{: RESULT = new TransformerExp((Expression)expr,TypeEnum.dict_type,valueleft); :}
-						  | DICT:value LPARAN IDENTIFIER:valueAs ASSIGN expression:expr expression_stm_list:list RPARAN
-								{: Expression assign = new AssignExp(new IdentifierExp((String)valueAs,valueAsleft), (Expression)expr,valueAsleft);
+						  | DICT:value LPARAN IDENTIFIER:valueAs ASSIGN expression:expr expression_stm_dict_list:list RPARAN
+								{: Expression assign = new AssignExp(new StringExp((String)valueAs,valueAsleft), (Expression)expr,valueAsleft);
 								   ((List<Expression>)list).add((Expression)assign);
 								   RESULT = new TransformerExp((List<Expression>)list,TypeEnum.dict_type,valueleft); 
 								:}
