@@ -33,9 +33,9 @@ public class ListType extends Types {
 		if (this.value != null && !this.value.isEmpty()){
 			List<Types> valueClone = new ArrayList<Types>(this.value);
 			Types first = valueClone.remove(0);
-			ret = ret.concat(first.print());
+			ret = ret.concat("'" + first.print() + "'");
 			for (Types types : valueClone) {
-				ret = ret.concat("," + types.print());
+				ret = ret.concat(", '" + types.print() + "'");
 			}
 		}
 		ret = ret.concat("]");

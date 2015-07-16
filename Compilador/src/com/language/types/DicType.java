@@ -44,8 +44,7 @@ public class DicType extends Types {
 
 	private String printElement(Types t) {
 		String ret = t.print();
-		ret = ret.concat(": ");
-		ret = ret.concat(dic.get(t).print());
+		ret = ret.concat(": '" + dic.get(t).print() + "'");
 		return ret;
 	}
 	

@@ -35,7 +35,7 @@ public class TupleType extends Types {
 			Types first = valueClone.remove(0);
 			ret = ret.concat(first.print());
 			for (Types types : valueClone) {
-				ret = ret.concat("," + types.print());
+				ret = ret.concat(", " + types.print());
 			}
 		}
 		ret = ret.concat(")");
