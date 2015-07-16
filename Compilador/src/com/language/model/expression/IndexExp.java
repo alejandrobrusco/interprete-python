@@ -14,14 +14,29 @@ public class IndexExp extends Expression {
 	int line;
 
 	public IndexExp(Expression eIni, Expression eFin, Expression eStep,int line) {
-		this.eIni = eIni;
-		this.eFin = eFin;
-		this.eStep = eStep;
+		
+		if (!(eIni instanceof EmptyExp)){
+			this.eIni = eIni;
+		}
+		
+		if (!(eFin instanceof EmptyExp)){
+			this.eFin = eFin;
+		}
+		
+		if (!(eStep instanceof EmptyExp)){
+			this.eStep = eStep;
+		}
 	}
 
 	public IndexExp(Expression eIni, Expression eFin,int line) {
-		this.eIni = eIni;
-		this.eFin = eFin;
+		
+		if (!(eIni instanceof EmptyExp)){
+			this.eIni = eIni;
+		}
+		
+		if (!(eFin instanceof EmptyExp)){
+			this.eFin = eFin;
+		}
 	}
 
 	public IndexExp(Expression simpleIndex,int line) {
@@ -31,11 +46,7 @@ public class IndexExp extends Expression {
 	@Override
 	public Types eval() {
 		
-		if (this.simpleIndex==null && this.eIni==null && this.eFin==null && this.eStep==null){
-			// Excpetion (no se si esto puede pasar)
-			return null;
-		}
-
+		
 		if (this.simpleIndex != null) {
 			Types index = this.simpleIndex.eval();
 
@@ -62,9 +73,12 @@ public class IndexExp extends Expression {
 	}
 
 	private void checkType(Expression expr) {
+		
+		if ((expr!=null && !expr.eval().getType().equals(TypeEnum.none_type))){
 
-		if (!(expr!=null && (expr.eval().getType().equals(TypeEnum.long_type) || expr.eval().getType().equals(TypeEnum.int_type)))){
-			throw new TypeErrorException("Error at line " + this.line +": could not convert '" + expr.eval().getType().getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
+			if (!(expr!=null && (expr.eval().getType().equals(TypeEnum.long_type) || expr.eval().getType().equals(TypeEnum.int_type)))){
+				throw new TypeErrorException("Error at line " + this.line +": could not convert '" + expr.eval().getType().getPythonType() + "' to " + TypeEnum.long_type.getPythonType());
+			}
 		}
 	
 	}
