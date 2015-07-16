@@ -196,5 +196,5 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 {Comment}           { /* ignore */ }
 
 . 					{
-						throw new ParsingException("Illegal character at line " + yyline+1 + ", column " + yycolumn+1 + " >> " + yytext());
+						throw new ParsingException("\nIllegal character at line " + yyline+1 + ", column " + yycolumn+1 + " >> " + yytext());
 					}

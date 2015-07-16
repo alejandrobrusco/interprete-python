@@ -13,7 +13,7 @@ parser code {:
 	public void syntax_error(Symbol s){
 		int line = s.left;
 		int column = s.right;
-		throw new ParsingException("Syntax error at line " + line + ", column " + column);
+		throw new ParsingException("\nSyntax error at line " + line + ", column " + column);
 	}
 :}
 
