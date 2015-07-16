@@ -42,28 +42,28 @@ public class BinaryExp extends Expression {
 				try {
 					return stringEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if ((lType.getType().equals(TypeEnum.float_type)) || (rType.getType().equals(TypeEnum.float_type))){
@@ -73,28 +73,28 @@ public class BinaryExp extends Expression {
 					// El motivo de esto es para no duplicar código y hacer 2 funciones prácticamente idéntias 
 					return floatEvalArit(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.long_type) || (rType.getType().equals(TypeEnum.long_type))){
 				try {
 					return longEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.long_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.int_type) || (rType.getType().equals(TypeEnum.int_type))){
 				try {
 					return intEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.int_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.boolean_type) || (rType.getType().equals(TypeEnum.boolean_type))){
 				try {
 					return boolEvalArit(lType, operator, rType, lType.getType().equals(TypeEnum.boolean_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else {
@@ -118,14 +118,14 @@ public class BinaryExp extends Expression {
 				try {
 					return difTypesComparison(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			} // Si ambos son numerables (Float, Long, Int, Bool)
 			else if (lOrder == 0 && rOrder == 0) {
 				try {
 					return evalNumerableLog(lType, operator, rType);
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			
@@ -133,32 +133,32 @@ public class BinaryExp extends Expression {
 				try {
 					return stringEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.string_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.dict_type) || (rType.getType().equals(TypeEnum.dict_type))){
 				try {
 					return dictEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.dict_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.tuple_type) || (rType.getType().equals(TypeEnum.tuple_type))){
 				try {
 					return tupleEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.tuple_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else if (lType.getType().equals(TypeEnum.list_type) || (rType.getType().equals(TypeEnum.list_type))){
 				try {
 					return listEvalLog(lType, operator, rType, lType.getType().equals(TypeEnum.list_type));
 				} catch (OperationNotExistException e) {
-					throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+					throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 				}
 			}
 			else {
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 			
 		}
@@ -192,7 +192,7 @@ public class BinaryExp extends Expression {
 			return new BooleanType(lStringValue.compareTo(rStringValue) != 0);
 		}
 		else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -222,7 +222,7 @@ public class BinaryExp extends Expression {
 			return new BooleanType(lFloatValue.floatValue() != rFloatValue.floatValue());
 		}
 		else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -263,7 +263,7 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -304,7 +304,7 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -353,7 +353,7 @@ public class BinaryExp extends Expression {
 			return new BooleanType(res.intValue() <= 0);
 		}
 		else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 		
@@ -367,7 +367,7 @@ public class BinaryExp extends Expression {
 				String lS = ((StringType) lType).getString().concat(rS);
 				return new StringType(lS);
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}				
 		}
 		else if (operator.equals(BinaryOp.mult)){ // Sólo puede ser una multiplicación de un número por un String.
@@ -390,7 +390,7 @@ public class BinaryExp extends Expression {
 			else if (numericType.getType().equals(TypeEnum.boolean_type)){
 				it = ((BooleanType) numericType).getIntegerValue().longValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 			String aux = "";
 			for (long i=0; i< it; i++){
@@ -398,7 +398,7 @@ public class BinaryExp extends Expression {
 			}
 			return new StringType(aux);
 		} else { // Operación inválida
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -429,7 +429,7 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.pow)){ // HAY RIESGO DE OVERFLOW !!!
 			return new FloatType(floatPow(lFloatValue, rFloatValue));
 		} else {
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -482,7 +482,7 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.bRShift)){
 			return new LongType(lLongValue >> rLongValue);
 		} else {
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -534,7 +534,7 @@ public class BinaryExp extends Expression {
 		else if (operator.equals(BinaryOp.bRShift)){
 			return new IntegerType(lIntValue >> rIntValue);
 		} else {
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -584,15 +584,15 @@ public class BinaryExp extends Expression {
 			else if (operator.equals(BinaryOp.bOr)){
 				return new BooleanType(((BooleanType) lType).getBoolean() | ((BooleanType) rType).getBoolean());
 			} else {
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 		} else { // No hay otros operadores definidos
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 
 	public Types dictEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
-		throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+		throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 	}
 	
 	public Types tupleEvalArit(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
@@ -604,7 +604,7 @@ public class BinaryExp extends Expression {
 			res.addAll(rTuple);
 			return new TupleType(res);
 		} else { // No hay otros operadores definidos
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -617,7 +617,7 @@ public class BinaryExp extends Expression {
 			res.addAll(rList);
 			return new ListType(res);
 		} else { // No hay otros operadores definidos
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 	}
 	
@@ -677,7 +677,7 @@ public class BinaryExp extends Expression {
 		else if (lType.getType().equals(TypeEnum.boolean_type)){
 			lFloatValue = ((BooleanType) lType).getIntegerValue().floatValue();
 		} else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 		
 		if (rType.getType().equals(TypeEnum.float_type)){
@@ -691,7 +691,7 @@ public class BinaryExp extends Expression {
 		else if (rType.getType().equals(TypeEnum.boolean_type)){
 			rFloatValue = ((BooleanType) rType).getIntegerValue().floatValue();
 		} else{
-			throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+			throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 		}
 		return new Values(lFloatValue, rFloatValue);
 	}
@@ -712,7 +712,7 @@ public class BinaryExp extends Expression {
 			else if (rType.getType().equals(TypeEnum.boolean_type)){
 				rLongValue = ((BooleanType) rType).getIntegerValue().longValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 		}
 		else {
@@ -744,7 +744,7 @@ public class BinaryExp extends Expression {
 			else if (rType.getType().equals(TypeEnum.boolean_type)){
 				rIntValue = ((BooleanType) rType).getIntegerValue().intValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 		}
 		else {
@@ -754,7 +754,7 @@ public class BinaryExp extends Expression {
 			else if (lType.getType().equals(TypeEnum.boolean_type)){
 				lIntValue = ((BooleanType) lType).getIntegerValue().intValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 			rIntValue = ((IntegerType) rType).getInteger();
 		}
@@ -772,14 +772,14 @@ public class BinaryExp extends Expression {
 			if (rType.getType().equals(TypeEnum.boolean_type)){
 				rBoolIntValue = ((BooleanType) rType).getIntegerValue().intValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 		}
 		else {
 			if (lType.getType().equals(TypeEnum.boolean_type)){
 				lBoolIntValue = ((BooleanType) lType).getIntegerValue().intValue();
 			} else{
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 			rBoolIntValue = ((BooleanType) rType).getIntegerValue();
 		}
@@ -900,7 +900,7 @@ public class BinaryExp extends Expression {
 			else if (operator.equals(BinaryOp.lessOrEqual)){
 				return new BooleanType(lOrder <= rOrder);
 			} else {
-				throw new OperationNotExistException("Operation: \'" + lType.getType().toString() + " " + operator.name() + " " + rType.getType().toString() + "\' is not defined.");
+				throw new OperationNotExistException("Error at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
 			}
 		}
 	}
