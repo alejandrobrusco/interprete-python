@@ -1,5 +1,8 @@
 <project name="Compiler" default="main" basedir=".">
 
+	<echo message="***** ANT del compilador *****"/>
+	<echo message="Se compilará y generará un JAR"/>
+
 	<property name="cup" location="cup" />
 	<property name="jflex" location="jflex" />
 	<property name="src" location="src" />
@@ -14,6 +17,22 @@
 	<property name="jar-dest" value="${build}/jar/Compilador.jar"/>
 
 	<property environment="env" />
+
+	<target name="print-version"> 
+		<echo>Java/JVM version: ${ant.java.version}</echo> 
+		<echo>Java/JVM detail version: ${java.version}</echo> 
+	</target>
+	
+	<fail message="Su versión de Java ${ant.java.version} no está soportada. 
+		Es necesario contar con Java 8 o superior.">
+		<condition>
+			<not>
+				<or>
+					<equals arg1="${ant.java.version}" arg2="1.8"/>
+				</or>
+			</not>
+		</condition>
+	</fail>
 
 	<path id="binaries">
 		<pathelement location="${bin}" />
