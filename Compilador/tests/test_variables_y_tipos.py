@@ -17,6 +17,10 @@ y='Esto es un String con comilla simple'
 h="""Esto es un print que ocupa varias lineas, donde tiene caracteres escapeados como \\n y esciribmos el caratcer 
 de fin de linea, asi como tambien \\t o \\f"""
 
+r = 567
+
+u="""Otro String seguido del anterior"""
+
 # print de elemenos basicos
 
 print a
@@ -27,6 +31,8 @@ print e
 print f
 print g
 print h
+print u
+print r
 
 print a,b,c
 print c,d
