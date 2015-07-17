@@ -1,6 +1,10 @@
 #!/bin/bash
 
-rm salidas/*
+if [ -e salidas/test_and_or.py_output.txt ]; then
+	rm salidas/*;
+fi
+
+echo ""
 echo "Se generaran las salidas de Python y del proyecto propio"
 echo ""
 JAR_PATH="../build/jar/Compilador.jar"
@@ -26,4 +30,12 @@ for i in $(ls test*.py); do
 	read
 done
 clear
-echo "FIN !"
+echo "FIN de tests automaticos!"
+
+echo ""
+echo "Los siguientes tests deben realizarse de forma manual porque requieren interaccion con el usuario:"
+for i in $(ls manual*.py); do
+	echo ${i};
+done
+echo ""
+echo "FIN DEL SCRIPT"
