@@ -33,6 +33,8 @@ import com.language.exceptions.*;
 	
 	Stack<Integer> stack = new Stack<Integer>();
 	private int current_indent;
+	
+	private StringBuffer string = new StringBuffer();
 
 %}
 
@@ -56,6 +58,11 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 %state indent_status
 %state normal_status
+
+%state doble_string
+%state simple_string
+%state one_doble_string
+%state one_simple_string
 
 %%
 
@@ -130,10 +137,11 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 "raw_input"			{ return symbol(sym.RAW_INPUT); }
 
-\"{3}[^\"{3}]*?\"{3}	{ return symbol(sym.STRING, yytext()); }
-\"([^\"\n]*)\"			{ return symbol(sym.STRING, yytext()); }
-'{3}[^'{3}]*?'{3}		{ return symbol(sym.STRING, yytext()); }
-'([^\'\n]*)'			{ return symbol(sym.STRING, yytext()); } 
+
+\"{3}				{ string.setLength(0); yybegin(doble_string);}
+\"					{ string.setLength(0); yybegin(one_doble_string);}
+\'{3}				{ string.setLength(0); yybegin(simple_string);}
+\'					{ string.setLength(0); yybegin(one_simple_string);}
 
 {Float}					{return symbol(sym.FLOATATION, yytext()); }
 {Integer}				{return symbol(sym.INTEGER, yytext()); }
@@ -156,6 +164,35 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 
 
 }
+
+<one_doble_string> {
+  \"	             { yybegin(indent_status); 
+                       return symbol(sym.STRING, string.toString()); 
+                     }
+  .|\\\"             { string.append(yytext());}
+}
+
+<doble_string> {
+  \"{3}              { yybegin(indent_status); 
+                       return symbol(sym.STRING, string.toString()); 
+                     }
+  .|\n               { string.append(yytext());}
+}
+
+<one_simple_string> {
+  \'              	 { yybegin(indent_status); 
+                       return symbol(sym.STRING, string.toString()); 
+                     }
+  .|\\\'             { string.append( yytext());}
+}
+
+<simple_string> {
+  \'{3}              { yybegin(indent_status); 
+                       return symbol(sym.STRING, string.toString()); 
+                     }
+  .|\n               { string.append( yytext());}
+}
+
 
 <indent_status>{
 " "			   		{	current_indent++; }
@@ -181,11 +218,13 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 						return symbol(sym.NEWLINE);
 					}
 
-<<EOF>>     		{	if (!stack.isEmpty() && stack.pop()!=0){
+<<EOF>>     		{	if (!stack.isEmpty() && stack.peek()!=0){
+							stack.pop();
 							yypushback(yylength());
 							return symbol(sym.DEDENT);
+						} else if (!stack.isEmpty() && stack.pop()==0) {
+							return symbol(sym.NEWLINE);
 						}
-
 					  	return symbol(sym.EOF);
 					}
 					

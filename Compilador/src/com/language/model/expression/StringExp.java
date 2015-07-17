@@ -39,7 +39,15 @@ public class StringExp extends Expression {
 				chars[i] = '\\';
 				chars[i+1] = '\0';
 				length--;
-			}
+			} else if (chars[i+1] == '\"' && chars[i] == '\\'){
+				chars[i] = '\"';
+				chars[i+1] = '\0';
+				length--;
+			} else if (chars[i+1] == '\'' && chars[i] == '\\'){
+				chars[i] = '\'';
+				chars[i+1] = '\0';
+				length--;
+			}				
 			i++;
 		}
 		char[] copy = new char[length];
