@@ -236,39 +236,71 @@ public class BinaryExp extends Expression {
 	
 	public Types dictEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 
+		Map<Types, Types> lDict = ((DicType) lType).getDic();
+		Map<Types, Types> rDict = ((DicType) rType).getDic();
+		Integer lSize = lDict.size();
+		Integer rSize = rDict.size();
 		if (operator.equals(BinaryOp.equal)){
-			Map<Types, Types> lDict = ((DicType) lType).getDic();
-			Map<Types, Types> rDict = ((DicType) rType).getDic();
 			return new BooleanType(lDict.equals(rDict));
 		}
 		else if (operator.equals(BinaryOp.notEqual)){
-			Map<Types, Types> lDict = ((DicType) lType).getDic();
-			Map<Types, Types> rDict = ((DicType) rType).getDic();
 			return new BooleanType(!lDict.equals(rDict));
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			String lString = ((DicType) lType).getDic().toString();
-			String rString = ((DicType) rType).getDic().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() > 0);
+			if (lSize == rSize) {
+				String lString = lDict.values().toString();
+				String rString = rDict.values().toString();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() > 0);
+			}
+			else if (lSize > rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			String lString = ((DicType) lType).getDic().toString();
-			String rString = ((DicType) rType).getDic().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() >= 0);
+			if (lSize == rSize) {
+				String lString = lDict.values().toString();
+				String rString = rDict.values().toString();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() >= 0);
+			}
+			else if (lSize > rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.less)){
-			String lString = ((DicType) lType).getDic().toString();
-			String rString = ((DicType) rType).getDic().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() < 0);
+			if (lSize == rSize) {
+				String lString = lDict.values().toString();
+				String rString = rDict.values().toString();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() < 0);
+			}
+			else if (lSize < rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			String lString = ((DicType) lType).getDic().toString();
-			String rString = ((DicType) rType).getDic().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() <= 0);
+			if (lSize == rSize) {
+				String lString = lDict.values().toString();
+				String rString = rDict.values().toString();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() <= 0);
+			}
+			else if (lSize < rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else{
 			throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
@@ -288,26 +320,26 @@ public class BinaryExp extends Expression {
 			return new BooleanType(!lTuple.equals(rTuple));
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			String lString = ((TupleType) lType).getTuple().toString();
-			String rString = ((TupleType) rType).getTuple().toString();
+			String lString = ((TupleType) lType).print();
+			String rString = ((TupleType) rType).print();
 			Integer res = lString.compareTo(rString);
 			return new BooleanType(res.intValue() > 0);
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			String lString = ((TupleType) lType).getTuple().toString();
-			String rString = ((TupleType) rType).getTuple().toString();
+			String lString = ((TupleType) lType).print();
+			String rString = ((TupleType) rType).print();
 			Integer res = lString.compareTo(rString);
 			return new BooleanType(res.intValue() >= 0);
 		}
 		else if (operator.equals(BinaryOp.less)){
-			String lString = ((TupleType) lType).getTuple().toString();
-			String rString = ((TupleType) rType).getTuple().toString();
+			String lString = ((TupleType) lType).print();
+			String rString = ((TupleType) rType).print();
 			Integer res = lString.compareTo(rString);
 			return new BooleanType(res.intValue() < 0);
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			String lString = ((TupleType) lType).getTuple().toString();
-			String rString = ((TupleType) rType).getTuple().toString();
+			String lString = ((TupleType) lType).print();
+			String rString = ((TupleType) rType).print();
 			Integer res = lString.compareTo(rString);
 			return new BooleanType(res.intValue() <= 0);
 		}
@@ -342,6 +374,8 @@ public class BinaryExp extends Expression {
 	
 	public Types listEvalLog(Types lType, BinaryOp operator, Types rType, boolean esElPrimero) throws OperationNotExistException{
 		
+		Integer lSize = ((ListType) lType).getList().size();
+		Integer rSize = ((ListType) rType).getList().size();
 		if (operator.equals(BinaryOp.equal)){
 			if (lType.getType().equals(TypeEnum.list_type) && (rType.getType().equals(TypeEnum.list_type))) {
 				List<Types> lList = ((ListType) lType).getList();
@@ -361,28 +395,60 @@ public class BinaryExp extends Expression {
 			}
 		}
 		else if (operator.equals(BinaryOp.greater)){
-			String lString = ((ListType) lType).getList().toString();
-			String rString = ((ListType) rType).getList().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() > 0);
+			if (lSize == rSize) {
+				String lString = ((ListType) lType).print();
+				String rString = ((ListType) rType).print();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() > 0);
+			}
+			else if (lSize > rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.greaterOrEqual)){
-			String lString = ((ListType) lType).getList().toString();
-			String rString = ((ListType) rType).getList().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() >= 0);
+			if (lSize == rSize) {
+				String lString = ((ListType) lType).print();
+				String rString = ((ListType) rType).print();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() >= 0);
+			}
+			else if (lSize > rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.less)){
-			String lString = ((ListType) lType).getList().toString();
-			String rString = ((ListType) rType).getList().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() < 0);
+			if (lSize == rSize) {
+				String lString = ((ListType) lType).print();
+				String rString = ((ListType) rType).print();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() < 0);
+			}
+			else if (lSize < rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else if (operator.equals(BinaryOp.lessOrEqual)){
-			String lString = ((ListType) lType).getList().toString();
-			String rString = ((ListType) rType).getList().toString();
-			Integer res = lString.compareTo(rString);
-			return new BooleanType(res.intValue() <= 0);
+			if (lSize == rSize) {
+				String lString = ((ListType) lType).print();
+				String rString = ((ListType) rType).print();
+				Integer res = lString.compareTo(rString);
+				return new BooleanType(res.intValue() <= 0);
+			}
+			else if (lSize < rSize) {
+				return new BooleanType(true);
+			}
+			else {
+				return new BooleanType(false);
+			}
 		}
 		else{
 			throw new OperationNotExistException("\nError at line " + this.line + ": operation \'" + lType.getType().getPythonType() + " " + operator.getPythonType() + " " + rType.getType().getPythonType() + "\' is not defined.");
