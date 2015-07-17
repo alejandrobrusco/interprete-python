@@ -2,7 +2,7 @@ package com.language.stack;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.language.types.LinkType;
 import com.language.types.Types;
 
 public class Stack {
@@ -26,11 +26,18 @@ public class Stack {
 		if (stackList != null && !stackList.isEmpty())
 			stackList.get(stackList.size() - 1).addVariable(id, t);
 	}
-
-	public Types findInActualScope(String id) {
-		Scope vList = stackList.get(stackList.size() - 1);
-		return (vList.findVariable(id));
-	}
+	
+//	public Types findInActualScope(String id) {
+//		Scope vList = stackList.get(stackList.size() - 1);
+//		Types findVariable = vList.findVariable(id);
+//		
+//		if (findVariable != null && findVariable.getType().equals(TypeEnum.link_type)){
+//			Types variable = findInOtherScopes(((LinkType)findVariable).getLinkedVariable());
+//			return variable;
+//		}
+//		
+//		return findVariable;
+//	}
 
 	public void printStack() {
 
@@ -43,10 +50,57 @@ public class Stack {
 
 	}
 	
-	public Types findInGlobalScope(String id){
-		Scope globalScope = this.stackList.get(0);
-		return globalScope.findVariable(id);
-		
+//	public Types findInGlobalScope(String id){
+//		Scope globalScope = this.stackList.get(0);
+//		return globalScope.findVariable(id);
+//		
+//	}
+	
+	private Types findVariableWithLevel (String id,int scopeLevel){
+		Types variable;
+		while (scopeLevel!=-1){
+			variable = this.stackList.get(scopeLevel).findVariable(id);
+			scopeLevel--;
+			if (variable != null){
+				if (variable instanceof LinkType){
+					return findVariableWithLevel(((LinkType)variable).getLinkedVariable(), scopeLevel);
+				} else {
+					return variable;
+				}
+			}
+		}
+		return null;
 	}
+	
+	public Types findVariable (String id){
+		return findVariableWithLevel(id,this.stackList.size()-1);
+	}
+		
+//	public Types findInOtherScopes(String id) {
+//		
+//		Types result = null;
+//		
+//		boolean exist = false;
+//		ListIterator<Scope> it = this.stackList.listIterator(this.stackList.size()-1);
+//		
+//		while (it.hasPrevious() && !exist){
+//			
+//			Scope scope = it.previous();
+//			Types variable = scope.findVariable(id);
+//			
+//			if (variable!=null){
+//				exist = true;
+//				result = variable;
+//			}
+//		}
+//		
+//		if (exist){
+//			return result;
+//		}
+//		else{
+//			throw new  VariableNotExistException("General Error searching LinkType");
+//		}
+//
+//	}
 
 }

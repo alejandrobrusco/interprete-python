@@ -8,7 +8,9 @@ import com.language.model.statements.FunctionDefinitionStm;
 import com.language.model.statements.Statement;
 import com.language.stack.Stack;
 import com.language.stack.StackHandler;
+import com.language.types.LinkType;
 import com.language.types.ReturnType;
+import com.language.types.TypeEnum;
 import com.language.types.Types;
 import com.language.types.VoidType;
 
@@ -49,13 +51,37 @@ public class FunctionExp extends Expression {
 						paramsHead.add(id);
 						
 						Expression expExp = ((AssignExp) assignExp).getExpression();
-						Types exp = expExp.eval();
-						paramsValues.add(exp);
+						Types expType = expExp.eval();
+						
+						if (expExp instanceof IdentifierExp){
+							// si Es referenciado (list,dict,tuple)
+							if (expType.getType().equals(TypeEnum.list_type)
+									|| expType.getType().equals(TypeEnum.dict_type) || expType.getType().equals(TypeEnum.tuple_type)){
+								LinkType link = new LinkType(((IdentifierExp) expExp).getId());
+								expType = link;
+							} else if (expType instanceof LinkType){
+								LinkType link = new LinkType(((LinkType)expType).getLinkedVariable());
+								expType = link;
+							}
+						}
+						paramsValues.add(expType);
 					}
 				} else {
 					// si se pasan los parametros sin la cabecera o no hay parametros
 					for (Expression parameterExp : parametersList) {
 						Types parameterType = parameterExp.eval();
+						
+						if (parameterExp instanceof IdentifierExp){
+							// si Es referenciado (list,dict,tuple)
+							if (parameterType.getType().equals(TypeEnum.list_type)
+									|| parameterType.getType().equals(TypeEnum.dict_type) || parameterType.getType().equals(TypeEnum.tuple_type)){
+								LinkType link = new LinkType(((IdentifierExp) parameterExp).getId());
+								parameterType = link;
+							} else if (parameterType instanceof LinkType){
+								LinkType link = new LinkType(((LinkType)parameterType).getLinkedVariable());
+								parameterType = link;
+							}
+						}
 						paramsValues.add(parameterType);
 					}
 					paramsHead.addAll(definedParameters);

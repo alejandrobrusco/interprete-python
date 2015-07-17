@@ -22,16 +22,14 @@ public class IdentifierExp extends Expression {
 	public Types eval() {
 		StackHandler stackHandler = StackHandler.getInstance();
 		
-		Types variableValue = stackHandler.getStack().findInActualScope(id);
-		Types globalVariable = stackHandler.getStack().findInGlobalScope(id);
+		Types variableValue = stackHandler.getStack().findVariable(id);
+
+//		Types variableValue = stackHandler.getStack().findInActualScope(id);
+//		Types globalVariable = stackHandler.getStack().findInOtherScopes(id);
 
 		if (variableValue!=null){
 			return variableValue;
-		}
-		else if (globalVariable!=null){
-			return globalVariable;
-		}
-		else{
+		} else {
 			throw new VariableNotExistException("\nError at line " + this.line + ": variable \'" + id +"\' is not defined");
 
 		}

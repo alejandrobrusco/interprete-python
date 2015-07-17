@@ -62,12 +62,9 @@ public class PredefinedFunctionExp extends Expression {
 			
 			StackHandler stackHandler = StackHandler.getInstance();
 			Stack stack = stackHandler.getStack();
-			Types variableType = stack.findInActualScope(variableId);
+			Types variableType = stack.findVariable(variableId);
 			if (variableType == null){
-				variableType = stack.findInGlobalScope(variableId);
-				if (variableType == null){
-					throw new VariableNotExistException("\nError at line " + this.line +": variable \'" + variableId +"\' is not defined");
-				}
+				throw new VariableNotExistException("\nError at line " + this.line +": variable \'" + variableId +"\' is not defined");
 			}
 			
 			//Nos fijamos que sea la variable de un tipo esperado (Dict,String,List)
