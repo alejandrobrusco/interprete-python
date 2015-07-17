@@ -1,4 +1,6 @@
 #!/bin/bash
+clear
+echo "********* MENU *********"
 echo "1 - Compilar (a través de ANT)"
 echo "2 - Ejecutar"
 echo "Ingrese la opción deseada:"
@@ -8,9 +10,9 @@ if  [ -z "$opcion" ]; then
 fi
 
 if [ $opcion = 2 ]; then
-        clear
-	echo "Introduzca la ruta del archivo de entrada (Ejemplo: /home/USER/test.py):"
+	echo "Introduzca la ruta del archivo de entrada (Ejemplo: /home/user/test.py):"
 	read FILEPATH
+	FILEPATH="/home/abrusco/test.py"
 	echo
 	clear
 	java -jar build/jar/Compilador.jar $FILEPATH
