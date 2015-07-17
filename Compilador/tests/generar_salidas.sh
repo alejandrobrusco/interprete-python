@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e salidas/test_and_or.py_output.txt ]; then
+if [ "!$(ls -A salidas)" ]; then
 	rm salidas/*;
 fi
 
