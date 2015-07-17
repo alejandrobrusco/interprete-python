@@ -240,8 +240,8 @@ public class PredefinedFunctionExp extends Expression {
 						if (TypeEnum.string_type.equals(oldStrType.getType()) && TypeEnum.string_type.equals(newStrType.getType())){
 							String oldStr = ((StringType)oldStrType).getString();
 							String newStr = ((StringType)newStrType).getString();
-							String replaceFirst = str.replaceFirst(oldStr, newStr);
-							return new StringType(replaceFirst);
+							String replace = str.replaceAll(oldStr, newStr);
+							return new StringType(replace);
 						} else if (TypeEnum.string_type.equals(newStrType.getType())) {
 							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' the two arguments should be \'str\' type");
 
@@ -354,7 +354,7 @@ public class PredefinedFunctionExp extends Expression {
 								count++;
 							}
 							
-							throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value" + value.toStringValue() + "not in list");
+							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' , value " + value.toStringValue() + " not in list");
 
 							
 						} else {
@@ -401,7 +401,8 @@ public class PredefinedFunctionExp extends Expression {
 						if (TypeEnum.int_type.equals(index.getType())){
 							List<Types> list = ((ListType) variableType).getList();
 							Integer i = ((IntegerType)index).getInteger();
-							list.add(i, value);
+							Integer iAdd = i <= list.size() ? i : list.size();
+							list.add(iAdd, value);
 							return new VoidType();
 						} else {
 							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' first argument should be \'int\' type");
@@ -417,8 +418,9 @@ public class PredefinedFunctionExp extends Expression {
 						if (TypeEnum.int_type.equals(index.getType())){
 							List<Types> list = ((ListType) variableType).getList();
 							Integer i = ((IntegerType)index).getInteger();
-							boolean ret = list.remove(i);
-							return new BooleanType(ret);
+							int i2 = i.intValue();
+							Types ret = list.remove(i2);
+							return new BooleanType(ret!=null);
 						} else {
 							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument should be \'int\' type");
 
