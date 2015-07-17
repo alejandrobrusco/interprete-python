@@ -116,7 +116,7 @@ public class FunctionExp extends Expression {
 				stackHandler.closeFunctionScope();
 				return ret;
 			} else {
-				throw new IlegalArgumentException("\nError at line " + this.line + ": function must be called with " + definedParameters.size() + " arguments");
+				throw new IlegalArgumentException("\nError at line " + this.line + ": function \'"+ functionId + "\' must be called with " + definedParameters.size() + " arguments");
 			}
 		} else {
 			throw new IlegalArgumentException("\nError at line " + this.line + ": general error parsin FunctionExp");
