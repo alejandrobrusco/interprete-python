@@ -214,13 +214,17 @@ public class PredefinedFunctionExp extends Expression {
 						Types sepStrType = parametersList.get(0).eval();
 						if (TypeEnum.string_type.equals(sepStrType.getType())){
 							String sepStr = ((StringType)sepStrType).getString();
-							String[] strSplit = str.split(sepStr);
-							List<Types> strSplitList  = new ArrayList<Types>();
-							for (String s : strSplit) {
-								Types t = new StringType(s);
-								strSplitList .add(t);
+							if (!"".equals(sepStr)){
+								String[] strSplit = str.split(sepStr);
+								List<Types> strSplitList  = new ArrayList<Types>();
+								for (String s : strSplit) {
+									Types t = new StringType(s);
+									strSplitList .add(t);
+								}
+								return new ListType(strSplitList);
+							} else {
+								throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\': empty separator");
 							}
-							return new ListType(strSplitList);
 						} else {
 							throw new IlegalArgumentException("\nError at line " + this.line +": in Pre-defined Function \'" + predefinedId + "\' applied to \'" + variableId + "\' argument must be an \'str\' type");
 						}
