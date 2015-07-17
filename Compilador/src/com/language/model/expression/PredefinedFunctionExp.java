@@ -190,7 +190,13 @@ public class PredefinedFunctionExp extends Expression {
 						String str = ((StringType)variableType).getString();
 						Types joinStrType = parametersList.get(0).eval();
 						if (TypeEnum.string_type.equals(joinStrType.getType())){
-							String joinStr = ((StringType)joinStrType).getString();
+							char[] chars = ((StringType)joinStrType).getString().toCharArray();
+							List<String> joinStr = new ArrayList<String>();
+							if (chars != null){
+								for (char c : chars) {
+									joinStr.add(String.valueOf(c));
+								}
+							}
 							String retStr = String.join(str, joinStr);
 							return new StringType(retStr);
 						} else {
