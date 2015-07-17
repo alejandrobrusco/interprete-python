@@ -176,7 +176,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
   \"{3}              { yybegin(indent_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
-  .|\n               { string.append(yytext());}
+  .|\n|\\\"               { string.append(yytext());}
 }
 
 <one_simple_string> {
@@ -190,7 +190,7 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
   \'{3}              { yybegin(indent_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
-  .|\n               { string.append( yytext());}
+  .|\n|\\\'          { string.append( yytext());}
 }
 
 
