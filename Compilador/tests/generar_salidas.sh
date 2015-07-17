@@ -1,8 +1,7 @@
 #!/bin/bash
 
-if [ "!$(ls -A salidas)" ]; then
-	rm salidas/*;
-fi
+rm salidas/test*;
+rm salidas/manual*;
 
 echo ""
 echo "Se generaran las salidas de Python y del proyecto propio"
