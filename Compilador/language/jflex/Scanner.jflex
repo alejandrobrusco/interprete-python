@@ -166,28 +166,28 @@ Comment 				= "#" {AnyCharacter}* {LineTerminator}?
 }
 
 <one_doble_string> {
-  \"	             { yybegin(indent_status); 
+  \"	             { yybegin(normal_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
   .|\\\"             { string.append(yytext());}
 }
 
 <doble_string> {
-  \"{3}              { yybegin(indent_status); 
+  \"{3}              { yybegin(normal_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
   .|\n|\\\"               { string.append(yytext());}
 }
 
 <one_simple_string> {
-  \'              	 { yybegin(indent_status); 
+  \'              	 { yybegin(normal_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
   .|\\\'             { string.append( yytext());}
 }
 
 <simple_string> {
-  \'{3}              { yybegin(indent_status); 
+  \'{3}              { yybegin(normal_status); 
                        return symbol(sym.STRING, string.toString()); 
                      }
   .|\n|\\\'          { string.append( yytext());}
