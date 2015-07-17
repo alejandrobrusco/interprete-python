@@ -103,19 +103,50 @@ public class BinaryExp extends Expression {
 			
 		} else if (!tipoOperador(operator)) { // Es Lógica
 			
-			// Si el operador es OR o AND, no nos interesa conocer de qué tipos son los operandos
-			if (operator.equals(BinaryOp.or)){
-				return lType;
-			}
-			else if (operator.equals(BinaryOp.and)){
-				return rType;
-			}
-			
 			Integer lOrder = getTypeValue(lType);
 			Integer rOrder = getTypeValue(rType);
+			
+			if (operator.equals(BinaryOp.and)){
+				if (lOrder == 0) {
+					Float lFloatValue = obtenerUnFloatValue(lType);
+					if (lFloatValue == 0.0) {
+						if (lType.getType().equals(TypeEnum.boolean_type)) {
+							return new BooleanType(false);
+						}
+						else if (lType.getType().equals(TypeEnum.float_type)) {
+							return new FloatType(lFloatValue);
+						}
+						else if (lType.getType().equals(TypeEnum.long_type)) {
+							return new LongType(0L);
+						}
+						else if (lType.getType().equals(TypeEnum.int_type)) {
+							return new IntegerType(0);
+						}
+					}
+				}
+				return rType;
+			}
+			else if (operator.equals(BinaryOp.or)){
+				if (rOrder == 0) {
+					Float rFloatValue = obtenerUnFloatValue(rType);
+					if (rFloatValue == 0.0) {
+						return lType;
+					} 
+					else {
+						if (lOrder == 0) {
+							Float lFloatValue = obtenerUnFloatValue(lType);
+							if (lFloatValue == 0.0) {
+								return rType;
+							} 
+						}
+					}
+				}
+				return lType;
+			}
+			
 			// Si son de distintos Types y al menos uno no es numerables (Float, Long, Int, Bool) 
-			if ((getTypeValue(lType) != 0 || getTypeValue(rType) != 0) &&
-					(getTypeValue(lType) != getTypeValue(rType))) {
+			if ((lOrder != 0 || rOrder != 0) &&
+					(lOrder != rOrder)) {
 				try {
 					return difTypesComparison(lType, operator, rType);
 				} catch (OperationNotExistException e) {
@@ -720,45 +751,26 @@ public class BinaryExp extends Expression {
 	}
 	
 // obtenerTypeValues
-/*
-	private Values obtenerStringValues(Types lType, Types rType,boolean esElPrimero) {
-		String lStringValue = "";
-		String rStringValue = "";
-		if (esElPrimero) {
-			lStringValue = ((StringType) lType).getString();
-			if (rType.getType().equals(TypeEnum.float_type)){
-				rStringValue = ((FloatType)rType).toString(); 
-			} else if (rType.getType().equals(TypeEnum.long_type)){
-				rStringValue = ((LongType) rType).toString();
-			}
-			else if (rType.getType().equals(TypeEnum.int_type)){
-				rStringValue = ((IntegerType) rType).toString();
-			}
-			else if (rType.getType().equals(TypeEnum.boolean_type)){
-				rStringValue = ((BooleanType) rType).toString();
-			} else{
-				// [TODO] Excepción de TIPOS
-			}
+	
+	private Float obtenerUnFloatValue(Types xType) throws OperationNotExistException {
+		Float xFloatValue = 0f;
+		
+		if (xType.getType().equals(TypeEnum.float_type)){
+			xFloatValue = ((FloatType)xType).getFloat(); 
+		} else if (xType.getType().equals(TypeEnum.long_type)){
+			xFloatValue = ((LongType) xType).getLong().floatValue();
 		}
-		else {
-			if (lType.getType().equals(TypeEnum.float_type)){
-				lStringValue = ((FloatType)lType).toString(); 
-			} else if (lType.getType().equals(TypeEnum.long_type)){
-				lStringValue = ((LongType) lType).toString();
-			}
-			else if (lType.getType().equals(TypeEnum.int_type)){
-				lStringValue = ((IntegerType) lType).toString();
-			}
-			else if (lType.getType().equals(TypeEnum.boolean_type)){
-				lStringValue = ((BooleanType) lType).toString();
-			} else{
-				// [TODO] Excepción de TIPOS
-			}
-			rStringValue = ((StringType) rType).getString();
+		else if (xType.getType().equals(TypeEnum.int_type)){
+			xFloatValue = ((IntegerType) xType).getInteger().floatValue();
 		}
-		return new Values(lStringValue, rStringValue);
+		else if (xType.getType().equals(TypeEnum.boolean_type)){
+			xFloatValue = ((BooleanType) xType).getIntegerValue().floatValue();
+		} else{
+			throw new OperationNotExistException("\nError at line " + this.line + ": type \'" + xType.getType().getPythonType() + "\' is not defined.");
+		}
+		
+		return xFloatValue;
 	}
-*/
 	
 	private Values obtenerFloatValues(Types lType, Types rType) throws OperationNotExistException {
 		Float lFloatValue = 0f;
