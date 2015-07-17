@@ -15,7 +15,7 @@ if [ $opcion = 2 ]; then
 	FILEPATH="/home/abrusco/test.py"
 	echo
 	clear
-	java -jar build/jar/Compilador.jar $FILEPATH
+	java -jar build/jar/Compilador.jar ${FILEPATH} > ${FILEPATH}_salida.txt
 else
         cd language
 	ant
