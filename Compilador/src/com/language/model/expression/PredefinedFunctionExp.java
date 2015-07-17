@@ -120,8 +120,10 @@ public class PredefinedFunctionExp extends Expression {
 					}
 				case VALUES:
 					if (parametersList.size()==0){
-						List<Types> dicValues = (List<Types>) ((DicType) variableType).getDic().values();
-						return new ListType(dicValues);
+						Collection<Types> dicValues = ((DicType) variableType).getDic().values();
+						List<Types> list = new ArrayList<Types>();
+						list.addAll(dicValues);
+						return new ListType(list);
 					} else {
 						throw new IlegalArgumentException("\nError at line " + this.line +": function \'" + predefinedId + "\' applied to \'" + variableId + "\' must not have any arguments");
 					}
@@ -140,7 +142,7 @@ public class PredefinedFunctionExp extends Expression {
 							int indexOf = 0;
 							int count = 0;
 							while (indexOf != -1){
-								indexOf = str.indexOf(subStr, 0);
+								indexOf = str.indexOf(subStr, indexOf);
 								if (indexOf != -1){
 									indexOf = indexOf + subStr.length();
 									count++;
