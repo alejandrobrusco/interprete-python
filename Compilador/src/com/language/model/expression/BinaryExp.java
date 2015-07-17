@@ -127,18 +127,13 @@ public class BinaryExp extends Expression {
 				return rType;
 			}
 			else if (operator.equals(BinaryOp.or)){
-				if (rOrder == 0) {
-					Float rFloatValue = obtenerUnFloatValue(rType);
-					if (rFloatValue == 0.0) {
-						return lType;
+				if (lOrder == 0) {
+					Float lFloatValue = obtenerUnFloatValue(lType);
+					if (lFloatValue == 0.0) {
+						return rType;
 					} 
 					else {
-						if (lOrder == 0) {
-							Float lFloatValue = obtenerUnFloatValue(lType);
-							if (lFloatValue == 0.0) {
-								return rType;
-							} 
-						}
+						return lType;
 					}
 				}
 				return lType;
