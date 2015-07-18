@@ -23,7 +23,7 @@ pause
 FOR %%i IN (test*.py) DO (
 	cls	
 	echo "------------------- DIFF de %%i -------------------"
-	diff.exe salidas/%%i_output?????????????????????????????
+	diff.exe salidas/%%i_output.txt salidas/%%i_output_propio.txt
 	echo ""
 	echo "--------------------------------------------------------------------"
 	echo "PRESIONA UNA TECLA PARA IR AL SIGUIENTE TEST"
