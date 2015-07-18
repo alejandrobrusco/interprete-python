@@ -27,18 +27,6 @@ public class Stack {
 			stackList.get(stackList.size() - 1).addVariable(id, t);
 	}
 	
-//	public Types findInActualScope(String id) {
-//		Scope vList = stackList.get(stackList.size() - 1);
-//		Types findVariable = vList.findVariable(id);
-//		
-//		if (findVariable != null && findVariable.getType().equals(TypeEnum.link_type)){
-//			Types variable = findInOtherScopes(((LinkType)findVariable).getLinkedVariable());
-//			return variable;
-//		}
-//		
-//		return findVariable;
-//	}
-
 	public void printStack() {
 
 		System.out.println("-------Stack--------");
@@ -49,12 +37,6 @@ public class Stack {
 		System.out.println("------fin Stack-----");
 
 	}
-	
-//	public Types findInGlobalScope(String id){
-//		Scope globalScope = this.stackList.get(0);
-//		return globalScope.findVariable(id);
-//		
-//	}
 	
 	private Types findVariableWithLevel (String id,int scopeLevel){
 		Types variable;
@@ -76,31 +58,4 @@ public class Stack {
 		return findVariableWithLevel(id,this.stackList.size()-1);
 	}
 		
-//	public Types findInOtherScopes(String id) {
-//		
-//		Types result = null;
-//		
-//		boolean exist = false;
-//		ListIterator<Scope> it = this.stackList.listIterator(this.stackList.size()-1);
-//		
-//		while (it.hasPrevious() && !exist){
-//			
-//			Scope scope = it.previous();
-//			Types variable = scope.findVariable(id);
-//			
-//			if (variable!=null){
-//				exist = true;
-//				result = variable;
-//			}
-//		}
-//		
-//		if (exist){
-//			return result;
-//		}
-//		else{
-//			throw new  VariableNotExistException("General Error searching LinkType");
-//		}
-//
-//	}
-
 }

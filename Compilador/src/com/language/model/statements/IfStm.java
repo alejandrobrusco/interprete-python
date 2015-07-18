@@ -5,7 +5,6 @@ import java.util.List;
 import com.language.exceptions.TypeErrorException;
 import com.language.model.expression.Expression;
 import com.language.model.statements.Statement;
-import com.language.types.BooleanType;
 import com.language.types.TypeEnum;
 import com.language.types.Types;
 import com.language.types.VoidType;
