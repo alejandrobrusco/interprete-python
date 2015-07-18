@@ -7,11 +7,8 @@ echo "Se generaran las salidas de Python y del proyecto propio"
 echo ""
 
 FOR %%i IN (test*.py) DO (
-	python %%i > salidas/%%i_output.txt;
-)
-
-FOR %%i IN (test*.py) DO (
-	java -jar ../build/jar/Compilador.jar %%i >salidas/%%i_output_propio.txt;
+	python %%i > salidas/%%i_output.txt
+	java -jar ../build/jar/Compilador.jar %%i >salidas/%%i_output_propio.txt
 )
 
 cls
@@ -33,10 +30,9 @@ FOR %%i IN (test*.py) DO (
 cls
 echo "FIN de tests automaticos!"
 
-echo ""
 echo "Los siguientes tests deben realizarse de forma manual porque requieren interaccion con el usuario:"
-for i in $(ls manual*.py); do
-	echo ${i};
-done
+FOR %%i in (manual*.py) DO (
+	echo %%i
+)
 echo ""
 echo "FIN DEL SCRIPT"
