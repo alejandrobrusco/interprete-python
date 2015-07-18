@@ -5,6 +5,8 @@ FOR %%A IN (salidas\?????????????????????????????????.txt) DO del "%%A"
 echo ""
 echo "Se generaran las salidas de Python y del proyecto propio"
 echo ""
+echo "Hay tests que dan ERROR intencionalmente y por lo tanto se mostraran esos errores en pantalla"
+pause
 
 FOR %%i IN (test*.py) DO (
 	python %%i > salidas/%%i_output.txt
